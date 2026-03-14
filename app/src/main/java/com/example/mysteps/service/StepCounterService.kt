@@ -1,6 +1,10 @@
 package com.example.mysteps.service
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.pm.ServiceInfo
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,13 +17,15 @@ import android.util.Log
 import java.util.Calendar
 
 /**
- * Background service that continuously monitors step count from the device sensor.
- * This service stores step data for hourly tracking.
+ * Foreground service that continuously monitors step count from the device sensor.
+ * Runs as a foreground service to prevent being killed by the system.
  */
 class StepCounterService : Service(), SensorEventListener {
 
     companion object {
         private const val TAG = "StepCounterService"
+        private const val NOTIFICATION_ID = 1
+        private const val CHANNEL_ID = "step_counter_channel"
         const val PREFS_NAME = "hourly_steps_prefs"
         const val KEY_HOUR_START_STEPS = "hour_start_steps"
         const val KEY_HOUR_START_TIME = "hour_start_time"
@@ -42,7 +48,14 @@ class StepCounterService : Service(), SensorEventListener {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Service created")
+        Log.e(TAG, "Service created")
+
+        createNotificationChannel()
+        startForeground(
+            NOTIFICATION_ID,
+            buildNotification(),
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_HEALTH
+        )
 
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -54,30 +67,25 @@ class StepCounterService : Service(), SensorEventListener {
                 stepCounterSensor,
                 SensorManager.SENSOR_DELAY_NORMAL
             )
-            Log.d(TAG, "Step counter sensor registered")
+            Log.e(TAG, "Step counter sensor registered")
         } else {
             Log.e(TAG, "Step counter sensor not available")
         }
 
-        // Initialize currentHour from storage
         val storedHour = prefs.getInt(KEY_CURRENT_HOUR, -1)
-        
+
         if (storedHour == -1) {
-            // First time initialization - set to current hour
-            // The first sensor reading will initialize the baseline
             val calendar = Calendar.getInstance()
             val currentActualHour = calendar.get(Calendar.HOUR_OF_DAY)
             currentHour = currentActualHour
-            Log.d(TAG, "First time initialization for hour: $currentActualHour")
+            Log.e(TAG, "First time initialization for hour: $currentActualHour")
             prefs.edit()
                 .putInt(KEY_CURRENT_HOUR, currentActualHour)
                 .putLong(KEY_HOUR_START_TIME, calendar.timeInMillis)
                 .apply()
         } else {
-            // Set currentHour to the stored value
-            // If the hour has changed, updateStepCount() will detect it on first sensor reading
             currentHour = storedHour
-            Log.d(TAG, "Restored hour from storage: $storedHour")
+            Log.e(TAG, "Restored hour from storage: $storedHour")
         }
     }
 
@@ -86,6 +94,7 @@ class StepCounterService : Service(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
+        Log.e(TAG, "onSensorChanged called, event=$event")
         event?.let {
             if (it.sensor.type == Sensor.TYPE_STEP_COUNTER) {
                 val totalSteps = it.values[0].toLong()
@@ -102,27 +111,23 @@ class StepCounterService : Service(), SensorEventListener {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
 
-        // Check if we've moved to a new hour
         if (hour != currentHour) {
-            Log.d(TAG, "New hour detected: $hour (previous: $currentHour)")
-            // Reset baseline for new hour
+            Log.e(TAG, "New hour detected: $hour (previous: $currentHour)")
             prefs.edit()
                 .putLong(KEY_HOUR_START_STEPS, totalSteps)
                 .putLong(KEY_HOUR_START_TIME, calendar.timeInMillis)
                 .putInt(KEY_CURRENT_HOUR, hour)
                 .apply()
             currentHour = hour
-            Log.d(TAG, "Hour baseline reset to: $totalSteps")
+            Log.e(TAG, "Hour baseline reset to: $totalSteps")
         } else if (!prefs.contains(KEY_HOUR_START_STEPS)) {
-            // First sensor reading in current hour - initialize baseline
-            Log.d(TAG, "First sensor reading - initializing baseline to: $totalSteps")
+            Log.e(TAG, "First sensor reading - initializing baseline to: $totalSteps")
             prefs.edit()
                 .putLong(KEY_HOUR_START_STEPS, totalSteps)
                 .putLong(KEY_HOUR_START_TIME, calendar.timeInMillis)
                 .apply()
         }
 
-        // Update current step count
         prefs.edit()
             .putLong(KEY_CURRENT_STEPS, totalSteps)
             .putLong(KEY_LAST_UPDATE, System.currentTimeMillis())
@@ -130,13 +135,35 @@ class StepCounterService : Service(), SensorEventListener {
 
         val hourlySteps = getHourlySteps(this)
         val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, -1)
-        Log.d(TAG, "Steps updated - Total: $totalSteps, HourStart: $hourStartSteps, Hourly: $hourlySteps")
+        Log.e(TAG, "Steps updated - Total: $totalSteps, HourStart: $hourStartSteps, Hourly: $hourlySteps")
+    }
+
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Step Counter",
+            NotificationManager.IMPORTANCE_LOW
+        ).apply {
+            description = "Tracks your hourly steps"
+            setShowBadge(false)
+        }
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(channel)
+    }
+
+    private fun buildNotification(): Notification {
+        return Notification.Builder(this, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_menu_directions)
+            .setContentTitle("MySteps")
+            .setContentText("Tracking steps")
+            .setOngoing(true)
+            .build()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         sensorManager.unregisterListener(this)
-        Log.d(TAG, "Service destroyed")
+        Log.e(TAG, "Service destroyed")
     }
 
     override fun onBind(intent: Intent?): IBinder? {

@@ -6,6 +6,7 @@
 package com.example.mysteps.presentation
 
 import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +29,7 @@ import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUp
 import com.example.mysteps.R
 import com.example.mysteps.complication.HourlyStepsComplicationService
 import com.example.mysteps.presentation.theme.MyStepsTheme
+import com.example.mysteps.service.StepCounterService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +41,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setTheme(android.R.style.Theme_DeviceDefault)
+
+        // Always start the step counter foreground service
+        startStepCounterService()
 
         // Check if this was triggered by a complication tap
         if (intent?.action == HourlyStepsComplicationService.ACTION_REFRESH_COMPLICATION) {
@@ -59,6 +64,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             WearApp("Android")
+        }
+    }
+
+    private fun startStepCounterService() {
+        try {
+            val serviceIntent = Intent(this, StepCounterService::class.java)
+            startForegroundService(serviceIntent)
+        } catch (e: Exception) {
+            // Service already running or failed to start
         }
     }
 

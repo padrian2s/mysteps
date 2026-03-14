@@ -64,7 +64,7 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     private fun startStepCounterService() {
         try {
             val serviceIntent = Intent(this, StepCounterService::class.java)
-            startService(serviceIntent)
+            startForegroundService(serviceIntent)
         } catch (e: Exception) {
             // Service already running or failed to start
         }
