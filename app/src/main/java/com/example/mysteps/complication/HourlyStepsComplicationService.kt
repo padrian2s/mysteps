@@ -2,44 +2,47 @@ package com.example.mysteps.complication
 
 import android.Manifest
 import android.app.PendingIntent
-import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
 import androidx.wear.watchface.complications.data.PlainComplicationText
+import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
 import com.example.mysteps.presentation.MainActivity
 import com.example.mysteps.service.StepCounterService
 
-/**
- * Complication data source that displays the number of steps taken in the current hour.
- *
- * This complication reads step data from the StepCounterService which continuously
- * monitors the device's step counter sensor.
- *
- * Tap the complication to refresh the step count immediately.
- */
 class HourlyStepsComplicationService : SuspendingComplicationDataSourceService() {
 
     override fun getPreviewData(type: ComplicationType): ComplicationData? {
-        if (type != ComplicationType.SHORT_TEXT) {
-            return null
+        val goal = StepCounterService.DEFAULT_STEP_GOAL
+        return when (type) {
+            ComplicationType.RANGED_VALUE -> createRangedComplicationData(
+                steps = 180,
+                stepGoal = goal,
+                completedHours = 3,
+                elapsedHours = 5,
+                complicationInstanceId = -1
+            )
+            ComplicationType.SHORT_TEXT -> createShortTextComplicationData(
+                steps = 180,
+                stepGoal = goal,
+                completedHours = 3,
+                elapsedHours = 5,
+                complicationInstanceId = -1
+            )
+            else -> null
         }
-        return createComplicationData(steps = 1234, complicationInstanceId = -1)
     }
 
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData {
-        // Start the step counter service if it's not already running
         startStepCounterService()
 
-        // Check if we have the required permission
         if (!hasActivityRecognitionPermission()) {
-            return createComplicationData(
+            return createShortTextComplicationData(
                 steps = 0,
                 showError = true,
                 errorMessage = "No permission",
@@ -47,17 +50,30 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
             )
         }
 
-        // Get hourly steps from the service's shared preferences
         val steps = StepCounterService.getHourlySteps(this)
-        return createComplicationData(
-            steps = steps,
-            complicationInstanceId = request.complicationInstanceId
-        )
+        val goal = StepCounterService.getStepGoal(this)
+        val (completed, elapsed) = StepCounterService.getHourlyProgress(this)
+
+        return when (request.complicationType) {
+            ComplicationType.RANGED_VALUE -> createRangedComplicationData(
+                steps = steps,
+                stepGoal = goal,
+                completedHours = completed,
+                elapsedHours = elapsed,
+                complicationInstanceId = request.complicationInstanceId
+            )
+            else -> createShortTextComplicationData(
+                steps = steps,
+                stepGoal = goal,
+                completedHours = completed,
+                elapsedHours = elapsed,
+                complicationInstanceId = request.complicationInstanceId
+            )
+        }
     }
 
     override fun onComplicationActivated(complicationInstanceId: Int, type: ComplicationType) {
         super.onComplicationActivated(complicationInstanceId, type)
-        // Ensure service is running when complication is activated
         startStepCounterService()
     }
 
@@ -77,47 +93,96 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun createComplicationData(
-        steps: Long,
-        showError: Boolean = false,
-        errorMessage: String = "No data",
-        complicationInstanceId: Int
-    ): ShortTextComplicationData {
-        val text = if (showError) {
-            "--"
-        } else if (steps >= 250) {
-            "❤"
-        } else {
-            steps.toString()
+    private fun buildTapAction(complicationInstanceId: Int): PendingIntent {
+        val intent = Intent(this, ComplicationTapReceiver::class.java).apply {
+            action = ComplicationTapReceiver.ACTION_COMPLICATION_TAP
         }
-
-        val contentDescription = if (showError) {
-            "Steps: $errorMessage"
-        } else if (steps >= 250) {
-            "$steps steps this hour - Goal reached!"
-        } else {
-            "$steps steps this hour"
-        }
-
-        // Create intent to open MainActivity and trigger complication update
-        val intent = Intent(this, MainActivity::class.java).apply {
-            action = ACTION_REFRESH_COMPLICATION
-            putExtra(EXTRA_COMPLICATION_ID, complicationInstanceId)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-
-        val pendingIntent = PendingIntent.getActivity(
+        return PendingIntent.getBroadcast(
             this,
             complicationInstanceId,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
+    }
+
+    private fun buildText(
+        steps: Long,
+        stepGoal: Int,
+        completedHours: Int,
+        elapsedHours: Int,
+        showError: Boolean
+    ): String {
+        return if (showError) {
+            "--"
+        } else if (steps >= stepGoal) {
+            if (elapsedHours > 0) "❤$completedHours/$elapsedHours" else "❤"
+        } else {
+            steps.toString()
+        }
+    }
+
+    private fun buildDescription(
+        steps: Long,
+        stepGoal: Int,
+        completedHours: Int,
+        elapsedHours: Int,
+        showError: Boolean,
+        errorMessage: String
+    ): String {
+        return if (showError) {
+            "Steps: $errorMessage"
+        } else if (steps >= stepGoal) {
+            "Goal reached! $completedHours of $elapsedHours hours completed"
+        } else {
+            "$steps steps this hour"
+        }
+    }
+
+    private fun createRangedComplicationData(
+        steps: Long,
+        stepGoal: Int = StepCounterService.DEFAULT_STEP_GOAL,
+        completedHours: Int = 0,
+        elapsedHours: Int = 0,
+        showError: Boolean = false,
+        errorMessage: String = "No data",
+        complicationInstanceId: Int
+    ): RangedValueComplicationData {
+        val text = buildText(steps, stepGoal, completedHours, elapsedHours, showError)
+        val description = buildDescription(steps, stepGoal, completedHours, elapsedHours, showError, errorMessage)
+        val goalReached = !showError && steps >= stepGoal
+
+        val rangeMin = 0f
+        val rangeMax = if (goalReached) 1f else stepGoal.toFloat()
+        val rangeValue = if (goalReached) 0f else if (showError) 0f else steps.toFloat().coerceAtMost(stepGoal.toFloat())
+
+        return RangedValueComplicationData.Builder(
+            value = rangeValue,
+            min = rangeMin,
+            max = rangeMax,
+            contentDescription = PlainComplicationText.Builder(description).build()
+        )
+            .setText(PlainComplicationText.Builder(text).build())
+            .setTapAction(buildTapAction(complicationInstanceId))
+            .build()
+    }
+
+    private fun createShortTextComplicationData(
+        steps: Long,
+        stepGoal: Int = StepCounterService.DEFAULT_STEP_GOAL,
+        completedHours: Int = 0,
+        elapsedHours: Int = 0,
+        showError: Boolean = false,
+        errorMessage: String = "No data",
+        complicationInstanceId: Int
+    ): ShortTextComplicationData {
+        val text = buildText(steps, stepGoal, completedHours, elapsedHours, showError)
+        val description = buildDescription(steps, stepGoal, completedHours, elapsedHours, showError, errorMessage)
 
         return ShortTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text).build(),
-            contentDescription = PlainComplicationText.Builder(contentDescription).build()
+            contentDescription = PlainComplicationText.Builder(description).build()
         )
-            .setTapAction(pendingIntent)
+            .setTapAction(buildTapAction(complicationInstanceId))
             .build()
     }
 
