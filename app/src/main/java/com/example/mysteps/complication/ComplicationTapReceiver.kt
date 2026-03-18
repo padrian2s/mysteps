@@ -4,15 +4,14 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.example.mysteps.presentation.MainActivity
 import com.example.mysteps.service.StepCounterService
 
-/**
- * Handles complication tap: if goal reached, opens the app settings.
- * If goal not reached, just requests a complication data refresh.
- */
 class ComplicationTapReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -20,15 +19,17 @@ class ComplicationTapReceiver : BroadcastReceiver() {
         val goal = StepCounterService.getStepGoal(context)
 
         if (steps >= goal) {
-            // Goal reached — open the settings app
             Log.e("ComplicationTap", "Goal reached, opening app")
+            // Double buzz for goal reached
+            vibrate(context, longArrayOf(0, 50, 80, 50))
             val activityIntent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }
             context.startActivity(activityIntent)
         } else {
-            // Goal not reached — just refresh the complication
             Log.e("ComplicationTap", "Refreshing complication, steps=$steps goal=$goal")
+            // Single short buzz for tap feedback
+            vibrate(context, longArrayOf(0, 30))
             try {
                 val componentName = ComponentName(context, HourlyStepsComplicationService::class.java)
                 ComplicationDataSourceUpdateRequester
@@ -37,6 +38,21 @@ class ComplicationTapReceiver : BroadcastReceiver() {
             } catch (e: Exception) {
                 Log.e("ComplicationTap", "Failed to refresh", e)
             }
+        }
+    }
+
+    private fun vibrate(context: Context, pattern: LongArray) {
+        try {
+            val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                val vm = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                vm.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
+        } catch (e: Exception) {
+            Log.e("ComplicationTap", "Failed to vibrate", e)
         }
     }
 

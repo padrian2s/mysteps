@@ -1,7 +1,12 @@
 package com.example.mysteps.presentation
 
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +31,6 @@ import androidx.wear.compose.material.Text
 import com.example.mysteps.presentation.theme.MyStepsTheme
 import com.example.mysteps.service.StepCounterService
 
-/**
- * Full-screen activity shown when the step alarm triggers.
- * Dismisses vibration on OK tap or crown/stem button press.
- */
 class DismissAlarmActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,6 @@ class DismissAlarmActivity : ComponentActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        // Crown/stem button press dismisses the alarm
         if (keyCode == KeyEvent.KEYCODE_STEM_1 ||
             keyCode == KeyEvent.KEYCODE_STEM_2 ||
             keyCode == KeyEvent.KEYCODE_STEM_3
@@ -55,10 +55,35 @@ class DismissAlarmActivity : ComponentActivity() {
     }
 
     private fun dismissAndFinish() {
-        val intent = Intent(this, StepCounterService::class.java).apply {
-            action = StepCounterService.ACTION_DISMISS_ALARM
+        // Stop vibration immediately from here too, in case service is dead
+        val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vm.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         }
-        startForegroundService(intent)
+        vibrator.cancel()
+
+        // Cancel alarm notification
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(2) // ALARM_NOTIFICATION_ID
+
+        // Mark this hour as dismissed in prefs
+        val prefs = getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        prefs.edit().putInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, hour).apply()
+
+        // Also notify the service
+        try {
+            val intent = Intent(this, StepCounterService::class.java).apply {
+                action = StepCounterService.ACTION_DISMISS_ALARM
+            }
+            startForegroundService(intent)
+        } catch (e: Exception) {
+            // Service might not be running — vibration already cancelled above
+        }
+
         finish()
     }
 }
@@ -100,7 +125,7 @@ fun DismissAlarmScreen(onDismiss: () -> Unit) {
                 )
             ) {
                 Text(
-                    text = "OK",
+                    text = "STOP",
                     fontSize = 16.sp
                 )
             }

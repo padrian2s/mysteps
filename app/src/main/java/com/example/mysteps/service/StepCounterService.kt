@@ -52,6 +52,8 @@ class StepCounterService : Service(), SensorEventListener {
         const val DEFAULT_STEP_GOAL = 250
         const val DEFAULT_INTERVAL_START = 8
         const val DEFAULT_INTERVAL_END = 21
+        const val KEY_ALARM_DURATION = "alarm_duration_seconds"
+        const val DEFAULT_ALARM_DURATION = 10
         const val ACTION_DISMISS_ALARM = "com.example.mysteps.DISMISS_ALARM"
         private const val ALARM_CHECK_INTERVAL_MS = 30_000L
         private const val ALARM_TRIGGER_MINUTE = 50
@@ -91,6 +93,16 @@ class StepCounterService : Service(), SensorEventListener {
         fun setAlarmEnabled(context: Context, enabled: Boolean) {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             prefs.edit().putBoolean(KEY_ALARM_ENABLED, enabled).apply()
+        }
+
+        fun getAlarmDuration(context: Context): Int {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            return prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
+        }
+
+        fun setAlarmDuration(context: Context, seconds: Int) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit().putInt(KEY_ALARM_DURATION, seconds).apply()
         }
 
         fun getIntervalStart(context: Context): Int {
@@ -200,7 +212,11 @@ class StepCounterService : Service(), SensorEventListener {
     private val screenOnUpdateRunnable = object : Runnable {
         override fun run() {
             if (isScreenOn) {
-                requestComplicationUpdate()
+                try {
+                    requestComplicationUpdate()
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error in screen update runnable", e)
+                }
                 handler.postDelayed(this, SCREEN_ON_UPDATE_INTERVAL_MS)
             }
         }
@@ -360,6 +376,7 @@ class StepCounterService : Service(), SensorEventListener {
 
     private fun requestComplicationUpdate() {
         try {
+            Log.e(TAG, "Requesting complication update")
             val componentName = ComponentName(this, HourlyStepsComplicationService::class.java)
             ComplicationDataSourceUpdateRequester
                 .create(context = this, complicationDataSourceComponent = componentName)
@@ -378,6 +395,11 @@ class StepCounterService : Service(), SensorEventListener {
         if (minute < ALARM_TRIGGER_MINUTE) return
         if (isVibrating) return
 
+        // Don't alarm outside the active interval
+        val intervalStart = prefs.getInt(KEY_INTERVAL_START, DEFAULT_INTERVAL_START)
+        val intervalEnd = prefs.getInt(KEY_INTERVAL_END, DEFAULT_INTERVAL_END)
+        if (hour < intervalStart || hour >= intervalEnd) return
+
         val dismissedHour = prefs.getInt(KEY_ALARM_DISMISSED_HOUR, -1)
         if (dismissedHour == hour) return
 
@@ -393,8 +415,19 @@ class StepCounterService : Service(), SensorEventListener {
     private fun triggerAlarm() {
         isVibrating = true
 
+        val durationSeconds = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
+        val durationMs = durationSeconds * 1000L
+        // Build repeating pattern: vibrate 500ms, pause 500ms
         val pattern = longArrayOf(0, 500, 500, 500, 500, 500)
         vibrator?.vibrate(VibrationEffect.createWaveform(pattern, 0))
+
+        // Auto-stop after configured duration
+        handler.postDelayed({
+            if (isVibrating) {
+                Log.e(TAG, "Alarm auto-stopped after ${durationSeconds}s")
+                dismissAlarm()
+            }
+        }, durationMs)
 
         val dismissIntent = Intent(this, com.example.mysteps.presentation.DismissAlarmActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK

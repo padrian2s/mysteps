@@ -70,24 +70,30 @@ class MainActivity : ComponentActivity() {
             permissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
         }
 
+        // Ensure alarm is always scheduled
+        com.example.mysteps.service.StepAlarmReceiver.scheduleNextAlarm(this)
+
         val currentSteps = StepCounterService.getHourlySteps(this)
         val currentGoal = StepCounterService.getStepGoal(this)
         val alarmOn = StepCounterService.isAlarmEnabled(this)
         val intervalStart = StepCounterService.getIntervalStart(this)
         val intervalEnd = StepCounterService.getIntervalEnd(this)
         val (completed, elapsed) = StepCounterService.getHourlyProgress(this)
+        val alarmDuration = StepCounterService.getAlarmDuration(this)
 
         setContent {
             SettingsScreen(
                 initialSteps = currentSteps,
                 initialGoal = currentGoal,
                 initialAlarmEnabled = alarmOn,
+                initialAlarmDuration = alarmDuration,
                 initialIntervalStart = intervalStart,
                 initialIntervalEnd = intervalEnd,
                 completedHours = completed,
                 elapsedHours = elapsed,
                 onGoalChanged = { StepCounterService.setStepGoal(this, it) },
                 onAlarmToggled = { StepCounterService.setAlarmEnabled(this, it) },
+                onAlarmDurationChanged = { StepCounterService.setAlarmDuration(this, it) },
                 onIntervalStartChanged = { StepCounterService.setIntervalStart(this, it) },
                 onIntervalEndChanged = { StepCounterService.setIntervalEnd(this, it) }
             )
@@ -169,17 +175,20 @@ fun SettingsScreen(
     initialSteps: Long,
     initialGoal: Int,
     initialAlarmEnabled: Boolean,
+    initialAlarmDuration: Int,
     initialIntervalStart: Int,
     initialIntervalEnd: Int,
     completedHours: Int,
     elapsedHours: Int,
     onGoalChanged: (Int) -> Unit,
     onAlarmToggled: (Boolean) -> Unit,
+    onAlarmDurationChanged: (Int) -> Unit,
     onIntervalStartChanged: (Int) -> Unit,
     onIntervalEndChanged: (Int) -> Unit
 ) {
     var stepGoal by remember { mutableIntStateOf(initialGoal) }
     var alarmEnabled by remember { mutableStateOf(initialAlarmEnabled) }
+    var alarmDuration by remember { mutableIntStateOf(initialAlarmDuration) }
     var intervalStart by remember { mutableIntStateOf(initialIntervalStart) }
     var intervalEnd by remember { mutableIntStateOf(initialIntervalEnd) }
     val listState = rememberScalingLazyListState()
@@ -300,6 +309,56 @@ fun SettingsScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp)
                     )
+                }
+
+                // Alarm duration
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Alarm Duration",
+                            fontSize = 12.sp,
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Button(
+                                onClick = {
+                                    if (alarmDuration > 5) {
+                                        alarmDuration -= 5
+                                        onAlarmDurationChanged(alarmDuration)
+                                    }
+                                },
+                                modifier = Modifier.size(32.dp),
+                                colors = ButtonDefaults.secondaryButtonColors()
+                            ) {
+                                Text("−", fontSize = 16.sp)
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "${alarmDuration}s",
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colors.primary,
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(
+                                onClick = {
+                                    alarmDuration += 5
+                                    onAlarmDurationChanged(alarmDuration)
+                                },
+                                modifier = Modifier.size(32.dp),
+                                colors = ButtonDefaults.secondaryButtonColors()
+                            ) {
+                                Text("+", fontSize = 16.sp)
+                            }
+                        }
+                    }
                 }
 
                 // Interval start
