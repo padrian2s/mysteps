@@ -34,6 +34,24 @@ class StepAlarmReceiver : BroadcastReceiver() {
          * Each hour gets its own PendingIntent (requestCode = hour) so they don't overwrite each other.
          * Safe to call multiple times — AlarmManager replaces identical PendingIntents.
          */
+        private const val KEY_LAST_SCHEDULE_DATE = "last_alarm_schedule_date"
+
+        /**
+         * Schedule alarms if not already done today.
+         * Safe to call from anywhere, as often as you want — only runs once per day.
+         */
+        fun ensureAlarmsScheduled(context: Context) {
+            val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
+            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+            val lastDate = prefs.getString(KEY_LAST_SCHEDULE_DATE, "") ?: ""
+            if (lastDate == today) return
+            scheduleAllAlarms(context)
+        }
+
+        /**
+         * Schedule ALL alarms for today. One per hour at :50 within the active interval.
+         * Each hour gets its own PendingIntent (requestCode = hour).
+         */
         fun scheduleAllAlarms(context: Context) {
             val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
             val intervalStart = prefs.getInt(StepCounterService.KEY_INTERVAL_START, StepCounterService.DEFAULT_INTERVAL_START)
@@ -59,7 +77,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
                     putExtra(EXTRA_ALARM_HOUR, hour)
                 }
                 val pendingIntent = PendingIntent.getBroadcast(
-                    context, hour, intent,  // requestCode = hour = unique per hour
+                    context, hour, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
@@ -74,6 +92,10 @@ class StepAlarmReceiver : BroadcastReceiver() {
                     Log.e(TAG, "Failed to schedule alarm for $hour:50", e)
                 }
             }
+
+            // Mark today as scheduled
+            val todayStr = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+            prefs.edit().putString(KEY_LAST_SCHEDULE_DATE, todayStr).apply()
 
             Log.e(TAG, "Scheduled $scheduledCount alarms ($intervalStart:50 - ${intervalEnd - 1}:50)")
         }
