@@ -18,7 +18,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
     companion object {
         private const val TAG = "StepAlarmReceiver"
         const val ACTION_CHECK_STEPS = "com.example.mysteps.CHECK_STEPS_ALARM"
-        private const val ALARM_CHANNEL_ID = "step_alarm_channel"
+        private const val ALARM_CHANNEL_ID = "step_alarm_v2"
         private const val ALARM_NOTIFICATION_ID = 2
         private const val EXTRA_ALARM_HOUR = "alarm_hour"
 
@@ -149,10 +149,15 @@ class StepAlarmReceiver : BroadcastReceiver() {
     private fun showAlarmNotification(context: Context) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
+        // Delete old channel that had vibration disabled
+        notificationManager.deleteNotificationChannel("step_alarm_channel")
+
         val channel = android.app.NotificationChannel(
             ALARM_CHANNEL_ID, "Step Alarm", android.app.NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = "Step goal not reached"
+            enableVibration(true)
+            setVibrationPattern(longArrayOf(0, 500, 300, 500, 300, 500, 300, 500, 300, 500))
         }
         notificationManager.createNotificationChannel(channel)
 
