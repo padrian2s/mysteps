@@ -44,8 +44,8 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData {
         startStepCounterService()
 
-        // Ensure today's alarms are scheduled (runs once per day, called every 5 min)
-        com.example.mysteps.service.StepAlarmReceiver.ensureAlarmsScheduled(this)
+        // Reschedule alarms — idempotent, safe to call every time
+        com.example.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
 
         if (!hasActivityRecognitionPermission()) {
             return createShortTextComplicationData(

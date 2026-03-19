@@ -29,30 +29,20 @@ class StepAlarmReceiver : BroadcastReceiver() {
         private const val ALARM_NOTIFICATION_ID = 2
         private const val EXTRA_ALARM_HOUR = "alarm_hour"
 
-        /**
-         * Schedule alarms for ALL hours in the active interval, each at :50.
-         * Each hour gets its own PendingIntent (requestCode = hour) so they don't overwrite each other.
-         * Safe to call multiple times — AlarmManager replaces identical PendingIntents.
-         */
-        private const val KEY_LAST_SCHEDULE_DATE = "last_alarm_schedule_date"
-
-        /**
-         * Schedule alarms if not already done today.
-         * Safe to call from anywhere, as often as you want — only runs once per day.
-         */
-        fun ensureAlarmsScheduled(context: Context) {
-            val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
-            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
-            val lastDate = prefs.getString(KEY_LAST_SCHEDULE_DATE, "") ?: ""
-            if (lastDate == today) return
-            scheduleAllAlarms(context)
-        }
+        private var lastScheduleTimeMs = 0L
 
         /**
          * Schedule ALL alarms for today. One per hour at :50 within the active interval.
          * Each hour gets its own PendingIntent (requestCode = hour).
+         *
+         * IDEMPOTENT: safe to call as often as you want. AlarmManager replaces
+         * identical PendingIntents (same requestCode). Throttled to once per minute.
          */
         fun scheduleAllAlarms(context: Context) {
+            val currentMs = System.currentTimeMillis()
+            if (currentMs - lastScheduleTimeMs < 60_000) return
+            lastScheduleTimeMs = currentMs
+
             val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
             val intervalStart = prefs.getInt(StepCounterService.KEY_INTERVAL_START, StepCounterService.DEFAULT_INTERVAL_START)
             val intervalEnd = prefs.getInt(StepCounterService.KEY_INTERVAL_END, StepCounterService.DEFAULT_INTERVAL_END)
@@ -92,10 +82,6 @@ class StepAlarmReceiver : BroadcastReceiver() {
                     Log.e(TAG, "Failed to schedule alarm for $hour:50", e)
                 }
             }
-
-            // Mark today as scheduled
-            val todayStr = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
-            prefs.edit().putString(KEY_LAST_SCHEDULE_DATE, todayStr).apply()
 
             Log.e(TAG, "Scheduled $scheduledCount alarms ($intervalStart:50 - ${intervalEnd - 1}:50)")
         }
