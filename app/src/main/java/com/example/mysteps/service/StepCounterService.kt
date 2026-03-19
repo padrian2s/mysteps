@@ -199,7 +199,16 @@ class StepCounterService : Service(), SensorEventListener {
     private lateinit var prefs: SharedPreferences
     private var currentHour: Int = -1
     private val handler = Handler(Looper.getMainLooper())
+    private var vibrator: Vibrator? = null
+    private var isVibrating = false
     private var isScreenOn = true
+
+    private val alarmCheckRunnable = object : Runnable {
+        override fun run() {
+            checkAndTriggerAlarm()
+            handler.postDelayed(this, ALARM_CHECK_INTERVAL_MS)
+        }
+    }
 
     private val screenOnUpdateRunnable = object : Runnable {
         override fun run() {
@@ -247,6 +256,14 @@ class StepCounterService : Service(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
+        vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vm.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+
         if (stepCounterSensor != null) {
             sensorManager.registerListener(
                 this,
@@ -287,27 +304,56 @@ class StepCounterService : Service(), SensorEventListener {
             handler.post(screenOnUpdateRunnable)
         }
 
+        // Start alarm check every 30s (backup for AlarmManager)
+        handler.postDelayed(alarmCheckRunnable, ALARM_CHECK_INTERVAL_MS)
     }
-
-    private var vibrator: Vibrator? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == ACTION_VIBRATE_ALARM) {
-            Log.e(TAG, "Vibrate alarm from foreground service")
-            if (vibrator == null) {
-                vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                    vm.defaultVibrator
-                } else {
-                    @Suppress("DEPRECATION")
-                    getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                }
-            }
-            val duration = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
-            vibrator?.vibrate(VibrationEffect.createOneShot(duration * 1000L, VibrationEffect.DEFAULT_AMPLITUDE))
-            Log.e(TAG, "Vibration started for ${duration}s")
+            triggerVibration()
         }
         return START_STICKY
+    }
+
+    private fun checkAndTriggerAlarm() {
+        val calendar = Calendar.getInstance()
+        val minute = calendar.get(Calendar.MINUTE)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+
+        if (!prefs.getBoolean(KEY_ALARM_ENABLED, true)) return
+        if (minute < ALARM_TRIGGER_MINUTE) return
+        if (isVibrating) return
+
+        val intervalStart = prefs.getInt(KEY_INTERVAL_START, DEFAULT_INTERVAL_START)
+        val intervalEnd = prefs.getInt(KEY_INTERVAL_END, DEFAULT_INTERVAL_END)
+        if (hour < intervalStart || hour >= intervalEnd) return
+
+        val dismissedHour = prefs.getInt(KEY_ALARM_DISMISSED_HOUR, -1)
+        if (dismissedHour == hour) return
+
+        val hourlySteps = getHourlySteps(this)
+        val stepGoal = prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
+
+        if (hourlySteps < stepGoal) {
+            Log.e(TAG, "Handler alarm triggered! minute=$minute, steps=$hourlySteps, goal=$stepGoal")
+            triggerVibration()
+        }
+    }
+
+    private fun triggerVibration() {
+        isVibrating = true
+        val duration = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
+        Log.e(TAG, "Vibrating for ${duration}s from foreground service")
+        vibrator?.vibrate(VibrationEffect.createOneShot(duration * 1000L, VibrationEffect.DEFAULT_AMPLITUDE))
+
+        // Auto-stop
+        handler.postDelayed({
+            isVibrating = false
+        }, duration * 1000L)
+
+        // Mark dismissed
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        prefs.edit().putInt(KEY_ALARM_DISMISSED_HOUR, hour).apply()
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -401,7 +447,9 @@ class StepCounterService : Service(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler.removeCallbacks(alarmCheckRunnable)
         handler.removeCallbacks(screenOnUpdateRunnable)
+        vibrator?.cancel()
         unregisterReceiver(screenReceiver)
         sensorManager.unregisterListener(this)
         Log.e(TAG, "Service destroyed")

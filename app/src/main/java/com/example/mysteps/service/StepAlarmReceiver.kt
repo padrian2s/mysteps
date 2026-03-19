@@ -149,19 +149,41 @@ class StepAlarmReceiver : BroadcastReceiver() {
 
         Log.e(TAG, "Triggering alarm!")
 
-        // Send vibrate command to foreground StepCounterService
-        // (foreground services CAN vibrate, background receivers CANNOT on SDK 36)
+        var vibratedViaService = false
+
+        // Method 1: vibrate via foreground service
         try {
             val vibrateIntent = Intent(context, StepCounterService::class.java).apply {
                 action = StepCounterService.ACTION_VIBRATE_ALARM
             }
             context.startService(vibrateIntent)
-            Log.e(TAG, "Sent vibrate command to StepCounterService")
+            vibratedViaService = true
+            Log.e(TAG, "Sent vibrate to service OK")
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to send vibrate to service", e)
+            Log.e(TAG, "Service vibrate failed: ${e.message}")
         }
 
-        // Show notification
+        // Method 2: vibrate directly as fallback
+        if (!vibratedViaService) {
+            try {
+                val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    val vm = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+                    vm.defaultVibrator
+                } else {
+                    @Suppress("DEPRECATION")
+                    context.getSystemService(Context.VIBRATOR_SERVICE) as android.os.Vibrator
+                }
+                vibrator.vibrate(android.os.VibrationEffect.createOneShot(5000, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
+                Log.e(TAG, "Direct vibrate fallback OK")
+            } catch (e2: Exception) {
+                Log.e(TAG, "Direct vibrate also failed: ${e2.message}")
+            }
+        }
+
+        // Persistent log
+        prefs.edit().putString("last_alarm_vibrate", "$hour:$min viaService=$vibratedViaService").apply()
+
+        // Show notification (also vibrates via channel)
         showAlarmNotification(context)
     }
 
