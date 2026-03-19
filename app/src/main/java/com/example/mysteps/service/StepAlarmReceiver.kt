@@ -1,18 +1,11 @@
 package com.example.mysteps.service
 
 import android.app.AlarmManager
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.util.Log
-import com.example.mysteps.presentation.DismissAlarmActivity
 import java.util.Calendar
 
 /**
@@ -137,64 +130,47 @@ class StepAlarmReceiver : BroadcastReceiver() {
 
         Log.e(TAG, "Triggering alarm!")
 
-        // Vibrate
-        val durationSeconds = prefs.getInt(StepCounterService.KEY_ALARM_DURATION, StepCounterService.DEFAULT_ALARM_DURATION)
-        val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            val vm = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vm.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        // Send vibrate command to foreground StepCounterService
+        // (foreground services CAN vibrate, background receivers CANNOT on SDK 36)
+        try {
+            val vibrateIntent = Intent(context, StepCounterService::class.java).apply {
+                action = StepCounterService.ACTION_VIBRATE_ALARM
+            }
+            context.startService(vibrateIntent)
+            Log.e(TAG, "Sent vibrate command to StepCounterService")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to send vibrate to service", e)
         }
-        val repeatCount = durationSeconds.coerceAtLeast(1)
-        val pattern = LongArray(repeatCount * 2 + 1)
-        pattern[0] = 0
-        for (i in 0 until repeatCount) {
-            pattern[i * 2 + 1] = 500
-            pattern[i * 2 + 2] = 500
-        }
-        vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
 
-        // Notification
+        // Show notification
         showAlarmNotification(context)
     }
 
     private fun showAlarmNotification(context: Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
-        val channel = NotificationChannel(
-            ALARM_CHANNEL_ID,
-            "Step Alarm",
-            NotificationManager.IMPORTANCE_HIGH
+        val channel = android.app.NotificationChannel(
+            ALARM_CHANNEL_ID, "Step Alarm", android.app.NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = "Alerts when step goal not reached"
-            enableVibration(false)
+            description = "Step goal not reached"
         }
         notificationManager.createNotificationChannel(channel)
 
-        val dismissIntent = Intent(context, DismissAlarmActivity::class.java).apply {
+        val dismissIntent = Intent(context, com.example.mysteps.presentation.DismissAlarmActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
-        val fullScreenPendingIntent = PendingIntent.getActivity(
+        val pendingIntent = android.app.PendingIntent.getActivity(
             context, 0, dismissIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
         )
 
-        val dismissAction = Notification.Action.Builder(
-            android.R.drawable.ic_delete,
-            "STOP",
-            fullScreenPendingIntent
-        ).build()
-
-        val notification = Notification.Builder(context, ALARM_CHANNEL_ID)
+        val notification = android.app.Notification.Builder(context, ALARM_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle("🚶 Move!")
             .setContentText("Step goal not reached")
-            .setContentIntent(fullScreenPendingIntent)
-            .setFullScreenIntent(fullScreenPendingIntent, true)
-            .addAction(dismissAction)
-            .setOngoing(true)
-            .setCategory(Notification.CATEGORY_ALARM)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setCategory(android.app.Notification.CATEGORY_ALARM)
             .build()
 
         notificationManager.notify(ALARM_NOTIFICATION_ID, notification)

@@ -55,7 +55,7 @@ class DismissAlarmActivity : ComponentActivity() {
     }
 
     private fun dismissAndFinish() {
-        // Stop vibration immediately from here too, in case service is dead
+        // Cancel vibration
         val vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
             vm.defaultVibrator
@@ -65,24 +65,10 @@ class DismissAlarmActivity : ComponentActivity() {
         }
         vibrator.cancel()
 
-        // Cancel alarm notification
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(2) // ALARM_NOTIFICATION_ID
-
         // Mark this hour as dismissed in prefs
         val prefs = getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
         val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
         prefs.edit().putInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, hour).apply()
-
-        // Also notify the service
-        try {
-            val intent = Intent(this, StepCounterService::class.java).apply {
-                action = StepCounterService.ACTION_DISMISS_ALARM
-            }
-            startForegroundService(intent)
-        } catch (e: Exception) {
-            // Service might not be running — vibration already cancelled above
-        }
 
         finish()
     }

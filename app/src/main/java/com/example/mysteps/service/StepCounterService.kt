@@ -19,6 +19,9 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.example.mysteps.complication.HourlyStepsComplicationService
@@ -52,6 +55,7 @@ class StepCounterService : Service(), SensorEventListener {
         const val KEY_ALARM_DURATION = "alarm_duration_seconds"
         const val DEFAULT_ALARM_DURATION = 10
         const val ACTION_DISMISS_ALARM = "com.example.mysteps.DISMISS_ALARM"
+        const val ACTION_VIBRATE_ALARM = "com.example.mysteps.VIBRATE_ALARM"
         private const val ALARM_CHECK_INTERVAL_MS = 30_000L
         private const val ALARM_TRIGGER_MINUTE = 50
         private const val SCREEN_ON_UPDATE_INTERVAL_MS = 2_000L
@@ -285,7 +289,24 @@ class StepCounterService : Service(), SensorEventListener {
 
     }
 
+    private var vibrator: Vibrator? = null
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent?.action == ACTION_VIBRATE_ALARM) {
+            Log.e(TAG, "Vibrate alarm from foreground service")
+            if (vibrator == null) {
+                vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                    vm.defaultVibrator
+                } else {
+                    @Suppress("DEPRECATION")
+                    getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                }
+            }
+            val duration = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
+            vibrator?.vibrate(VibrationEffect.createOneShot(duration * 1000L, VibrationEffect.DEFAULT_AMPLITUDE))
+            Log.e(TAG, "Vibration started for ${duration}s")
+        }
         return START_STICKY
     }
 
