@@ -336,6 +336,7 @@ class StepCounterService : Service(), SensorEventListener {
 
         if (hourlySteps < stepGoal) {
             Log.e(TAG, "Handler alarm triggered! minute=$minute, steps=$hourlySteps, goal=$stepGoal")
+            prefs.edit().putInt(KEY_ALARM_DISMISSED_HOUR, hour).apply()
             triggerVibration()
         }
     }
@@ -351,9 +352,8 @@ class StepCounterService : Service(), SensorEventListener {
             isVibrating = false
         }, duration * 1000L)
 
-        // Mark dismissed
-        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        prefs.edit().putInt(KEY_ALARM_DISMISSED_HOUR, hour).apply()
+        // NOTE: dismissed_hour is set by checkAndTriggerAlarm, NOT here
+        // so force_test vibrations don't block real alarms
     }
 
     override fun onSensorChanged(event: SensorEvent?) {

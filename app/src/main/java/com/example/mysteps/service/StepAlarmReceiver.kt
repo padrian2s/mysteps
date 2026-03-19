@@ -141,7 +141,10 @@ class StepAlarmReceiver : BroadcastReceiver() {
                 prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED goal_reached steps=$hourlySteps goal=$stepGoal").apply()
                 return
             }
-            prefs.edit().putString("last_alarm_result", "$hour:$min TRIGGERING steps=$hourlySteps goal=$stepGoal").apply()
+            prefs.edit()
+                .putString("last_alarm_result", "$hour:$min TRIGGERING steps=$hourlySteps goal=$stepGoal")
+                .putInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, hour)
+                .apply()
         } else {
             Log.e(TAG, "Force test mode — bypassing all checks")
             prefs.edit().putString("last_alarm_result", "$hour:$min FORCE_TEST").apply()
