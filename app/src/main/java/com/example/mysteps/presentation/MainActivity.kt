@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
         }
 
         // Ensure alarm is always scheduled
-        com.example.mysteps.service.StepAlarmReceiver.scheduleNextAlarm(this)
+        com.example.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
 
         val currentSteps = StepCounterService.getHourlySteps(this)
         val currentGoal = StepCounterService.getStepGoal(this)

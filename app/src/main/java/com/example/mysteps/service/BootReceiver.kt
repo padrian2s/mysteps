@@ -9,7 +9,7 @@ class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
             Log.e("BootReceiver", "Boot completed — scheduling step alarm")
-            StepAlarmReceiver.scheduleNextAlarm(context)
+            StepAlarmReceiver.scheduleAllAlarms(context)
         }
     }
 }

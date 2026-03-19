@@ -44,9 +44,6 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData {
         startStepCounterService()
 
-        // Ensure alarm is scheduled (this runs every 5 min even if service is dead)
-        com.example.mysteps.service.StepAlarmReceiver.scheduleNextAlarm(this)
-
         if (!hasActivityRecognitionPermission()) {
             return createShortTextComplicationData(
                 steps = 0,
