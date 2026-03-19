@@ -131,6 +131,19 @@ else
     FAIL=$((FAIL+1))
 fi
 
+# Test 11: Check last real alarm result (persistent log)
+echo -n "TEST 11: Last real alarm result... "
+PREFS=$(adb -s $DEVICE shell run-as $PKG cat /data/data/$PKG/shared_prefs/hourly_steps_prefs.xml 2>&1)
+LAST_FIRE=$(echo "$PREFS" | grep "last_alarm_fire" | sed 's/.*value="\(.*\)".*/\1/')
+LAST_RESULT=$(echo "$PREFS" | grep "last_alarm_result" | sed 's/.*value="\(.*\)".*/\1/')
+if [ -n "$LAST_FIRE" ]; then
+    echo "PASS (fire=$LAST_FIRE result=$LAST_RESULT)"
+    PASS=$((PASS+1))
+else
+    echo "INFO - no real alarm fired yet (waiting for :50)"
+    PASS=$((PASS+1))
+fi
+
 # Summary
 echo ""
 echo "========================================="

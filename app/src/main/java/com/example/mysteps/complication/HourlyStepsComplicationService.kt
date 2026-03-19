@@ -4,14 +4,17 @@ import android.Manifest
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Icon
 import androidx.core.content.ContextCompat
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
+import androidx.wear.watchface.complications.data.MonochromaticImage
 import androidx.wear.watchface.complications.data.PlainComplicationText
 import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
+import com.example.mysteps.R
 import com.example.mysteps.presentation.MainActivity
 import com.example.mysteps.service.StepCounterService
 
@@ -158,6 +161,10 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
         val rangeMax = if (goalReached) 1f else stepGoal.toFloat()
         val rangeValue = if (goalReached) 0f else if (showError) 0f else steps.toFloat().coerceAtMost(stepGoal.toFloat())
 
+        val icon = MonochromaticImage.Builder(
+            Icon.createWithResource(this, R.drawable.ic_complication_steps)
+        ).build()
+
         return RangedValueComplicationData.Builder(
             value = rangeValue,
             min = rangeMin,
@@ -165,6 +172,7 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
             contentDescription = PlainComplicationText.Builder(description).build()
         )
             .setText(PlainComplicationText.Builder(text).build())
+            .setMonochromaticImage(icon)
             .setTapAction(buildTapAction(complicationInstanceId))
             .build()
     }
@@ -181,10 +189,15 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
         val text = buildText(steps, stepGoal, completedHours, elapsedHours, showError)
         val description = buildDescription(steps, stepGoal, completedHours, elapsedHours, showError, errorMessage)
 
+        val icon = MonochromaticImage.Builder(
+            Icon.createWithResource(this, R.drawable.ic_complication_steps)
+        ).build()
+
         return ShortTextComplicationData.Builder(
             text = PlainComplicationText.Builder(text).build(),
             contentDescription = PlainComplicationText.Builder(description).build()
         )
+            .setMonochromaticImage(icon)
             .setTapAction(buildTapAction(complicationInstanceId))
             .build()
     }

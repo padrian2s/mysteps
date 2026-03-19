@@ -84,6 +84,11 @@ class StepAlarmReceiver : BroadcastReceiver() {
         val forceTest = intent.getBooleanExtra("force_test", false)
         val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
 
+        // Persistent log to track alarm fires (survives logcat rotation)
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val min = Calendar.getInstance().get(Calendar.MINUTE)
+        prefs.edit().putString("last_alarm_fire", "$hour:$min forceTest=$forceTest").apply()
+
         // Force reschedule for next hour (clears saved time first)
         forceScheduleNextAlarm(context)
 
@@ -95,25 +100,31 @@ class StepAlarmReceiver : BroadcastReceiver() {
 
             if (!alarmEnabled) {
                 Log.e(TAG, "Alarm disabled, skipping")
+                prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED disabled").apply()
                 return
             }
             if (hour < intervalStart || hour >= intervalEnd) {
                 Log.e(TAG, "Outside interval ($intervalStart-$intervalEnd), hour=$hour, skipping")
+                prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED outside_interval").apply()
                 return
             }
             val dismissedHour = prefs.getInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, -1)
             if (dismissedHour == hour) {
                 Log.e(TAG, "Already dismissed this hour, skipping")
+                prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED dismissed").apply()
                 return
             }
             val hourlySteps = StepCounterService.getHourlySteps(context)
             val stepGoal = prefs.getInt(StepCounterService.KEY_STEP_GOAL, StepCounterService.DEFAULT_STEP_GOAL)
             if (hourlySteps >= stepGoal) {
                 Log.e(TAG, "Goal already reached ($hourlySteps >= $stepGoal), skipping")
+                prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED goal_reached steps=$hourlySteps goal=$stepGoal").apply()
                 return
             }
+            prefs.edit().putString("last_alarm_result", "$hour:$min TRIGGERING steps=$hourlySteps goal=$stepGoal dismissed=$dismissedHour").apply()
         } else {
             Log.e(TAG, "Force test mode — bypassing all checks")
+            prefs.edit().putString("last_alarm_result", "$hour:$min FORCE_TEST").apply()
         }
 
         Log.e(TAG, "Triggering alarm!")
