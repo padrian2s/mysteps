@@ -23,6 +23,25 @@ class StepAlarmReceiver : BroadcastReceiver() {
         private const val EXTRA_ALARM_HOUR = "alarm_hour"
 
         private var lastScheduleTimeMs = 0L
+        private const val EXTRA_TEST_DELAY = "test_delay_seconds"
+
+        /**
+         * Schedule a test alarm N seconds from now.
+         */
+        fun scheduleTestAlarm(context: Context, delaySeconds: Int) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, StepAlarmReceiver::class.java).apply {
+                action = ACTION_CHECK_STEPS
+                putExtra("force_test", true)
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context, 99, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            val targetMs = System.currentTimeMillis() + delaySeconds * 1000L
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, targetMs, pendingIntent)
+            Log.e(TAG, "Test alarm scheduled in ${delaySeconds}s")
+        }
 
         /**
          * Schedule ALL alarms for today. One per hour at :50 within the active interval.
@@ -161,11 +180,12 @@ class StepAlarmReceiver : BroadcastReceiver() {
         }
         notificationManager.createNotificationChannel(channel)
 
-        val dismissIntent = Intent(context, com.example.mysteps.presentation.DismissAlarmActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        // Tap notification → open app (shows current steps)
+        val appIntent = Intent(context, com.example.mysteps.presentation.MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         val pendingIntent = android.app.PendingIntent.getActivity(
-            context, 0, dismissIntent,
+            context, 0, appIntent,
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
         )
 
