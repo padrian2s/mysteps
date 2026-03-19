@@ -23,16 +23,9 @@ class StepAlarmReceiver : BroadcastReceiver() {
         private const val ALARM_CHANNEL_ID = "step_alarm_channel"
         private const val ALARM_NOTIFICATION_ID = 2
 
-        fun scheduleNextAlarm(context: Context) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, StepAlarmReceiver::class.java).apply {
-                action = ACTION_CHECK_STEPS
-            }
-            val pendingIntent = PendingIntent.getBroadcast(
-                context, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
+        private const val KEY_SCHEDULED_ALARM_TIME = "scheduled_alarm_time"
 
+        fun scheduleNextAlarm(context: Context) {
             val calendar = Calendar.getInstance()
             val currentMinute = calendar.get(Calendar.MINUTE)
 
@@ -43,16 +36,45 @@ class StepAlarmReceiver : BroadcastReceiver() {
             calendar.set(Calendar.SECOND, 0)
             calendar.set(Calendar.MILLISECOND, 0)
 
+            val targetTime = calendar.timeInMillis
+
+            // Don't reschedule if alarm is already set for this exact time
+            val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
+            val currentScheduled = prefs.getLong(KEY_SCHEDULED_ALARM_TIME, 0)
+            if (currentScheduled == targetTime) {
+                return
+            }
+
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, StepAlarmReceiver::class.java).apply {
+                action = ACTION_CHECK_STEPS
+            }
+            val pendingIntent = PendingIntent.getBroadcast(
+                context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
             try {
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
+                    targetTime,
                     pendingIntent
                 )
+                prefs.edit().putLong(KEY_SCHEDULED_ALARM_TIME, targetTime).apply()
                 Log.e(TAG, "Next alarm scheduled for ${calendar.get(Calendar.HOUR_OF_DAY)}:50")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to schedule alarm", e)
             }
+        }
+
+        /**
+         * Force reschedule — called from onReceive after alarm fires.
+         * Clears saved time so scheduleNextAlarm will actually set a new one.
+         */
+        fun forceScheduleNextAlarm(context: Context) {
+            val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit().putLong(KEY_SCHEDULED_ALARM_TIME, 0).apply()
+            scheduleNextAlarm(context)
         }
     }
 
@@ -62,7 +84,8 @@ class StepAlarmReceiver : BroadcastReceiver() {
         val forceTest = intent.getBooleanExtra("force_test", false)
         val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
 
-        scheduleNextAlarm(context)
+        // Force reschedule for next hour (clears saved time first)
+        forceScheduleNextAlarm(context)
 
         if (!forceTest) {
             val alarmEnabled = prefs.getBoolean(StepCounterService.KEY_ALARM_ENABLED, true)

@@ -19,9 +19,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.example.mysteps.complication.HourlyStepsComplicationService
@@ -198,16 +195,7 @@ class StepCounterService : Service(), SensorEventListener {
     private lateinit var prefs: SharedPreferences
     private var currentHour: Int = -1
     private val handler = Handler(Looper.getMainLooper())
-    private var vibrator: Vibrator? = null
-    private var isVibrating = false
     private var isScreenOn = true
-
-    private val alarmCheckRunnable = object : Runnable {
-        override fun run() {
-            checkAlarm()
-            handler.postDelayed(this, ALARM_CHECK_INTERVAL_MS)
-        }
-    }
 
     private val screenOnUpdateRunnable = object : Runnable {
         override fun run() {
@@ -255,14 +243,6 @@ class StepCounterService : Service(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
-        vibrator = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vm.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        }
-
         if (stepCounterSensor != null) {
             sensorManager.registerListener(
                 this,
@@ -303,13 +283,9 @@ class StepCounterService : Service(), SensorEventListener {
             handler.post(screenOnUpdateRunnable)
         }
 
-        handler.postDelayed(alarmCheckRunnable, ALARM_CHECK_INTERVAL_MS)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent?.action == ACTION_DISMISS_ALARM) {
-            dismissAlarm()
-        }
         return START_STICKY
     }
 
@@ -342,7 +318,6 @@ class StepCounterService : Service(), SensorEventListener {
                 recordCompletedHour(this, currentHour)
             }
 
-            dismissAlarm()
             prefs.edit()
                 .putLong(KEY_HOUR_START_STEPS, totalSteps)
                 .putLong(KEY_HOUR_START_TIME, calendar.timeInMillis)
@@ -367,11 +342,6 @@ class StepCounterService : Service(), SensorEventListener {
         val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, -1)
         Log.e(TAG, "Steps updated - Total: $totalSteps, HourStart: $hourStartSteps, Hourly: $hourlySteps")
 
-        val stepGoal = prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
-        if (hourlySteps >= stepGoal && isVibrating) {
-            Log.e(TAG, "Goal reached while alarm active — dismissing")
-            dismissAlarm()
-        }
     }
 
     private fun requestComplicationUpdate() {
@@ -383,68 +353,6 @@ class StepCounterService : Service(), SensorEventListener {
                 .requestUpdateAll()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update complications", e)
-        }
-    }
-
-    private fun checkAlarm() {
-        val calendar = Calendar.getInstance()
-        val minute = calendar.get(Calendar.MINUTE)
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-
-        if (!prefs.getBoolean(KEY_ALARM_ENABLED, true)) return
-        if (minute < ALARM_TRIGGER_MINUTE) return
-        if (isVibrating) return
-
-        // Don't alarm outside the active interval
-        val intervalStart = prefs.getInt(KEY_INTERVAL_START, DEFAULT_INTERVAL_START)
-        val intervalEnd = prefs.getInt(KEY_INTERVAL_END, DEFAULT_INTERVAL_END)
-        if (hour < intervalStart || hour >= intervalEnd) return
-
-        val dismissedHour = prefs.getInt(KEY_ALARM_DISMISSED_HOUR, -1)
-        if (dismissedHour == hour) return
-
-        val hourlySteps = getHourlySteps(this)
-        val stepGoal = prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
-
-        if (hourlySteps < stepGoal) {
-            Log.e(TAG, "Alarm triggered! minute=$minute, steps=$hourlySteps, goal=$stepGoal")
-            triggerAlarm()
-        }
-    }
-
-    private fun triggerAlarm() {
-        isVibrating = true
-
-        val durationSeconds = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
-        val durationMs = durationSeconds * 1000L
-        // Build repeating pattern: vibrate 500ms, pause 500ms
-        val pattern = longArrayOf(0, 500, 500, 500, 500, 500)
-        vibrator?.vibrate(VibrationEffect.createWaveform(pattern, 0))
-
-        // Auto-stop after configured duration
-        handler.postDelayed({
-            if (isVibrating) {
-                Log.e(TAG, "Alarm auto-stopped after ${durationSeconds}s")
-                dismissAlarm()
-            }
-        }, durationMs)
-
-        val dismissIntent = Intent(this, com.example.mysteps.presentation.DismissAlarmActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-        startActivity(dismissIntent)
-    }
-
-    fun dismissAlarm() {
-        if (isVibrating) {
-            Log.e(TAG, "Alarm dismissed")
-            isVibrating = false
-            vibrator?.cancel()
-
-            val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-            prefs.edit().putInt(KEY_ALARM_DISMISSED_HOUR, hour).apply()
-
-            requestComplicationUpdate()
         }
     }
 
@@ -472,10 +380,8 @@ class StepCounterService : Service(), SensorEventListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(alarmCheckRunnable)
         handler.removeCallbacks(screenOnUpdateRunnable)
         unregisterReceiver(screenReceiver)
-        vibrator?.cancel()
         sensorManager.unregisterListener(this)
         Log.e(TAG, "Service destroyed")
     }
