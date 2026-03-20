@@ -345,15 +345,17 @@ class StepCounterService : Service(), SensorEventListener {
         isVibrating = true
         val duration = prefs.getInt(KEY_ALARM_DURATION, DEFAULT_ALARM_DURATION)
         Log.e(TAG, "Vibrating for ${duration}s from foreground service")
-        vibrator?.vibrate(VibrationEffect.createOneShot(duration * 1000L, VibrationEffect.DEFAULT_AMPLITUDE))
 
-        // Auto-stop
+        // Repeating pattern: 800ms strong buzz, 400ms pause — much more noticeable
+        val pattern = longArrayOf(0, 800, 400)
+        vibrator?.vibrate(VibrationEffect.createWaveform(pattern, 0)) // 0 = repeat from index 0
+
+        // Stop after configured duration
         handler.postDelayed({
+            vibrator?.cancel()
             isVibrating = false
+            Log.e(TAG, "Vibration stopped after ${duration}s")
         }, duration * 1000L)
-
-        // NOTE: dismissed_hour is set by checkAndTriggerAlarm, NOT here
-        // so force_test vibrations don't block real alarms
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
