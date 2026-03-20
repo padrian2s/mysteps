@@ -1,4 +1,4 @@
-package com.example.mysteps.complication
+package com.adrianp.mysteps.complication
 
 import android.content.BroadcastReceiver
 import android.content.ComponentName
@@ -9,8 +9,8 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.example.mysteps.presentation.MainActivity
-import com.example.mysteps.service.StepCounterService
+import com.adrianp.mysteps.presentation.MainActivity
+import com.adrianp.mysteps.service.StepCounterService
 
 class ComplicationTapReceiver : BroadcastReceiver() {
 
@@ -57,6 +57,6 @@ class ComplicationTapReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        const val ACTION_COMPLICATION_TAP = "com.example.mysteps.COMPLICATION_TAP"
+        const val ACTION_COMPLICATION_TAP = "com.adrianp.mysteps.COMPLICATION_TAP"
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mysteps.complication
+package com.adrianp.mysteps.complication
 
 import android.Manifest
 import android.app.PendingIntent
@@ -14,9 +14,9 @@ import androidx.wear.watchface.complications.data.RangedValueComplicationData
 import androidx.wear.watchface.complications.data.ShortTextComplicationData
 import androidx.wear.watchface.complications.datasource.ComplicationRequest
 import androidx.wear.watchface.complications.datasource.SuspendingComplicationDataSourceService
-import com.example.mysteps.R
-import com.example.mysteps.presentation.MainActivity
-import com.example.mysteps.service.StepCounterService
+import com.adrianp.mysteps.R
+import com.adrianp.mysteps.presentation.MainActivity
+import com.adrianp.mysteps.service.StepCounterService
 
 class HourlyStepsComplicationService : SuspendingComplicationDataSourceService() {
 
@@ -45,7 +45,7 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
         startStepCounterService()
 
         // Reschedule alarms — idempotent, safe to call every time
-        com.example.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
+        com.adrianp.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
 
         if (!hasActivityRecognitionPermission()) {
             return createShortTextComplicationData(
@@ -203,7 +203,7 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     }
 
     companion object {
-        const val ACTION_REFRESH_COMPLICATION = "com.example.mysteps.REFRESH_COMPLICATION"
+        const val ACTION_REFRESH_COMPLICATION = "com.adrianp.mysteps.REFRESH_COMPLICATION"
         const val EXTRA_COMPLICATION_ID = "complication_id"
     }
 }

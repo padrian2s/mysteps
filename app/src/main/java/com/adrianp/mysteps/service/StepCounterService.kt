@@ -1,4 +1,4 @@
-package com.example.mysteps.service
+package com.adrianp.mysteps.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -24,7 +24,7 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.util.Log
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
-import com.example.mysteps.complication.HourlyStepsComplicationService
+import com.adrianp.mysteps.complication.HourlyStepsComplicationService
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -54,8 +54,8 @@ class StepCounterService : Service(), SensorEventListener {
         const val DEFAULT_INTERVAL_END = 21
         const val KEY_ALARM_DURATION = "alarm_duration_seconds"
         const val DEFAULT_ALARM_DURATION = 10
-        const val ACTION_DISMISS_ALARM = "com.example.mysteps.DISMISS_ALARM"
-        const val ACTION_VIBRATE_ALARM = "com.example.mysteps.VIBRATE_ALARM"
+        const val ACTION_DISMISS_ALARM = "com.adrianp.mysteps.DISMISS_ALARM"
+        const val ACTION_VIBRATE_ALARM = "com.adrianp.mysteps.VIBRATE_ALARM"
         private const val ALARM_CHECK_INTERVAL_MS = 30_000L
         private const val ALARM_TRIGGER_MINUTE = 50
         private const val SCREEN_ON_UPDATE_INTERVAL_MS = 2_000L

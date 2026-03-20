@@ -3,7 +3,7 @@
 # Simulates the real alarm flow and verifies vibration + notification
 
 DEVICE="48301JEAYW011L"
-PKG="com.example.mysteps"
+PKG="com.adrianp.mysteps"
 RECEIVER="$PKG/.service.StepAlarmReceiver"
 PASS=0
 FAIL=0

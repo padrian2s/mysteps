@@ -1,4 +1,4 @@
-package com.example.mysteps.presentation
+package com.adrianp.mysteps.presentation
 
 import android.Manifest
 import android.content.Intent
@@ -44,8 +44,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Switch
 import androidx.wear.compose.material.ToggleChip
-import com.example.mysteps.presentation.theme.MyStepsTheme
-import com.example.mysteps.service.StepCounterService
+import com.adrianp.mysteps.presentation.theme.MyStepsTheme
+import com.adrianp.mysteps.service.StepCounterService
 
 class MainActivity : ComponentActivity() {
 
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
         }
 
         // Ensure alarm is always scheduled
-        com.example.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
+        com.adrianp.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
 
         val currentSteps = StepCounterService.getHourlySteps(this)
         val currentGoal = StepCounterService.getStepGoal(this)

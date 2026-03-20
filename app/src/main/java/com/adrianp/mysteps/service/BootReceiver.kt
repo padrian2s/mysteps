@@ -1,4 +1,4 @@
-package com.example.mysteps.service
+package com.adrianp.mysteps.service
 
 import android.content.BroadcastReceiver
 import android.content.Context

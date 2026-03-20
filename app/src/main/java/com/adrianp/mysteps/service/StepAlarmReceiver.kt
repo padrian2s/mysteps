@@ -1,4 +1,4 @@
-package com.example.mysteps.service
+package com.adrianp.mysteps.service
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -17,7 +17,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
 
     companion object {
         private const val TAG = "StepAlarmReceiver"
-        const val ACTION_CHECK_STEPS = "com.example.mysteps.CHECK_STEPS_ALARM"
+        const val ACTION_CHECK_STEPS = "com.adrianp.mysteps.CHECK_STEPS_ALARM"
         private const val ALARM_CHANNEL_ID = "step_alarm_v2"
         private const val ALARM_NOTIFICATION_ID = 2
         private const val EXTRA_ALARM_HOUR = "alarm_hour"
@@ -206,7 +206,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
         notificationManager.createNotificationChannel(channel)
 
         // Tap notification → open app (shows current steps)
-        val appIntent = Intent(context, com.example.mysteps.presentation.MainActivity::class.java).apply {
+        val appIntent = Intent(context, com.adrianp.mysteps.presentation.MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         val pendingIntent = android.app.PendingIntent.getActivity(

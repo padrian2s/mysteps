@@ -1,4 +1,4 @@
-package com.example.mysteps.presentation
+package com.adrianp.mysteps.presentation
 
 import android.app.NotificationManager
 import android.content.Context
@@ -28,8 +28,8 @@ import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.ButtonDefaults
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
-import com.example.mysteps.presentation.theme.MyStepsTheme
-import com.example.mysteps.service.StepCounterService
+import com.adrianp.mysteps.presentation.theme.MyStepsTheme
+import com.adrianp.mysteps.service.StepCounterService
 
 class DismissAlarmActivity : ComponentActivity() {
 

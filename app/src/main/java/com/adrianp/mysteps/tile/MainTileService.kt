@@ -1,4 +1,4 @@
-package com.example.mysteps.tile
+package com.adrianp.mysteps.tile
 
 import android.content.Context
 import androidx.wear.protolayout.ColorBuilders.argb
