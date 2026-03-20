@@ -1,0 +1,1 @@
+Hourly step counter for Wear OS with vibration alerts and progress tracking.

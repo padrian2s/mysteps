@@ -1,0 +1,39 @@
+MySteps tracks your steps every hour and reminds you to move when you haven't reached your goal. Designed for people who sit for long periods and need regular movement reminders.
+
+FEATURES
+
+Step Counter Complication
+• Shows your hourly step count directly on your watch face
+• Progress arc fills up as you walk toward your goal
+• Heart icon appears when you reach your hourly goal
+• Daily progress shows how many hours you've completed (e.g. 3/5)
+• Updates every 2 seconds when the screen is on
+
+Vibration Alarm
+• Vibrates 10 minutes before the hour if you haven't reached your step goal
+• Strong repeating vibration pattern — impossible to miss
+• Notification appears with your current step count
+• Works reliably even when the watch screen is off
+
+Fully Configurable
+• Step goal: adjust in increments of 50 (default: 250 steps per hour)
+• Active hours: set your start and end time (default: 8 AM to 9 PM)
+• Alarm duration: choose how long the vibration lasts
+• Toggle alarm on/off
+
+HOW TO USE
+
+1. Install MySteps on your Wear OS watch
+2. Long-press your watch face → Customize → select a complication slot
+3. Choose "Hourly Steps" from the list
+4. Open MySteps app to adjust your step goal and alarm settings
+5. Walk! The complication updates in real-time
+
+PRIVACY
+
+MySteps runs entirely on your watch. No data is collected, sent to servers, or shared with anyone. All step data stays on your device.
+
+REQUIREMENTS
+
+• Wear OS 3.0 or later
+• Watch with step counter sensor (Pixel Watch, Galaxy Watch, etc.)
