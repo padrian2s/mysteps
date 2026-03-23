@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MySteps"
 include(":app")
+include(":phone")

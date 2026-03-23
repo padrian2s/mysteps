@@ -411,6 +411,24 @@ class StepCounterService : Service(), SensorEventListener {
         val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, -1)
         Log.e(TAG, "Steps updated - Total: $totalSteps, HourStart: $hourStartSteps, Hourly: $hourlySteps")
 
+        syncToPhone(hourlySteps)
+    }
+
+    private fun syncToPhone(hourlySteps: Long) {
+        try {
+            val stepGoal = prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
+            val (completed, elapsed) = getHourlyProgress(this)
+            val dataMap = com.google.android.gms.wearable.PutDataMapRequest.create("/steps").apply {
+                dataMap.putLong("hourly_steps", hourlySteps)
+                dataMap.putInt("step_goal", stepGoal)
+                dataMap.putInt("completed_hours", completed)
+                dataMap.putInt("elapsed_hours", elapsed)
+                dataMap.putLong("timestamp", System.currentTimeMillis())
+            }.asPutDataRequest().setUrgent()
+            com.google.android.gms.wearable.Wearable.getDataClient(this).putDataItem(dataMap)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to sync to phone", e)
+        }
     }
 
     private fun requestComplicationUpdate() {
