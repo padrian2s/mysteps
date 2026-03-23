@@ -418,11 +418,15 @@ class StepCounterService : Service(), SensorEventListener {
         try {
             val stepGoal = prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
             val (completed, elapsed) = getHourlyProgress(this)
+            val intervalStart = prefs.getInt(KEY_INTERVAL_START, DEFAULT_INTERVAL_START)
+            val intervalEnd = prefs.getInt(KEY_INTERVAL_END, DEFAULT_INTERVAL_END)
             val dataMap = com.google.android.gms.wearable.PutDataMapRequest.create("/steps").apply {
                 dataMap.putLong("hourly_steps", hourlySteps)
                 dataMap.putInt("step_goal", stepGoal)
                 dataMap.putInt("completed_hours", completed)
                 dataMap.putInt("elapsed_hours", elapsed)
+                dataMap.putInt("interval_start", intervalStart)
+                dataMap.putInt("interval_end", intervalEnd)
                 dataMap.putLong("timestamp", System.currentTimeMillis())
             }.asPutDataRequest().setUrgent()
             com.google.android.gms.wearable.Wearable.getDataClient(this).putDataItem(dataMap)

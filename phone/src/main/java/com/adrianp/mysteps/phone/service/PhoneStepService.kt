@@ -38,7 +38,11 @@ class PhoneStepService : Service(), DataClient.OnDataChangedListener {
         const val KEY_ALARM_ENABLED = "alarm_enabled"
         const val KEY_DISMISSED_HOUR = "dismissed_hour"
         const val KEY_LAST_SYNC = "last_sync"
+        const val KEY_INTERVAL_START = "interval_start_hour"
+        const val KEY_INTERVAL_END = "interval_end_hour"
         const val DEFAULT_STEP_GOAL = 250
+        const val DEFAULT_INTERVAL_START = 8
+        const val DEFAULT_INTERVAL_END = 21
         private const val CHECK_INTERVAL_MS = 30_000L
         private const val ALARM_TRIGGER_MINUTE = 50
         const val ACTION_DISMISS = "com.adrianp.mysteps.phone.DISMISS"
@@ -123,14 +127,18 @@ class PhoneStepService : Service(), DataClient.OnDataChangedListener {
                 val completed = dataMap.getInt("completed_hours")
                 val elapsed = dataMap.getInt("elapsed_hours")
                 val timestamp = dataMap.getLong("timestamp")
+                val intervalStart = dataMap.getInt("interval_start", DEFAULT_INTERVAL_START)
+                val intervalEnd = dataMap.getInt("interval_end", DEFAULT_INTERVAL_END)
 
-                Log.e(TAG, "Received from watch: steps=$hourlySteps goal=$stepGoal completed=$completed/$elapsed")
+                Log.e(TAG, "Received from watch: steps=$hourlySteps goal=$stepGoal completed=$completed/$elapsed interval=$intervalStart-$intervalEnd")
 
                 prefs.edit()
                     .putLong(KEY_HOURLY_STEPS, hourlySteps)
                     .putInt(KEY_STEP_GOAL, stepGoal)
                     .putInt(KEY_COMPLETED_HOURS, completed)
                     .putInt(KEY_ELAPSED_HOURS, elapsed)
+                    .putInt(KEY_INTERVAL_START, intervalStart)
+                    .putInt(KEY_INTERVAL_END, intervalEnd)
                     .putLong(KEY_LAST_SYNC, timestamp)
                     .apply()
 
@@ -146,6 +154,11 @@ class PhoneStepService : Service(), DataClient.OnDataChangedListener {
 
         if (!prefs.getBoolean(KEY_ALARM_ENABLED, true)) return
         if (minute < ALARM_TRIGGER_MINUTE) return
+
+        // Respect active interval from watch settings
+        val intervalStart = prefs.getInt(KEY_INTERVAL_START, DEFAULT_INTERVAL_START)
+        val intervalEnd = prefs.getInt(KEY_INTERVAL_END, DEFAULT_INTERVAL_END)
+        if (hour < intervalStart || hour >= intervalEnd) return
 
         val dismissedHour = prefs.getInt(KEY_DISMISSED_HOUR, -1)
         if (dismissedHour == hour) return

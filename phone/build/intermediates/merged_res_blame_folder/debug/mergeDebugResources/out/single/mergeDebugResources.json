@@ -1,86 +1,82 @@
 [
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-mdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable_tile_preview.png.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable/tile_preview.png"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable_splash_icon.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable/splash_icon.xml"
-    },
-    {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xxxhdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable_ic_complication_steps.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable/ic_complication_steps.xml"
-    },
-    {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/layout_widget_steps.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/layout/widget_steps.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable_ic_complication_steps.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable/ic_complication_steps.xml"
     },
     {
         "merged": "com.adrianp.mysteps.phone-debug-50:/layout_widget_steps.xml.flat",
         "source": "com.adrianp.mysteps.phone-main-52:/layout/widget_steps.xml"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable-round_tile_preview.png.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable-round/tile_preview.png"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable/ic_launcher_background.xml"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-anydpi/ic_launcher.xml"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable-round_tile_preview.png.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable-round/tile_preview.png"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable_tile_preview.png.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable/tile_preview.png"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-hdpi/ic_launcher.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable_ic_launcher_background.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable/ic_launcher_background.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/drawable_splash_icon.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/drawable/splash_icon.xml"
     },
     {
-        "merged": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-debug-50:/xml_widget_info.xml.flat",
-        "source": "/Users/adrian/.gradle/daemon/8.13/com.adrianp.mysteps.phone-main-52:/xml/widget_info.xml"
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-anydpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.adrianp.mysteps.phone-debug-50:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.adrianp.mysteps.phone-debug-50:/xml_widget_info.xml.flat",
+        "source": "com.adrianp.mysteps.phone-main-52:/xml/widget_info.xml"
     }
 ]
