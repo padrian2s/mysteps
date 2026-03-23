@@ -100,7 +100,7 @@ class PhoneStepService : Service(), DataClient.OnDataChangedListener {
         startForeground(
             SERVICE_NOTIFICATION_ID,
             buildServiceNotification(),
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_HEALTH
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
         )
 
         prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
