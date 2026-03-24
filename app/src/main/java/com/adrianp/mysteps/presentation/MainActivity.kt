@@ -281,6 +281,18 @@ fun SettingsScreen(
                                 Text("+", fontSize = 18.sp)
                             }
                         }
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Button(
+                            onClick = {
+                                stepGoal = 250
+                                onGoalChanged(250)
+                            },
+                            modifier = Modifier.height(28.dp),
+                            colors = if (stepGoal == 250) ButtonDefaults.primaryButtonColors()
+                                     else ButtonDefaults.secondaryButtonColors()
+                        ) {
+                            Text("Fitbit 250", fontSize = 11.sp)
+                        }
                     }
                 }
 
