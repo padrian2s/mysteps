@@ -80,11 +80,13 @@ class MainActivity : ComponentActivity() {
         val intervalEnd = StepCounterService.getIntervalEnd(this)
         val (completed, elapsed) = StepCounterService.getHourlyProgress(this)
         val alarmDuration = StepCounterService.getAlarmDuration(this)
+        val stepOffset = StepCounterService.getStepOffset(this)
 
         setContent {
             SettingsScreen(
                 initialSteps = currentSteps,
                 initialGoal = currentGoal,
+                initialStepOffset = stepOffset,
                 initialAlarmEnabled = alarmOn,
                 initialAlarmDuration = alarmDuration,
                 initialIntervalStart = intervalStart,
@@ -92,6 +94,7 @@ class MainActivity : ComponentActivity() {
                 completedHours = completed,
                 elapsedHours = elapsed,
                 onGoalChanged = { StepCounterService.setStepGoal(this, it) },
+                onStepOffsetChanged = { StepCounterService.setStepOffset(this, it) },
                 onAlarmToggled = { StepCounterService.setAlarmEnabled(this, it) },
                 onAlarmDurationChanged = { StepCounterService.setAlarmDuration(this, it) },
                 onIntervalStartChanged = { StepCounterService.setIntervalStart(this, it) },
@@ -174,6 +177,7 @@ fun HourPicker(
 fun SettingsScreen(
     initialSteps: Long,
     initialGoal: Int,
+    initialStepOffset: Int,
     initialAlarmEnabled: Boolean,
     initialAlarmDuration: Int,
     initialIntervalStart: Int,
@@ -181,12 +185,14 @@ fun SettingsScreen(
     completedHours: Int,
     elapsedHours: Int,
     onGoalChanged: (Int) -> Unit,
+    onStepOffsetChanged: (Int) -> Unit,
     onAlarmToggled: (Boolean) -> Unit,
     onAlarmDurationChanged: (Int) -> Unit,
     onIntervalStartChanged: (Int) -> Unit,
     onIntervalEndChanged: (Int) -> Unit
 ) {
     var stepGoal by remember { mutableIntStateOf(initialGoal) }
+    var stepOffset by remember { mutableIntStateOf(initialStepOffset) }
     var alarmEnabled by remember { mutableStateOf(initialAlarmEnabled) }
     var alarmDuration by remember { mutableIntStateOf(initialAlarmDuration) }
     var intervalStart by remember { mutableIntStateOf(initialIntervalStart) }
@@ -292,6 +298,61 @@ fun SettingsScreen(
                                      else ButtonDefaults.secondaryButtonColors()
                         ) {
                             Text("Fitbit 250", fontSize = 11.sp)
+                        }
+                    }
+                }
+
+                // Fitbit Sync offset
+                item {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Fitbit Sync",
+                            fontSize = 12.sp,
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                        Text(
+                            text = "Starting steps per hour",
+                            fontSize = 9.sp,
+                            color = Color.White.copy(alpha = 0.4f)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Button(
+                                onClick = {
+                                    if (stepOffset > 0) {
+                                        stepOffset -= 10
+                                        onStepOffsetChanged(stepOffset)
+                                    }
+                                },
+                                modifier = Modifier.size(32.dp),
+                                colors = ButtonDefaults.secondaryButtonColors()
+                            ) {
+                                Text("−", fontSize = 16.sp)
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "$stepOffset",
+                                fontSize = 18.sp,
+                                color = if (stepOffset > 0) Color(0xFF4CAF50) else MaterialTheme.colors.primary,
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(
+                                onClick = {
+                                    stepOffset += 10
+                                    onStepOffsetChanged(stepOffset)
+                                },
+                                modifier = Modifier.size(32.dp),
+                                colors = ButtonDefaults.secondaryButtonColors()
+                            ) {
+                                Text("+", fontSize = 16.sp)
+                            }
                         }
                     }
                 }

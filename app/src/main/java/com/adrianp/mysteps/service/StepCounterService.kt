@@ -54,6 +54,8 @@ class StepCounterService : Service(), SensorEventListener {
         const val DEFAULT_INTERVAL_END = 21
         const val KEY_ALARM_DURATION = "alarm_duration_seconds"
         const val DEFAULT_ALARM_DURATION = 10
+        const val KEY_STEP_OFFSET = "step_offset"
+        const val DEFAULT_STEP_OFFSET = 0
         const val ACTION_DISMISS_ALARM = "com.adrianp.mysteps.DISMISS_ALARM"
         const val ACTION_VIBRATE_ALARM = "com.adrianp.mysteps.VIBRATE_ALARM"
         private const val ALARM_CHECK_INTERVAL_MS = 30_000L
@@ -68,12 +70,23 @@ class StepCounterService : Service(), SensorEventListener {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             val storedHour = prefs.getInt(KEY_CURRENT_HOUR, -1)
             val actualHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val offset = prefs.getInt(KEY_STEP_OFFSET, DEFAULT_STEP_OFFSET).toLong()
             if (storedHour != -1 && storedHour != actualHour) {
-                return 0
+                return offset
             }
             val currentSteps = prefs.getLong(KEY_CURRENT_STEPS, 0)
             val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, 0)
-            return kotlin.math.max(0, currentSteps - hourStartSteps)
+            return kotlin.math.max(0, currentSteps - hourStartSteps) + offset
+        }
+
+        fun getStepOffset(context: Context): Int {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            return prefs.getInt(KEY_STEP_OFFSET, DEFAULT_STEP_OFFSET)
+        }
+
+        fun setStepOffset(context: Context, offset: Int) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            prefs.edit().putInt(KEY_STEP_OFFSET, offset).apply()
         }
 
         fun getStepGoal(context: Context): Int {
