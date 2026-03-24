@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                 completedHours = completed,
                 elapsedHours = elapsed,
                 onGoalChanged = { StepCounterService.setStepGoal(this, it) },
-                onStepOffsetChanged = { StepCounterService.setStepOffset(this, it) },
+                onStepOffsetChanged = { StepCounterService.setStartingSteps(this, it) },
                 onAlarmToggled = { StepCounterService.setAlarmEnabled(this, it) },
                 onAlarmDurationChanged = { StepCounterService.setAlarmDuration(this, it) },
                 onIntervalStartChanged = { StepCounterService.setIntervalStart(this, it) },
@@ -287,18 +287,6 @@ fun SettingsScreen(
                                 Text("+", fontSize = 18.sp)
                             }
                         }
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Button(
-                            onClick = {
-                                stepGoal = 250
-                                onGoalChanged(250)
-                            },
-                            modifier = Modifier.height(28.dp),
-                            colors = if (stepGoal == 250) ButtonDefaults.primaryButtonColors()
-                                     else ButtonDefaults.secondaryButtonColors()
-                        ) {
-                            Text("Fitbit 250", fontSize = 11.sp)
-                        }
                     }
                 }
 
@@ -326,7 +314,7 @@ fun SettingsScreen(
                             Button(
                                 onClick = {
                                     if (stepOffset > 0) {
-                                        stepOffset -= 10
+                                        stepOffset -= 1
                                         onStepOffsetChanged(stepOffset)
                                     }
                                 },
@@ -345,7 +333,7 @@ fun SettingsScreen(
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(
                                 onClick = {
-                                    stepOffset += 10
+                                    stepOffset += 1
                                     onStepOffsetChanged(stepOffset)
                                 },
                                 modifier = Modifier.size(32.dp),

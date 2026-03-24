@@ -70,13 +70,12 @@ class StepCounterService : Service(), SensorEventListener {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             val storedHour = prefs.getInt(KEY_CURRENT_HOUR, -1)
             val actualHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-            val offset = prefs.getInt(KEY_STEP_OFFSET, DEFAULT_STEP_OFFSET).toLong()
             if (storedHour != -1 && storedHour != actualHour) {
-                return offset
+                return 0
             }
             val currentSteps = prefs.getLong(KEY_CURRENT_STEPS, 0)
             val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, 0)
-            return kotlin.math.max(0, currentSteps - hourStartSteps) + offset
+            return kotlin.math.max(0, currentSteps - hourStartSteps)
         }
 
         fun getStepOffset(context: Context): Int {
@@ -84,9 +83,20 @@ class StepCounterService : Service(), SensorEventListener {
             return prefs.getInt(KEY_STEP_OFFSET, DEFAULT_STEP_OFFSET)
         }
 
-        fun setStepOffset(context: Context, offset: Int) {
+        /**
+         * Sets the hourly step count to start from this value.
+         * Adjusts hour_start_steps so getHourlySteps() returns this value + sensor steps.
+         * Resets automatically when the hour changes.
+         */
+        fun setStartingSteps(context: Context, startingSteps: Int) {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            prefs.edit().putInt(KEY_STEP_OFFSET, offset).apply()
+            val currentSteps = prefs.getLong(KEY_CURRENT_STEPS, 0)
+            // Set hour_start_steps so that currentSteps - hourStartSteps = startingSteps
+            val newHourStart = currentSteps - startingSteps
+            prefs.edit()
+                .putLong(KEY_HOUR_START_STEPS, newHourStart)
+                .putInt(KEY_STEP_OFFSET, startingSteps)
+                .apply()
         }
 
         fun getStepGoal(context: Context): Int {
@@ -404,6 +414,7 @@ class StepCounterService : Service(), SensorEventListener {
                 .putLong(KEY_HOUR_START_STEPS, totalSteps)
                 .putLong(KEY_HOUR_START_TIME, calendar.timeInMillis)
                 .putInt(KEY_CURRENT_HOUR, hour)
+                .putInt(KEY_STEP_OFFSET, 0)
                 .apply()
             currentHour = hour
             Log.e(TAG, "Hour baseline reset to: $totalSteps")
