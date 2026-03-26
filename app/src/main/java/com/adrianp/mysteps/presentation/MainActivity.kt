@@ -70,6 +70,14 @@ class MainActivity : ComponentActivity() {
             permissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
         }
 
+        // Request notification permission (SDK 33+)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
         // Ensure alarm is always scheduled
         com.adrianp.mysteps.service.StepAlarmReceiver.scheduleAllAlarms(this)
 
