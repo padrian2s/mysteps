@@ -219,7 +219,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
             .setContentTitle("🚶 Move!")
             .setContentText("Step goal not reached")
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
+            .setOngoing(true)
             .setCategory(android.app.Notification.CATEGORY_ALARM)
             .build()
 
