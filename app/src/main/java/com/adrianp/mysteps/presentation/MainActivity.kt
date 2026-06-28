@@ -1,6 +1,7 @@
 package com.adrianp.mysteps.presentation
 
 import android.Manifest
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -44,6 +45,8 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.Switch
 import androidx.wear.compose.material.ToggleChip
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import com.adrianp.mysteps.complication.HourlyStepsComplicationService
 import com.adrianp.mysteps.presentation.theme.MyStepsTheme
 import com.adrianp.mysteps.service.StepCounterService
 
@@ -106,7 +109,11 @@ class MainActivity : ComponentActivity() {
                 onAlarmToggled = { StepCounterService.setAlarmEnabled(this, it) },
                 onAlarmDurationChanged = { StepCounterService.setAlarmDuration(this, it) },
                 onIntervalStartChanged = { StepCounterService.setIntervalStart(this, it) },
-                onIntervalEndChanged = { StepCounterService.setIntervalEnd(this, it) }
+                onIntervalEndChanged = { StepCounterService.setIntervalEnd(this, it) },
+                onAddSteps = {
+                    StepCounterService.addSyntheticSteps(this, it)
+                    requestComplicationUpdate()
+                }
             )
         }
     }
@@ -116,6 +123,17 @@ class MainActivity : ComponentActivity() {
             this,
             Manifest.permission.ACTIVITY_RECOGNITION
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestComplicationUpdate() {
+        try {
+            val componentName = ComponentName(this, HourlyStepsComplicationService::class.java)
+            ComplicationDataSourceUpdateRequester
+                .create(context = this, complicationDataSourceComponent = componentName)
+                .requestUpdateAll()
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Failed to update complications", e)
+        }
     }
 
     private fun startStepCounterService() {
@@ -197,8 +215,10 @@ fun SettingsScreen(
     onAlarmToggled: (Boolean) -> Unit,
     onAlarmDurationChanged: (Int) -> Unit,
     onIntervalStartChanged: (Int) -> Unit,
-    onIntervalEndChanged: (Int) -> Unit
+    onIntervalEndChanged: (Int) -> Unit,
+    onAddSteps: (Int) -> Unit
 ) {
+    var displayedSteps by remember { mutableStateOf(initialSteps) }
     var stepGoal by remember { mutableIntStateOf(initialGoal) }
     var stepOffset by remember { mutableIntStateOf(initialStepOffset) }
     var alarmEnabled by remember { mutableStateOf(initialAlarmEnabled) }
@@ -226,9 +246,9 @@ fun SettingsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(top = 8.dp)
                     ) {
-                        val goalReached = initialSteps >= stepGoal
+                        val goalReached = displayedSteps >= stepGoal
                         Text(
-                            text = if (goalReached) "❤" else "$initialSteps",
+                            text = if (goalReached) "❤" else "$displayedSteps",
                             fontSize = if (goalReached) 28.sp else 24.sp,
                             color = if (goalReached) Color(0xFFFF6B6B) else MaterialTheme.colors.primary,
                             textAlign = TextAlign.Center
@@ -295,6 +315,22 @@ fun SettingsScreen(
                                 Text("+", fontSize = 18.sp)
                             }
                         }
+                    }
+                }
+
+                // Add synthetic steps (counts toward this hour's goal)
+                item {
+                    Button(
+                        onClick = {
+                            displayedSteps += 300
+                            onAddSteps(300)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        colors = ButtonDefaults.primaryButtonColors()
+                    ) {
+                        Text("+300 steps", fontSize = 14.sp)
                     }
                 }
 

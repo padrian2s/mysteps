@@ -99,6 +99,21 @@ class StepCounterService : Service(), SensorEventListener {
                 .apply()
         }
 
+        /**
+         * Adds synthetic steps to the current hour. These are "real" within the app:
+         * they count toward the hourly goal, show in the complication/tile, and silence
+         * the alarm. Done by lowering hour_start_steps so getHourlySteps() returns +amount.
+         * Resets automatically when the hour changes, just like real steps.
+         */
+        fun addSyntheticSteps(context: Context, amount: Int) {
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val hourStartSteps = prefs.getLong(KEY_HOUR_START_STEPS, 0)
+            prefs.edit()
+                .putLong(KEY_HOUR_START_STEPS, hourStartSteps - amount)
+                .apply()
+            Log.e(TAG, "Added $amount synthetic steps, new hourly: ${getHourlySteps(context)}")
+        }
+
         fun getStepGoal(context: Context): Int {
             val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             return prefs.getInt(KEY_STEP_GOAL, DEFAULT_STEP_GOAL)
