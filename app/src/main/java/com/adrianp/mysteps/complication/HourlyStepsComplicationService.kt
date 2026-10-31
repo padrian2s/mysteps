@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Icon
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.wear.watchface.complications.data.ComplicationData
 import androidx.wear.watchface.complications.data.ComplicationType
@@ -56,9 +57,13 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
             )
         }
 
+        // Records the finished hour at xx:00 even if no step has arrived yet, so ❤N/M stays right
+        StepCounterService.rolloverIfNeeded(this)
+
         val steps = StepCounterService.getHourlySteps(this)
         val goal = StepCounterService.getStepGoal(this)
         val (completed, elapsed) = StepCounterService.getHourlyProgress(this)
+        Log.d(TAG, "onComplicationRequest id=${request.complicationInstanceId} steps=$steps")
 
         return when (request.complicationType) {
             ComplicationType.RANGED_VALUE -> createRangedComplicationData(
@@ -84,6 +89,9 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     }
 
     private fun startStepCounterService() {
+        // The service is a health-type foreground service: starting it without
+        // ACTIVITY_RECOGNITION throws SecurityException in its onCreate and crashes the app
+        if (!hasActivityRecognitionPermission()) return
         try {
             val serviceIntent = Intent(this, StepCounterService::class.java)
             startForegroundService(serviceIntent)
@@ -203,6 +211,7 @@ class HourlyStepsComplicationService : SuspendingComplicationDataSourceService()
     }
 
     companion object {
+        private const val TAG = "HourlyStepsComplication"
         const val ACTION_REFRESH_COMPLICATION = "com.adrianp.mysteps.REFRESH_COMPLICATION"
         const val EXTRA_COMPLICATION_ID = "complication_id"
     }

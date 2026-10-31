@@ -20,12 +20,12 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 ### Watch Face Complication
 - **Progress arc** showing step completion toward your hourly goal
 - **Heart icon** (❤) when goal is reached, with daily progress (e.g. `❤3/5` = 3 of 5 hours completed)
-- **Real-time updates** every 2 seconds while screen is on
+- **Real-time updates** as you walk while screen is on
 - **Smart tap**: opens settings when goal reached, refreshes step count when not
 
 ### Vibration Alarm
 - **Vibrates 10 minutes before the hour** if step goal not reached
-- **Dismiss** by pressing the crown button or tapping OK
+- **"Move!" notification** clears when tapped, when you reach the goal, or when the hour ends
 - **Auto-stops** when you reach the goal or the hour changes
 - **Toggle on/off** in settings
 
@@ -59,19 +59,17 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ## Architecture
 
 ```
-com.example.mysteps/
+com.adrianp.mysteps/
 ├── complication/
 │   ├── HourlyStepsComplicationService.kt   # RANGED_VALUE + SHORT_TEXT complication
-│   ├── ComplicationTapReceiver.kt          # Smart tap handler
-│   └── MainComplicationService.kt          # Day-of-week complication
+│   └── ComplicationTapReceiver.kt          # Smart tap handler
 ├── service/
-│   └── StepCounterService.kt              # Foreground service, sensor, alarm, screen tracking
-├── presentation/
-│   ├── MainActivity.kt                    # Settings UI (Compose)
-│   ├── DismissAlarmActivity.kt            # Alarm dismiss screen
-│   └── theme/Theme.kt
-└── tile/
-    └── MainTileService.kt
+│   ├── StepCounterService.kt              # Foreground service, sensor, alarm, screen tracking
+│   ├── StepAlarmReceiver.kt               # Hourly :50 alarms + "Move!" notification
+│   └── BootReceiver.kt                    # Reschedules alarms after reboot
+└── presentation/
+    ├── MainActivity.kt                    # Settings UI (Compose)
+    └── theme/Theme.kt
 ```
 
 ## License

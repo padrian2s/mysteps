@@ -97,6 +97,11 @@ class StepAlarmReceiver : BroadcastReceiver() {
 
             Log.e(TAG, "Scheduled $scheduledCount alarms ($intervalStart:50 - ${intervalEnd - 1}:50)")
         }
+
+        fun cancelAlarmNotification(context: Context) {
+            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+            notificationManager.cancel(ALARM_NOTIFICATION_ID)
+        }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -128,8 +133,8 @@ class StepAlarmReceiver : BroadcastReceiver() {
                 prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED outside_interval").apply()
                 return
             }
-            val dismissedHour = prefs.getInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, -1)
-            if (dismissedHour == hour) {
+            val hourStart = StepCounterService.hourStartMillis(now.timeInMillis)
+            if (prefs.getLong(StepCounterService.KEY_ALARM_DISMISSED_HOUR_START, -1) == hourStart) {
                 Log.e(TAG, "Already dismissed this hour, skipping")
                 prefs.edit().putString("last_alarm_result", "$hour:$min SKIPPED dismissed").apply()
                 return
@@ -143,7 +148,7 @@ class StepAlarmReceiver : BroadcastReceiver() {
             }
             prefs.edit()
                 .putString("last_alarm_result", "$hour:$min TRIGGERING steps=$hourlySteps goal=$stepGoal")
-                .putInt(StepCounterService.KEY_ALARM_DISMISSED_HOUR, hour)
+                .putLong(StepCounterService.KEY_ALARM_DISMISSED_HOUR_START, hourStart)
                 .apply()
         } else {
             Log.e(TAG, "Force test mode — bypassing all checks")
@@ -214,12 +219,16 @@ class StepAlarmReceiver : BroadcastReceiver() {
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
         )
 
+        // Stays until tapped, the goal is reached (StepCounterService cancels it) or the hour ends
+        val nextHourStart = StepCounterService.hourStartMillis() + 60 * 60 * 1000L
         val notification = android.app.Notification.Builder(context, ALARM_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_alert)
             .setContentTitle("🚶 Move!")
             .setContentText("Step goal not reached")
             .setContentIntent(pendingIntent)
             .setOngoing(true)
+            .setAutoCancel(true)
+            .setTimeoutAfter(nextHourStart - System.currentTimeMillis())
             .setCategory(android.app.Notification.CATEGORY_ALARM)
             .build()
 
