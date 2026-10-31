@@ -65,6 +65,7 @@ import com.adrianp.mysteps.service.StepCounterService
 
 private val PanelColor = Color(0xFF202124)
 private val HeartColor = Color(0xFFFF6B6B)
+private val DoneColor = Color(0xFF4CAF50)
 private val LabelColor = Color.White.copy(alpha = 0.7f)
 private val HintColor = Color.White.copy(alpha = 0.5f)
 private const val MAX_HOUR_DOTS_PER_ROW = 13
@@ -391,7 +392,7 @@ private fun HourDots(hours: List<HourStatus>) {
                         .clip(CircleShape)
                     Box(
                         modifier = when (status) {
-                            HourStatus.COMPLETED -> dot.background(HeartColor)
+                            HourStatus.COMPLETED -> dot.background(DoneColor)
                             HourStatus.MISSED -> dot.background(Color.White.copy(alpha = 0.35f))
                             HourStatus.IN_PROGRESS -> dot.border(1.5.dp, MaterialTheme.colors.primary, CircleShape)
                             HourStatus.UPCOMING -> dot.background(Color.White.copy(alpha = 0.12f))
