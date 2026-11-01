@@ -37,7 +37,9 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 ### Metro Watch Face (`metroface/`)
 - Separate Watch Face Format (v4) watch face, built as its own resource-only APK
 - Big time, date row, and four round badges (no labels): heart rate, Active Zone Minutes (complication slot, Fitbit by default), **MySteps** (complication with a progress ring), and temperature
-- Optional seconds (Customize → Seconds); everything stays visible in always-on mode
+- Optional seconds (Customize → Seconds)
+- Low-power always-on mode (~2% lit pixels vs Google's 15% limit): pure black background, outlined time, badges as dark rings with dimmed numbers
+- The XML is generated: edit `metroface/generate_watchface.py`, then run `python3 metroface/generate_watchface.py`
 - Requires Wear OS 6 (API 36)
 
 ### Hourly Progress Tracking
