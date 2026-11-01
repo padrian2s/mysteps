@@ -27,6 +27,7 @@ BADGE_X = [X0 + i * (D + GAP) for i in range(4)]
 
 # Badge colors: (interactive fill, ambient ring, ambient number)
 RED = ("#ffee352e", "#ff6a1714", "#ffa8433f")
+HR_AMBIENT_NUMBER = "#ffff7a72"  # heart rate stays clearly readable in always-on
 GREEN = ("#ff00933c", "#ff00421b", "#ff2f8f55")
 ORANGE = ("#ffff6319", "#ff70290b", "#ffb0592e")
 YELLOW = ("#fffccc0a", "#ff6b5704", "#ffa89030")
@@ -90,12 +91,14 @@ def text(content, size, color, x=0, pad=4, auto=True, ambient=False, spacing=Non
 </PartText>"""
 
 
-def badge_texts(content, fallback, condition, colors, x, size, spacing=None, number_color="#ffffffff"):
+def badge_texts(content, fallback, condition, colors, x, size, spacing=None, number_color="#ffffffff",
+                ambient_number=None):
     """Interactive + ambient number for a non-complication badge, '--' when no data."""
     name, expr = condition
+    ambient_color = ambient_number or colors[2]
     on = "\n".join([
         text(content, size, number_color, x, pad=2, spacing=spacing),
-        text(content, size, colors[2], x, pad=2, spacing=spacing, ambient=True),
+        text(content, size, ambient_color, x, pad=2, spacing=spacing, ambient=True),
     ])
     off = "\n".join([
         text(fallback, 30, number_color, x, auto=False),
@@ -282,7 +285,8 @@ def badges():
         "<!-- Heart rate -->",
         circle(RED[0], x=hr), circle(None, ambient=RED[1], x=hr),
         badge_texts('<Template>%s<Parameter expression="round([HEART_RATE])" /></Template>', "--",
-                    ("hasHr", "[HEART_RATE] &gt; 0"), RED, hr, 42, spacing="-0.04"),
+                    ("hasHr", "[HEART_RATE] &gt; 0"), RED, hr, 46, spacing="-0.04",
+                    ambient_number=HR_AMBIENT_NUMBER),
         "<!-- Temperature -->",
         circle(YELLOW[0], x=temp), circle(None, ambient=YELLOW[1], x=temp),
         badge_texts('<Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template>', "--",

@@ -49,13 +49,13 @@
           <PartText x="82" y="0" width="60" height="64">
             <Variant mode="AMBIENT" target="alpha" value="0" />
             <Text align="CENTER" isAutoSize="TRUE">
-              <Font family="inter_bold" size="42" letterSpacing="-0.04" color="#ffffffff"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+              <Font family="inter_bold" size="46" letterSpacing="-0.04" color="#ffffffff"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
             </Text>
           </PartText>
           <PartText x="82" y="0" width="60" height="64" alpha="0">
             <Variant mode="AMBIENT" target="alpha" value="255" />
             <Text align="CENTER" isAutoSize="TRUE">
-              <Font family="inter_bold" size="42" letterSpacing="-0.04" color="#ffa8433f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+              <Font family="inter_bold" size="46" letterSpacing="-0.04" color="#ffff7a72"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
             </Text>
           </PartText>
         </Compare>
