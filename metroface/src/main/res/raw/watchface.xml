@@ -537,8 +537,8 @@
       </Text>
     </PartText>
 
-    <!-- Dims the interactive face by 25% (fewer lit OLED subpixels); not in always-on -->
-    <PartDraw x="0" y="0" width="452" height="452" name="InteractiveDim" alpha="64">
+    <!-- Dims the interactive face by 70% (fewer lit OLED subpixels); not in always-on -->
+    <PartDraw x="0" y="0" width="452" height="452" name="InteractiveDim" alpha="178">
       <Variant mode="AMBIENT" target="alpha" value="0" />
       <Rectangle x="0" y="0" width="452" height="452">
         <Fill color="#ff000000" />
