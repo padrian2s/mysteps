@@ -536,5 +536,13 @@
         </Font>
       </Text>
     </PartText>
+
+    <!-- Dims the interactive face by 20% (fewer lit OLED subpixels); not in always-on -->
+    <PartDraw x="0" y="0" width="452" height="452" name="InteractiveDim" alpha="51">
+      <Variant mode="AMBIENT" target="alpha" value="0" />
+      <Rectangle x="0" y="0" width="452" height="452">
+        <Fill color="#ff000000" />
+      </Rectangle>
+    </PartDraw>
   </Scene>
 </WatchFace>
