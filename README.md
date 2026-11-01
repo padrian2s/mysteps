@@ -38,6 +38,7 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - Separate Watch Face Format (v4) watch face, built as its own resource-only APK
 - Big time, date row, and four round badges (no labels): heart rate, Active Zone Minutes (complication slot, Fitbit by default), **MySteps** (complication with a progress ring), and temperature
 - Optional seconds (Customize → Seconds)
+- Screen-on brightness set from the MySteps app (Settings → **Metro Face**, 5–100%, default 30%); the face reads it through a hidden complication
 - Low-power always-on mode (~2% lit pixels vs Google's 15% limit): pure black background, outlined time, badges as dark rings with dimmed numbers
 - The XML is generated: edit `metroface/generate_watchface.py`, then run `python3 metroface/generate_watchface.py`
 - Requires Wear OS 6 (API 36)
@@ -74,6 +75,7 @@ adb install metroface/build/outputs/apk/debug/metroface-debug.apk
 com.adrianp.mysteps/
 ├── complication/
 │   ├── HourlyStepsComplicationService.kt   # RANGED_VALUE + SHORT_TEXT complication
+│   ├── FaceBrightnessComplicationService.kt # Metro face brightness (hidden slot)
 │   └── ComplicationTapReceiver.kt          # Smart tap handler
 ├── service/
 │   ├── StepCounterService.kt              # Foreground service, sensor, alarm, screen tracking

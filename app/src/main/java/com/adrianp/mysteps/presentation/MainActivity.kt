@@ -58,6 +58,7 @@ import androidx.wear.compose.material.Switch
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
+import com.adrianp.mysteps.complication.FaceBrightnessComplicationService
 import com.adrianp.mysteps.complication.HourlyStepsComplicationService
 import com.adrianp.mysteps.presentation.theme.MyStepsTheme
 import com.adrianp.mysteps.service.HourStatus
@@ -123,6 +124,7 @@ class MainActivity : ComponentActivity() {
         val intervalStart = StepCounterService.getIntervalStart(this)
         val intervalEnd = StepCounterService.getIntervalEnd(this)
         val alarmDuration = StepCounterService.getAlarmDuration(this)
+        val faceBrightness = FaceBrightnessComplicationService.get(this)
 
         setContent {
             SettingsScreen(
@@ -134,6 +136,7 @@ class MainActivity : ComponentActivity() {
                 initialAlarmDuration = alarmDuration,
                 initialIntervalStart = intervalStart,
                 initialIntervalEnd = intervalEnd,
+                initialFaceBrightness = faceBrightness,
                 onGoalChanged = {
                     StepCounterService.setStepGoal(this, it)
                     refreshProgress()
@@ -152,6 +155,7 @@ class MainActivity : ComponentActivity() {
                     StepCounterService.setIntervalEnd(this, it)
                     refreshProgress()
                 },
+                onFaceBrightnessChanged = { FaceBrightnessComplicationService.set(this, it) },
                 onAddSteps = {
                     StepCounterService.addSyntheticSteps(this, it)
                     refreshProgress()
@@ -414,12 +418,14 @@ fun SettingsScreen(
     initialAlarmDuration: Int,
     initialIntervalStart: Int,
     initialIntervalEnd: Int,
+    initialFaceBrightness: Int,
     onGoalChanged: (Int) -> Unit,
     onStepOffsetChanged: (Int) -> Unit,
     onAlarmToggled: (Boolean) -> Unit,
     onAlarmDurationChanged: (Int) -> Unit,
     onIntervalStartChanged: (Int) -> Unit,
     onIntervalEndChanged: (Int) -> Unit,
+    onFaceBrightnessChanged: (Int) -> Unit,
     onAddSteps: (Int) -> Unit
 ) {
     var stepGoal by remember { mutableIntStateOf(initialGoal) }
@@ -427,6 +433,7 @@ fun SettingsScreen(
     var alarmDuration by remember { mutableIntStateOf(initialAlarmDuration) }
     var intervalStart by remember { mutableIntStateOf(initialIntervalStart) }
     var intervalEnd by remember { mutableIntStateOf(initialIntervalEnd) }
+    var faceBrightness by remember { mutableIntStateOf(initialFaceBrightness) }
     // Start centered on the first panel so it isn't hidden under the time
     val listState = rememberScalingLazyListState(initialCenterItemIndex = 0)
 
@@ -551,6 +558,28 @@ fun SettingsScreen(
                                 intervalEnd = it
                                 onIntervalEndChanged(it)
                             }
+                        )
+                    }
+                }
+
+                // Metro watch face brightness while the screen is on
+                item {
+                    Panel(title = "Metro Face", subtitle = "Brightness when screen is on") {
+                        val min = FaceBrightnessComplicationService.MIN_PERCENT
+                        val max = FaceBrightnessComplicationService.MAX_PERCENT
+                        val step = FaceBrightnessComplicationService.STEP_PERCENT
+                        ValueStepper(
+                            value = "$faceBrightness%",
+                            onDecrement = {
+                                faceBrightness = (faceBrightness - step).coerceAtLeast(min)
+                                onFaceBrightnessChanged(faceBrightness)
+                            },
+                            onIncrement = {
+                                faceBrightness = (faceBrightness + step).coerceAtMost(max)
+                                onFaceBrightnessChanged(faceBrightness)
+                            },
+                            decrementEnabled = faceBrightness > min,
+                            incrementEnabled = faceBrightness < max
                         )
                     }
                 }

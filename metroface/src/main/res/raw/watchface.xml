@@ -537,12 +537,31 @@
       </Text>
     </PartText>
 
-    <!-- Dims the interactive face by 70% (fewer lit OLED subpixels); not in always-on -->
-    <PartDraw x="0" y="0" width="452" height="452" name="InteractiveDim" alpha="178">
+    <!-- Interactive brightness, set in the MySteps app (Settings → Metro Face) -->
+    <ComplicationSlot x="0" y="0" width="452" height="452" slotId="9"
+        supportedTypes="RANGED_VALUE EMPTY" isCustomizable="FALSE">
+      <DefaultProviderPolicy
+          primaryProvider="com.adrianp.mysteps/com.adrianp.mysteps.complication.FaceBrightnessComplicationService"
+          primaryProviderType="RANGED_VALUE"
+          defaultSystemProvider="EMPTY"
+          defaultSystemProviderType="EMPTY" />
+      <BoundingBox x="0" y="0" width="452" height="452" />
+      <Complication type="RANGED_VALUE">
+        <PartDraw x="0" y="0" width="452" height="452" alpha="0">
+          <Transform target="alpha" value="(100 - clamp([COMPLICATION.RANGED_VALUE_VALUE], 5, 100)) * 2.55" />
+          <Rectangle x="0" y="0" width="452" height="452">
+            <Fill color="#ff000000" />
+          </Rectangle>
+        </PartDraw>
+      </Complication>
+      <Complication type="EMPTY">
+        <PartDraw x="0" y="0" width="452" height="452" alpha="178">
+          <Rectangle x="0" y="0" width="452" height="452">
+            <Fill color="#ff000000" />
+          </Rectangle>
+        </PartDraw>
+      </Complication>
       <Variant mode="AMBIENT" target="alpha" value="0" />
-      <Rectangle x="0" y="0" width="452" height="452">
-        <Fill color="#ff000000" />
-      </Rectangle>
-    </PartDraw>
+    </ComplicationSlot>
   </Scene>
 </WatchFace>

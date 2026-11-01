@@ -6,4 +6,5 @@
     -->
     <string name="hello_world">From the Square world,\nHello, %1$s!</string>
     <string name="hourly_steps_complication_label">Hourly Steps</string>
+    <string name="face_brightness_complication_label">Metro face brightness</string>
 </resources>
