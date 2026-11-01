@@ -3,4 +3,5 @@
     <string name="watch_face_name">Metro</string>
     <string name="show_seconds_label">Seconds</string>
     <string name="mysteps_slot_label">MySteps</string>
+    <string name="azm_slot_label">Active Zone Minutes</string>
 </resources>
