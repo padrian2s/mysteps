@@ -24,158 +24,152 @@
     </PartDraw>
 
     <!-- Four round "line" badges: BPM, STEPS, MYSTEPS (complication), TEMP -->
-    <Group x="93" y="92" width="266" height="76" name="Badges">
+    <Group x="80" y="92" width="292" height="84" name="Badges">
 
       <!-- BPM -->
-      <PartDraw x="0" y="0" width="56" height="56">
-        <Ellipse x="0" y="0" width="56" height="56">
+      <PartDraw x="0" y="0" width="64" height="64">
+        <Ellipse x="0" y="0" width="64" height="64">
           <Fill color="#ffee352e" />
         </Ellipse>
       </PartDraw>
       <Condition>
-          <Expressions>
-            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-          </Expressions>
+        <Expressions>
+          <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+        </Expressions>
         <Compare expression="hasHr">
-          <PartText x="2" y="0" width="52" height="56">
+          <PartText x="2" y="0" width="60" height="64">
             <Text align="CENTER" isAutoSize="TRUE">
-              <Font family="inter_bold" size="34" letterSpacing="-0.04" color="#ffffffff">
-                <Template>%s<Parameter expression="round([HEART_RATE])" /></Template>
-              </Font>
+              <Font family="inter_bold" size="42" letterSpacing="-0.04" color="#ffffffff"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
             </Text>
           </PartText>
         </Compare>
         <Default>
-          <PartText x="4" y="0" width="48" height="56">
+          <PartText x="4" y="0" width="56" height="64">
             <Text align="CENTER">
-              <Font family="inter_bold" size="26" color="#ffffffff">--</Font>
+              <Font family="inter_bold" size="32" color="#ffffffff">--</Font>
             </Text>
           </PartText>
         </Default>
       </Condition>
-      <PartText x="0" y="62" width="56" height="14">
+      <PartText x="0" y="70" width="64" height="14">
         <Text align="CENTER">
           <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">BPM</Font>
         </Text>
       </PartText>
 
       <!-- STEPS (today) -->
-      <PartDraw x="70" y="0" width="56" height="56">
-        <Ellipse x="0" y="0" width="56" height="56">
+      <PartDraw x="76" y="0" width="64" height="64">
+        <Ellipse x="0" y="0" width="64" height="64">
           <Fill color="#ff00933c" />
         </Ellipse>
       </PartDraw>
-      <PartText x="74" y="0" width="48" height="56">
+      <PartText x="79" y="0" width="58" height="64">
         <Text align="CENTER" isAutoSize="TRUE">
-          <Font family="inter_bold" size="26" color="#ffffffff">
-            <Template>%s<Parameter expression="[STEP_COUNT]" /></Template>
-          </Font>
+          <Font family="inter_bold" size="34" color="#ffffffff"><Template>%s<Parameter expression="[STEP_COUNT]" /></Template></Font>
         </Text>
       </PartText>
-      <PartText x="70" y="62" width="56" height="14">
+      <PartText x="76" y="70" width="64" height="14">
         <Text align="CENTER">
           <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">STEPS</Font>
         </Text>
       </PartText>
 
       <!-- MYSTEPS: the MySteps complication (steps this hour, ❤N/M once the goal is met) -->
-      <PartText x="133" y="62" width="70" height="14">
+      <PartText x="147" y="70" width="74" height="14">
         <Text align="CENTER">
           <Font family="inter_bold" size="11" letterSpacing="0.02" color="#ffffffff">MYSTEPS</Font>
         </Text>
       </PartText>
 
       <!-- TEMP -->
-      <PartDraw x="210" y="0" width="56" height="56">
-        <Ellipse x="0" y="0" width="56" height="56">
+      <PartDraw x="228" y="0" width="64" height="64">
+        <Ellipse x="0" y="0" width="64" height="64">
           <Fill color="#fffccc0a" />
         </Ellipse>
       </PartDraw>
       <Condition>
-          <Expressions>
-            <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
-          </Expressions>
+        <Expressions>
+          <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
+        </Expressions>
         <Compare expression="hasWeather">
-          <PartText x="214" y="0" width="48" height="56">
+          <PartText x="232" y="0" width="56" height="64">
             <Text align="CENTER" isAutoSize="TRUE">
-              <Font family="inter_bold" size="22" letterSpacing="-0.045" color="#ff0e0e0e">
-                <Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template>
-              </Font>
+              <Font family="inter_bold" size="30" letterSpacing="-0.045" color="#ff0e0e0e"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
             </Text>
           </PartText>
         </Compare>
         <Default>
-          <PartText x="214" y="0" width="48" height="56">
+          <PartText x="232" y="0" width="56" height="64">
             <Text align="CENTER">
-              <Font family="inter_bold" size="22" color="#ff0e0e0e">--</Font>
+              <Font family="inter_bold" size="30" color="#ff0e0e0e">--</Font>
             </Text>
           </PartText>
         </Default>
       </Condition>
-      <PartText x="210" y="62" width="56" height="14">
+      <PartText x="228" y="70" width="64" height="14">
         <Text align="CENTER">
           <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">TEMP</Font>
         </Text>
       </PartText>
     </Group>
 
-    <ComplicationSlot x="233" y="92" width="56" height="56" slotId="0"
+    <ComplicationSlot x="232" y="92" width="64" height="64" slotId="0"
         displayName="mysteps_slot_label" supportedTypes="SHORT_TEXT RANGED_VALUE EMPTY">
       <DefaultProviderPolicy
           primaryProvider="com.adrianp.mysteps/com.adrianp.mysteps.complication.HourlyStepsComplicationService"
           primaryProviderType="RANGED_VALUE"
           defaultSystemProvider="EMPTY"
           defaultSystemProviderType="EMPTY" />
-      <BoundingOval x="0" y="0" width="56" height="56" />
+      <BoundingOval x="0" y="0" width="64" height="64" />
       <Complication type="SHORT_TEXT">
-        <PartDraw x="0" y="0" width="56" height="56">
-          <Ellipse x="0" y="0" width="56" height="56">
+        <PartDraw x="0" y="0" width="64" height="64">
+          <Ellipse x="0" y="0" width="64" height="64">
             <Fill color="#ffff6319" />
           </Ellipse>
         </PartDraw>
-        <PartText x="4" y="0" width="48" height="56">
+        <PartText x="4" y="0" width="56" height="64">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="inter_bold" size="26" color="#ffffffff">
-              <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
-            </Font>
+            <Font family="inter_bold" size="34" color="#ffffffff">
+                <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
+              </Font>
           </Text>
         </PartText>
       </Complication>
       <!-- Progress ring towards the hourly goal + the complication text -->
       <Complication type="RANGED_VALUE">
-        <PartDraw x="0" y="0" width="56" height="56">
-          <Ellipse x="0" y="0" width="56" height="56">
+        <PartDraw x="0" y="0" width="64" height="64">
+          <Ellipse x="0" y="0" width="64" height="64">
             <Fill color="#ffff6319" />
           </Ellipse>
         </PartDraw>
-        <PartDraw x="0" y="0" width="56" height="56">
-          <Ellipse x="4" y="4" width="48" height="48">
+        <PartDraw x="0" y="0" width="64" height="64">
+          <Ellipse x="4" y="4" width="56" height="56">
             <Stroke color="#55ffffff" thickness="3" />
           </Ellipse>
         </PartDraw>
-        <PartDraw x="0" y="0" width="56" height="56">
-          <Arc centerX="28" centerY="28" width="48" height="48" startAngle="0" endAngle="0">
+        <PartDraw x="0" y="0" width="64" height="64">
+          <Arc centerX="32" centerY="32" width="56" height="56" startAngle="0" endAngle="0">
             <Transform target="endAngle" value="(clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]) * 360" />
             <Stroke color="#ffffffff" thickness="3" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="8" y="0" width="40" height="56">
+        <PartText x="8" y="0" width="48" height="64">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="inter_bold" size="22" color="#ffffffff">
-              <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
-            </Font>
+            <Font family="inter_bold" size="30" color="#ffffffff">
+                <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
+              </Font>
           </Text>
         </PartText>
       </Complication>
       <Complication type="EMPTY">
-        <PartDraw x="0" y="0" width="56" height="56">
-          <Ellipse x="0" y="0" width="56" height="56">
+        <PartDraw x="0" y="0" width="64" height="64">
+          <Ellipse x="0" y="0" width="64" height="64">
             <Fill color="#ffff6319" />
           </Ellipse>
         </PartDraw>
-        <PartText x="4" y="0" width="48" height="56">
+        <PartText x="4" y="0" width="56" height="64">
           <Text align="CENTER">
-            <Font family="inter_bold" size="26" color="#ffffffff">--</Font>
+            <Font family="inter_bold" size="32" color="#ffffffff">--</Font>
           </Text>
         </PartText>
       </Complication>
