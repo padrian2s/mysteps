@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_face_name">Metro</string>
+    <string name="show_seconds_label">Seconds</string>
+    <string name="mysteps_slot_label">MySteps</string>
+</resources>

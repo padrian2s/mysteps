@@ -34,6 +34,12 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - **Active interval**: start and end hour for tracking (default: 08:00 - 21:00)
 - **Vibration alarm**: on/off toggle
 
+### Metro Watch Face (`metroface/`)
+- Separate Watch Face Format (v4) watch face, built as its own resource-only APK
+- Big time, date row, and four round badges: heart rate, today's steps, **MySteps** (this complication, with a progress ring), and temperature
+- Optional seconds (Customize → Seconds); everything stays visible in always-on mode
+- Requires Wear OS 6 (API 36)
+
 ### Hourly Progress Tracking
 - Tracks how many hours you've met your step goal within your active interval
 - Displayed on the complication (e.g. `❤3/5`) and in the app
@@ -48,6 +54,10 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 ```bash
 ./gradlew assembleDebug
 adb install app/build/outputs/apk/debug/app-debug.apk
+
+# Metro watch face (optional)
+./gradlew :metroface:assembleDebug
+adb install metroface/build/outputs/apk/debug/metroface-debug.apk
 ```
 
 ## Usage

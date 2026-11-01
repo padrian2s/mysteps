@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Metro watch face (Watch Face Format v4), from the "Metro Watch Face" design.
+  The coordinate space is 452x452 so the design's pixel positions carry over 1:1.
+  Fonts are bundled (Inter) so text widths are known: the date row is centered
+  from the measured width of each English day/month name.
+-->
+<WatchFace width="452" height="452" clipShape="CIRCLE">
+  <Metadata key="CLOCK_TYPE" value="DIGITAL" />
+  <Metadata key="PREVIEW_TIME" value="10:08:32" />
+
+  <UserConfigurations>
+    <BooleanConfiguration id="showSeconds" displayName="show_seconds_label"
+        screenReaderText="show_seconds_label" defaultValue="FALSE" />
+  </UserConfigurations>
+
+  <Scene backgroundColor="#ff0e0e0e">
+
+    <!-- Top rule -->
+    <PartDraw x="0" y="78" width="452" height="4" name="TopRule">
+      <Rectangle x="0" y="0" width="452" height="4">
+        <Fill color="#ffffffff" />
+      </Rectangle>
+    </PartDraw>
+
+    <!-- Four round "line" badges: BPM, STEPS, MYSTEPS (complication), TEMP -->
+    <Group x="93" y="92" width="266" height="76" name="Badges">
+
+      <!-- BPM -->
+      <PartDraw x="0" y="0" width="56" height="56">
+        <Ellipse x="0" y="0" width="56" height="56">
+          <Fill color="#ffee352e" />
+        </Ellipse>
+      </PartDraw>
+      <Condition>
+          <Expressions>
+            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+          </Expressions>
+        <Compare expression="hasHr">
+          <PartText x="2" y="0" width="52" height="56">
+            <Text align="CENTER" isAutoSize="TRUE">
+              <Font family="inter_bold" size="34" letterSpacing="-0.04" color="#ffffffff">
+                <Template>%s<Parameter expression="round([HEART_RATE])" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </Compare>
+        <Default>
+          <PartText x="4" y="0" width="48" height="56">
+            <Text align="CENTER">
+              <Font family="inter_bold" size="26" color="#ffffffff">--</Font>
+            </Text>
+          </PartText>
+        </Default>
+      </Condition>
+      <PartText x="0" y="62" width="56" height="14">
+        <Text align="CENTER">
+          <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">BPM</Font>
+        </Text>
+      </PartText>
+
+      <!-- STEPS (today) -->
+      <PartDraw x="70" y="0" width="56" height="56">
+        <Ellipse x="0" y="0" width="56" height="56">
+          <Fill color="#ff00933c" />
+        </Ellipse>
+      </PartDraw>
+      <PartText x="74" y="0" width="48" height="56">
+        <Text align="CENTER" isAutoSize="TRUE">
+          <Font family="inter_bold" size="26" color="#ffffffff">
+            <Template>%s<Parameter expression="[STEP_COUNT]" /></Template>
+          </Font>
+        </Text>
+      </PartText>
+      <PartText x="70" y="62" width="56" height="14">
+        <Text align="CENTER">
+          <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">STEPS</Font>
+        </Text>
+      </PartText>
+
+      <!-- MYSTEPS: the MySteps complication (steps this hour, ❤N/M once the goal is met) -->
+      <PartText x="133" y="62" width="70" height="14">
+        <Text align="CENTER">
+          <Font family="inter_bold" size="11" letterSpacing="0.02" color="#ffffffff">MYSTEPS</Font>
+        </Text>
+      </PartText>
+
+      <!-- TEMP -->
+      <PartDraw x="210" y="0" width="56" height="56">
+        <Ellipse x="0" y="0" width="56" height="56">
+          <Fill color="#fffccc0a" />
+        </Ellipse>
+      </PartDraw>
+      <Condition>
+          <Expressions>
+            <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
+          </Expressions>
+        <Compare expression="hasWeather">
+          <PartText x="214" y="0" width="48" height="56">
+            <Text align="CENTER" isAutoSize="TRUE">
+              <Font family="inter_bold" size="22" letterSpacing="-0.045" color="#ff0e0e0e">
+                <Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template>
+              </Font>
+            </Text>
+          </PartText>
+        </Compare>
+        <Default>
+          <PartText x="214" y="0" width="48" height="56">
+            <Text align="CENTER">
+              <Font family="inter_bold" size="22" color="#ff0e0e0e">--</Font>
+            </Text>
+          </PartText>
+        </Default>
+      </Condition>
+      <PartText x="210" y="62" width="56" height="14">
+        <Text align="CENTER">
+          <Font family="inter_bold" size="11" letterSpacing="0.09" color="#ffffffff">TEMP</Font>
+        </Text>
+      </PartText>
+    </Group>
+
+    <ComplicationSlot x="233" y="92" width="56" height="56" slotId="0"
+        displayName="mysteps_slot_label" supportedTypes="SHORT_TEXT RANGED_VALUE EMPTY">
+      <DefaultProviderPolicy
+          primaryProvider="com.adrianp.mysteps/com.adrianp.mysteps.complication.HourlyStepsComplicationService"
+          primaryProviderType="RANGED_VALUE"
+          defaultSystemProvider="EMPTY"
+          defaultSystemProviderType="EMPTY" />
+      <BoundingOval x="0" y="0" width="56" height="56" />
+      <Complication type="SHORT_TEXT">
+        <PartDraw x="0" y="0" width="56" height="56">
+          <Ellipse x="0" y="0" width="56" height="56">
+            <Fill color="#ffff6319" />
+          </Ellipse>
+        </PartDraw>
+        <PartText x="4" y="0" width="48" height="56">
+          <Text align="CENTER" isAutoSize="TRUE">
+            <Font family="inter_bold" size="26" color="#ffffffff">
+              <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
+            </Font>
+          </Text>
+        </PartText>
+      </Complication>
+      <!-- Progress ring towards the hourly goal + the complication text -->
+      <Complication type="RANGED_VALUE">
+        <PartDraw x="0" y="0" width="56" height="56">
+          <Ellipse x="0" y="0" width="56" height="56">
+            <Fill color="#ffff6319" />
+          </Ellipse>
+        </PartDraw>
+        <PartDraw x="0" y="0" width="56" height="56">
+          <Ellipse x="4" y="4" width="48" height="48">
+            <Stroke color="#55ffffff" thickness="3" />
+          </Ellipse>
+        </PartDraw>
+        <PartDraw x="0" y="0" width="56" height="56">
+          <Arc centerX="28" centerY="28" width="48" height="48" startAngle="0" endAngle="0">
+            <Transform target="endAngle" value="(clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]) * 360" />
+            <Stroke color="#ffffffff" thickness="3" cap="ROUND" />
+          </Arc>
+        </PartDraw>
+        <PartText x="8" y="0" width="40" height="56">
+          <Text align="CENTER" isAutoSize="TRUE">
+            <Font family="inter_bold" size="22" color="#ffffffff">
+              <Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template>
+            </Font>
+          </Text>
+        </PartText>
+      </Complication>
+      <Complication type="EMPTY">
+        <PartDraw x="0" y="0" width="56" height="56">
+          <Ellipse x="0" y="0" width="56" height="56">
+            <Fill color="#ffff6319" />
+          </Ellipse>
+        </PartDraw>
+        <PartText x="4" y="0" width="48" height="56">
+          <Text align="CENTER">
+            <Font family="inter_bold" size="26" color="#ffffffff">--</Font>
+          </Text>
+        </PartText>
+      </Complication>
+    </ComplicationSlot>
+
+    <!--
+      Time. With seconds on, time and seconds are centered together. (Ambient offload to
+      the low-power display processor was tried: Pixel Watch refuses TimeText without a
+      font atlas, even with the system font, so the face isn't offloadable.)
+    -->
+    <BooleanConfiguration id="showSeconds">
+      <BooleanOption id="FALSE">
+        <DigitalClock x="0" y="182" width="452" height="132">
+          <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER"
+              x="0" y="0" width="452" height="132">
+            <Font family="inter_bold" size="132" color="#ffffffff" />
+          </TimeText>
+        </DigitalClock>
+      </BooleanOption>
+      <BooleanOption id="TRUE">
+        <DigitalClock x="0" y="182" width="452" height="132">
+          <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="END"
+              x="0" y="0" width="388" height="132">
+            <Font family="inter_bold" size="132" color="#ffffffff" />
+          </TimeText>
+          <TimeText format="ss" align="START" x="394" y="86" width="40" height="34">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Font family="inter_bold" size="28" color="#ffa7a9ac" />
+          </TimeText>
+        </DigitalClock>
+      </BooleanOption>
+    </BooleanConfiguration>
+
+    <!-- Divider -->
+    <PartDraw x="0" y="322" width="452" height="2" name="Divider">
+      <Rectangle x="0" y="0" width="452" height="2">
+        <Fill color="#ff3a3a3a" />
+      </Rectangle>
+    </PartDraw>
+
+    <!--
+      Date row: [day-number badge] DAYNAME MON, centered as a whole.
+      Row width = 34 + 12 + dayW + 12 + monW, with dayW/monW measured from Inter at 26px.
+    -->
+    <Group x="0" y="336" width="400" height="34" name="DateRow">
+      <Transform target="x" value="(452 - (58 + ([DAY_OF_WEEK] == 1 ? 110 : ([DAY_OF_WEEK] == 2 ? 118 : ([DAY_OF_WEEK] == 3 ? 122 : ([DAY_OF_WEEK] == 4 ? 168 : ([DAY_OF_WEEK] == 5 ? 142 : ([DAY_OF_WEEK] == 6 ? 93 : 142)))))) + 12 + ([MONTH] == 1 ? 53 : ([MONTH] == 2 ? 48 : ([MONTH] == 3 ? 58 : ([MONTH] == 4 ? 52 : ([MONTH] == 5 ? 59 : ([MONTH] == 6 ? 54 : ([MONTH] == 7 ? 49 : ([MONTH] == 8 ? 56 : ([MONTH] == 9 ? 50 : ([MONTH] == 10 ? 56 : ([MONTH] == 11 ? 58 : 54))))))))))))) / 2" />
+      <PartDraw x="0" y="0" width="34" height="34">
+        <Ellipse x="0" y="0" width="34" height="34">
+          <Fill color="#ff0039a6" />
+        </Ellipse>
+      </PartDraw>
+      <PartText x="0" y="0" width="34" height="34">
+        <Text align="CENTER">
+          <Font family="inter_bold" size="18" color="#ffffffff">
+            <Template>%s<Parameter expression="[DAY]" /></Template>
+          </Font>
+        </Text>
+      </PartText>
+      <PartText x="46" y="0" width="180" height="34">
+        <Text align="START">
+          <Font family="inter_bold" size="26" letterSpacing="-0.019" color="#ffffffff">
+            <Template>%s<Parameter expression="[DAY_OF_WEEK] == 1 ? &quot;SUNDAY&quot; : ([DAY_OF_WEEK] == 2 ? &quot;MONDAY&quot; : ([DAY_OF_WEEK] == 3 ? &quot;TUESDAY&quot; : ([DAY_OF_WEEK] == 4 ? &quot;WEDNESDAY&quot; : ([DAY_OF_WEEK] == 5 ? &quot;THURSDAY&quot; : ([DAY_OF_WEEK] == 6 ? &quot;FRIDAY&quot; : &quot;SATURDAY&quot;)))))" /></Template>
+          </Font>
+        </Text>
+      </PartText>
+      <PartText x="160" y="0" width="80" height="34">
+        <Transform target="x" value="58 + ([DAY_OF_WEEK] == 1 ? 110 : ([DAY_OF_WEEK] == 2 ? 118 : ([DAY_OF_WEEK] == 3 ? 122 : ([DAY_OF_WEEK] == 4 ? 168 : ([DAY_OF_WEEK] == 5 ? 142 : ([DAY_OF_WEEK] == 6 ? 93 : 142))))))" />
+        <Text align="START">
+          <Font family="inter_regular" size="26" color="#ffa7a9ac">
+            <Template>%s<Parameter expression="[MONTH] == 1 ? &quot;JAN&quot; : ([MONTH] == 2 ? &quot;FEB&quot; : ([MONTH] == 3 ? &quot;MAR&quot; : ([MONTH] == 4 ? &quot;APR&quot; : ([MONTH] == 5 ? &quot;MAY&quot; : ([MONTH] == 6 ? &quot;JUN&quot; : ([MONTH] == 7 ? &quot;JUL&quot; : ([MONTH] == 8 ? &quot;AUG&quot; : ([MONTH] == 9 ? &quot;SEP&quot; : ([MONTH] == 10 ? &quot;OCT&quot; : ([MONTH] == 11 ? &quot;NOV&quot; : &quot;DEC&quot;))))))))))" /></Template>
+          </Font>
+        </Text>
+      </PartText>
+    </Group>
+
+    <!-- Direction line: morning goes uptown, evening downtown -->
+    <PartText x="0" y="384" width="452" height="18" name="Direction">
+      <Text align="CENTER">
+        <Font family="inter_bold" size="12" letterSpacing="0.167" color="#ffa7a9ac">
+          <Template>%s<Parameter expression="[HOUR_0_23] &lt; 12 ? &quot;UPTOWN ↑ MORNING&quot; : &quot;DOWNTOWN ↓ EVENING&quot;" /></Template>
+        </Font>
+      </Text>
+    </PartText>
+  </Scene>
+</WatchFace>
