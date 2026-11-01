@@ -20,7 +20,7 @@ OUT = Path(__file__).parent / "src/main/res/raw/watchface.xml"
 
 SIZE = 452                      # canvas; the design's pixel positions carry over 1:1
 BG = "#ff0e0e0e"                # interactive background
-INTERACTIVE_DIM = 0.20          # interactive mode drawn at 80% intensity (black overlay)
+INTERACTIVE_DIM = 0.25          # interactive mode drawn at 75% intensity (black overlay)
 D, GAP, BADGE_Y = 64, 12, 106   # badge diameter, spacing, row top
 RING = 3                        # ring stroke width
 X0 = (SIZE - (4 * D + 3 * GAP)) // 2
