@@ -7,9 +7,19 @@
   <UserConfigurations>
     <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="pink">
       <ColorOption id="pink" displayName="colors_pink" screenReaderText="colors_pink"
-          colors="#ffce7fb3 #ff30adcc" />
+          colors="#ffce7fb3 #ff2993ad" />
       <ColorOption id="blue" displayName="colors_blue" screenReaderText="colors_blue"
-          colors="#ff30adcc #ffce7fb3" />
+          colors="#ff2993ad #ffce7fb3" />
+      <ColorOption id="mint" displayName="colors_mint" screenReaderText="colors_mint"
+          colors="#ff7fd8be #ffff8a65" />
+      <ColorOption id="amber" displayName="colors_amber" screenReaderText="colors_amber"
+          colors="#ffffc857 #ff2993ad" />
+      <ColorOption id="lavender" displayName="colors_lavender" screenReaderText="colors_lavender"
+          colors="#ffb39ddb #ffffb38a" />
+      <ColorOption id="white" displayName="colors_white" screenReaderText="colors_white"
+          colors="#ffe8eaed #ff2993ad" />
+      <ColorOption id="lime" displayName="colors_lime" screenReaderText="colors_lime"
+          colors="#ffc5e86c #ffb39ddb" />
     </ColorConfiguration>
   </UserConfigurations>
 
