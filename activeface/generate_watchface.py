@@ -17,9 +17,11 @@ OUT = Path(__file__).parent / "src/main/res/raw/watchface.xml"
 
 SIZE = 456
 NAVY = "#ff161d2f"
-PINK = "#ffce7fb3"
+# Customize → Colors: pink text with blue icons, or the two swapped
+TEXT_COLOR, ICON_COLOR = "#ffce7fb3", "#ff30adcc"
+PINK = "[CONFIGURATION.themeColor.0]"    # text, HR marker, always-on outline
 BLUE = "#ff7092ea"
-ICON = "#ff30adcc"              # icons: light blue
+ICON = "[CONFIGURATION.themeColor.1]"
 HEART = "#ffff3029"             # heart-rate heart: red, like the ❤ emoji
 
 # Horseshoe rings: 280° from 220° (bottom-left) clockwise to 140° (bottom-right)
@@ -306,6 +308,15 @@ def watchface():
 <WatchFace width="{SIZE}" height="{SIZE}" clipShape="CIRCLE">
   <Metadata key="CLOCK_TYPE" value="DIGITAL" />
   <Metadata key="PREVIEW_TIME" value="10:08:32" />
+
+  <UserConfigurations>
+    <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="pink">
+      <ColorOption id="pink" displayName="colors_pink" screenReaderText="colors_pink"
+          colors="{TEXT_COLOR} {ICON_COLOR}" />
+      <ColorOption id="blue" displayName="colors_blue" screenReaderText="colors_blue"
+          colors="{ICON_COLOR} {TEXT_COLOR}" />
+    </ColorConfiguration>
+  </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">
 {indent(scene, 4)}

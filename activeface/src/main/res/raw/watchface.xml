@@ -4,6 +4,15 @@
   <Metadata key="CLOCK_TYPE" value="DIGITAL" />
   <Metadata key="PREVIEW_TIME" value="10:08:32" />
 
+  <UserConfigurations>
+    <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="pink">
+      <ColorOption id="pink" displayName="colors_pink" screenReaderText="colors_pink"
+          colors="#ffce7fb3 #ff30adcc" />
+      <ColorOption id="blue" displayName="colors_blue" screenReaderText="colors_blue"
+          colors="#ff30adcc #ffce7fb3" />
+    </ColorConfiguration>
+  </UserConfigurations>
+
   <Scene backgroundColor="#ff000000">
     <!-- Top left: Active Zone Minutes (Fitbit) by default -->
     <ComplicationSlot x="78" y="54" width="105" height="105" slotId="1"
@@ -29,13 +38,13 @@
         </PartDraw>
         <PartText x="15" y="26" width="74" height="53">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -58,13 +67,13 @@
         </PartDraw>
         <PartText x="15" y="26" width="74" height="53">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -80,13 +89,13 @@
         </PartDraw>
         <PartText x="15" y="26" width="74" height="53">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -127,13 +136,13 @@
         </PartDraw>
         <PartText x="18" y="36" width="93" height="58">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -156,13 +165,13 @@
         </PartDraw>
         <PartText x="18" y="36" width="93" height="58">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -178,13 +187,13 @@
         </PartDraw>
         <PartText x="18" y="36" width="93" height="58">
           <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="#ffce7fb3"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ff30adcc" />
+              <Fill color="[CONFIGURATION.themeColor.1]" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -212,19 +221,19 @@
     <PartDraw x="6" y="171" width="262" height="115" alpha="0" name="TimePillAmbient">
       <Variant mode="AMBIENT" target="alpha" value="255" />
       <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="56" cornerRadiusY="56">
-        <Stroke color="#ffce7fb3" thickness="3" />
+        <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
       </RoundRectangle>
     </PartDraw>
     <DigitalClock x="12" y="166" width="250" height="128">
       <Variant mode="AMBIENT" target="alpha" value="0" />
       <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="0" width="250" height="128">
-        <Font family="gs_time" size="80" color="#ffce7fb3" />
+        <Font family="gs_time" size="80" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
     </DigitalClock>
     <DigitalClock x="12" y="166" width="250" height="128" alpha="0">
       <Variant mode="AMBIENT" target="alpha" value="255" />
       <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="0" width="250" height="128">
-        <Font family="gs_time_ambient" size="80" color="#ffce7fb3" />
+        <Font family="gs_time_ambient" size="80" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
     </DigitalClock>
 
@@ -249,20 +258,20 @@
           </PartDraw>
           <PartDraw x="7" y="7" width="20" height="20">
             <Ellipse x="0.5" y="0.5" width="19" height="19">
-              <Fill color="#ffce7fb3" />
+              <Fill color="[CONFIGURATION.themeColor.0]" />
             </Ellipse>
           </PartDraw>
         </Group>
         <PartText x="308" y="184" width="120" height="83">
           <Text align="CENTER">
-            <Font family="gs_bold" size="52" color="#ffce7fb3"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+            <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
           </Text>
         </PartText>
       </Compare>
       <Default>
         <PartText x="308" y="184" width="120" height="83">
           <Text align="CENTER">
-            <Font family="gs_bold" size="52" color="#ffce7fb3">--</Font>
+            <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]">--</Font>
           </Text>
         </PartText>
       </Default>
@@ -297,82 +306,82 @@
         <Expression name="night7">[WEATHER.IS_AVAILABLE] &amp;&amp; ([WEATHER.CONDITION] == 15)</Expression>
       </Expressions>
       <Compare expression="day0">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_sunny" />
         </PartImage>
       </Compare>
       <Compare expression="night0">
-        <PartImage x="104" y="313" width="52" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="104" y="313" width="52" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_night" />
         </PartImage>
       </Compare>
       <Compare expression="day1">
-        <PartImage x="93" y="316" width="74" height="67" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="316" width="74" height="67" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_partly_day" />
         </PartImage>
       </Compare>
       <Compare expression="night1">
-        <PartImage x="93" y="315" width="74" height="70" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="315" width="74" height="70" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_partly_night" />
         </PartImage>
       </Compare>
       <Compare expression="day2">
-        <PartImage x="93" y="323" width="74" height="54" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="323" width="74" height="54" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_cloud" />
         </PartImage>
       </Compare>
       <Compare expression="night2">
-        <PartImage x="93" y="323" width="74" height="54" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="323" width="74" height="54" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_cloud" />
         </PartImage>
       </Compare>
       <Compare expression="day3">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_fog" />
         </PartImage>
       </Compare>
       <Compare expression="night3">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_fog" />
         </PartImage>
       </Compare>
       <Compare expression="day4">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_rain" />
         </PartImage>
       </Compare>
       <Compare expression="night4">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_rain" />
         </PartImage>
       </Compare>
       <Compare expression="day5">
-        <PartImage x="95" y="313" width="70" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="95" y="313" width="70" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_snow" />
         </PartImage>
       </Compare>
       <Compare expression="night5">
-        <PartImage x="95" y="313" width="70" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="95" y="313" width="70" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_snow" />
         </PartImage>
       </Compare>
       <Compare expression="day6">
-        <PartImage x="96" y="313" width="67" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="96" y="313" width="67" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_storm" />
         </PartImage>
       </Compare>
       <Compare expression="night6">
-        <PartImage x="96" y="313" width="67" height="74" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="96" y="313" width="67" height="74" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_storm" />
         </PartImage>
       </Compare>
       <Compare expression="day7">
-        <PartImage x="93" y="318" width="74" height="63" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="318" width="74" height="63" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_wind" />
         </PartImage>
       </Compare>
       <Compare expression="night7">
-        <PartImage x="93" y="318" width="74" height="63" tintColor="#ff30adcc" alpha="90">
+        <PartImage x="93" y="318" width="74" height="63" tintColor="[CONFIGURATION.themeColor.1]" alpha="90">
           <Image resource="ic_wx_wind" />
         </PartImage>
       </Compare>
@@ -384,14 +393,14 @@
       <Compare expression="hasWeather">
         <PartText x="80" y="321" width="100" height="58">
           <Text align="CENTER">
-            <Font family="gs_bold" size="36" color="#ffce7fb3"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
           </Text>
         </PartText>
       </Compare>
       <Default>
         <PartText x="80" y="321" width="100" height="58">
           <Text align="CENTER">
-            <Font family="gs_bold" size="36" color="#ffce7fb3">--</Font>
+            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]">--</Font>
           </Text>
         </PartText>
       </Default>
@@ -405,12 +414,12 @@
     </PartDraw>
     <PartText x="216" y="320" width="120" height="66">
       <Text align="CENTER">
-        <Font family="gs_bold" size="41" color="#ffce7fb3"><Template>%s<Parameter expression="[DAY_Z]" /></Template></Font>
+        <Font family="gs_bold" size="41" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY_Z]" /></Template></Font>
       </Text>
     </PartText>
     <PartText x="218" y="366" width="120" height="42">
       <Text align="CENTER">
-        <Font family="gs_bold_wide" size="26" color="#ffce7fb3"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;JAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAY.&quot; : ([MONTH] == 6 ? &quot;JUN.&quot; : ([MONTH] == 7 ? &quot;JUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
+        <Font family="gs_bold_wide" size="26" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;JAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAY.&quot; : ([MONTH] == 6 ? &quot;JUN.&quot; : ([MONTH] == 7 ? &quot;JUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
       </Text>
     </PartText>
   </Scene>
