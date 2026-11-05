@@ -22,12 +22,13 @@ NAVY = "#ff161d2f"
 PINK_C, BLUE_C = "#ffce7fb3", "#ff2993ad"
 COLOR_OPTIONS = [
     ("pink", "Pink & blue", PINK_C, BLUE_C),
-    ("blue", "Blue & pink", BLUE_C, PINK_C),
-    ("mint", "Mint & coral", "#ff7fd8be", "#ffff8a65"),
-    ("amber", "Amber & teal", "#ffffc857", "#ff2993ad"),
-    ("lavender", "Lavender & peach", "#ffb39ddb", "#ffffb38a"),
-    ("white", "White & blue", "#ffe8eaed", "#ff2993ad"),
-    ("lime", "Lime & lavender", "#ffc5e86c", "#ffb39ddb"),
+    # Fitbit Inspire 3 palette (no official hex values exist; approximated from the
+    # band colors, Fitbit's brand teal and the Active Zone Minutes colors)
+    ("morning", "Morning Glow", "#fff7d58b", "#ffff9a6b"),
+    ("lilac", "Lilac Bliss", "#ffc9b6ec", "#ff9b84d6"),
+    ("midnight", "Midnight Zen", "#ffe2e2e2", "#ff6f7f9e"),
+    ("teal", "Fitbit Teal", "#ff39cccc", "#ffe2e2e2"),
+    ("azm", "Zone Minutes", "#fff8c33c", "#fff57c3a"),
 ]
 PINK = "[CONFIGURATION.themeColor.0]"    # text, HR marker, always-on outline
 BLUE = "#ff7092ea"

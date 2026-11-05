@@ -8,18 +8,16 @@
     <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="pink">
       <ColorOption id="pink" displayName="colors_pink" screenReaderText="colors_pink"
           colors="#ffce7fb3 #ff2993ad" />
-      <ColorOption id="blue" displayName="colors_blue" screenReaderText="colors_blue"
-          colors="#ff2993ad #ffce7fb3" />
-      <ColorOption id="mint" displayName="colors_mint" screenReaderText="colors_mint"
-          colors="#ff7fd8be #ffff8a65" />
-      <ColorOption id="amber" displayName="colors_amber" screenReaderText="colors_amber"
-          colors="#ffffc857 #ff2993ad" />
-      <ColorOption id="lavender" displayName="colors_lavender" screenReaderText="colors_lavender"
-          colors="#ffb39ddb #ffffb38a" />
-      <ColorOption id="white" displayName="colors_white" screenReaderText="colors_white"
-          colors="#ffe8eaed #ff2993ad" />
-      <ColorOption id="lime" displayName="colors_lime" screenReaderText="colors_lime"
-          colors="#ffc5e86c #ffb39ddb" />
+      <ColorOption id="morning" displayName="colors_morning" screenReaderText="colors_morning"
+          colors="#fff7d58b #ffff9a6b" />
+      <ColorOption id="lilac" displayName="colors_lilac" screenReaderText="colors_lilac"
+          colors="#ffc9b6ec #ff9b84d6" />
+      <ColorOption id="midnight" displayName="colors_midnight" screenReaderText="colors_midnight"
+          colors="#ffe2e2e2 #ff6f7f9e" />
+      <ColorOption id="teal" displayName="colors_teal" screenReaderText="colors_teal"
+          colors="#ff39cccc #ffe2e2e2" />
+      <ColorOption id="azm" displayName="colors_azm" screenReaderText="colors_azm"
+          colors="#fff8c33c #fff57c3a" />
     </ColorConfiguration>
   </UserConfigurations>
 
