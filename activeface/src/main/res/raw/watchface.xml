@@ -19,6 +19,21 @@
       <ColorOption id="azm" displayName="colors_azm" screenReaderText="colors_azm"
           colors="#fff8c33c #fff57c3a" />
     </ColorConfiguration>
+    <ListConfiguration id="timeShape" displayName="time_label" screenReaderText="time_label" defaultValue="pill">
+      <ListOption id="pill" displayName="time_pill" screenReaderText="time_pill" />
+      <ListOption id="rounded" displayName="time_rounded" screenReaderText="time_rounded" />
+      <ListOption id="outline" displayName="time_outline" screenReaderText="time_outline" />
+      <ListOption id="none" displayName="time_none" screenReaderText="time_none" />
+    </ListConfiguration>
+    <ListConfiguration id="rings" displayName="rings_label" screenReaderText="rings_label" defaultValue="horseshoe">
+      <ListOption id="horseshoe" displayName="rings_horseshoe" screenReaderText="rings_horseshoe" />
+      <ListOption id="full" displayName="rings_full" screenReaderText="rings_full" />
+    </ListConfiguration>
+    <ListConfiguration id="circles" displayName="circles_label" screenReaderText="circles_label" defaultValue="filled">
+      <ListOption id="filled" displayName="circles_filled" screenReaderText="circles_filled" />
+      <ListOption id="outline" displayName="circles_outline" screenReaderText="circles_outline" />
+      <ListOption id="none" displayName="circles_none" screenReaderText="circles_none" />
+    </ListConfiguration>
   </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">
@@ -32,91 +47,218 @@
           defaultSystemProviderType="EMPTY" />
       <BoundingOval x="0" y="0" width="105" height="105" />
       <Complication type="RANGED_VALUE">
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Transform target="endAngle" value="220 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280" />
-            <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="15" y="26" width="74" height="53">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="38" y="76" width="28" height="28" name="Icon">
-          <PartDraw x="0" y="0" width="28" height="28">
-            <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="105" height="105" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="105" height="105" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Transform target="endAngle" value="220 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280" />
+                    <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="26" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="76" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="105" height="105" name="rings_full">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Transform target="endAngle" value="0 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 360" />
+                    <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="18" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="60" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Transform target="endAngle" value="220 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 280" />
-            <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="15" y="26" width="74" height="53">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="38" y="76" width="28" height="28" name="Icon">
-          <PartDraw x="0" y="0" width="28" height="28">
-            <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="105" height="105" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="105" height="105" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Transform target="endAngle" value="220 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 280" />
+                    <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="26" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="76" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="105" height="105" name="rings_full">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Transform target="endAngle" value="0 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 360" />
+                    <Stroke color="#ff7092ea" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="18" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="60" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="15" y="26" width="74" height="53">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="38" y="76" width="28" height="28" name="Icon">
-          <PartDraw x="0" y="0" width="28" height="28">
-            <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="105" height="105" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="105" height="105" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="26" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="76" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="105" height="105" name="rings_full">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="15" y="18" width="74" height="53">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="33" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="38" y="60" width="28" height="28" name="Icon">
+                  <PartDraw x="0" y="0" width="28" height="28">
+                    <Rectangle x="0" y="0" width="28" height="28">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="EMPTY">
-        <PartDraw x="0" y="0" width="104" height="104">
-          <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
-          </Arc>
-        </PartDraw>
+        <Group x="0" y="0" width="105" height="105" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="105" height="105" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="105" height="105" name="rings_full">
+                <PartDraw x="0" y="0" width="104" height="104">
+                  <Arc centerX="52" centerY="52" width="92" height="92" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="12" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
     </ComplicationSlot>
 
@@ -130,108 +272,270 @@
           defaultSystemProviderType="EMPTY" />
       <BoundingOval x="0" y="0" width="130" height="130" />
       <Complication type="RANGED_VALUE">
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Transform target="endAngle" value="220 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280" />
-            <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="18" y="36" width="93" height="58">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="47" y="93" width="36" height="36" name="Icon">
-          <PartDraw x="0" y="0" width="36" height="36">
-            <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="130" height="130" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="130" height="130" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Transform target="endAngle" value="220 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 280" />
+                    <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="36" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="93" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="130" height="130" name="rings_full">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Transform target="alpha" value="((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Transform target="endAngle" value="0 + ((clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])) * 360" />
+                    <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="26" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="74" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Transform target="endAngle" value="220 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 280" />
-            <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="18" y="36" width="93" height="58">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="47" y="93" width="36" height="36" name="Icon">
-          <PartDraw x="0" y="0" width="36" height="36">
-            <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="130" height="130" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="130" height="130" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Transform target="endAngle" value="220 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 280" />
+                    <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="36" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="93" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="130" height="130" name="rings_full">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Transform target="alpha" value="(clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) &gt; 0 ? 255 : 0" />
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Transform target="endAngle" value="0 + (clamp([COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE], 0, 1)) * 360" />
+                    <Stroke color="#ff7092ea" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="26" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="74" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="18" y="36" width="93" height="58">
-          <Text align="CENTER" isAutoSize="TRUE">
-            <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <Group x="47" y="93" width="36" height="36" name="Icon">
-          <PartDraw x="0" y="0" width="36" height="36">
-            <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="[CONFIGURATION.themeColor.1]" />
-            </Rectangle>
-          </PartDraw>
-          <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
-            <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
-          </PartImage>
+        <Group x="0" y="0" width="130" height="130" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="130" height="130" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="36" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="93" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="130" height="130" name="rings_full">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+                <PartText x="18" y="26" width="93" height="58">
+                  <Text align="CENTER" isAutoSize="TRUE">
+                    <Font family="gs_bold" size="36" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+                <Group x="47" y="74" width="36" height="36" name="Icon">
+                  <PartDraw x="0" y="0" width="36" height="36">
+                    <Rectangle x="0" y="0" width="36" height="36">
+                      <Fill color="[CONFIGURATION.themeColor.1]" />
+                    </Rectangle>
+                  </PartDraw>
+                  <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
+                    <Image resource="[COMPLICATION.MONOCHROMATIC_IMAGE]" />
+                  </PartImage>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
       </Complication>
       <Complication type="EMPTY">
-        <PartDraw x="0" y="0" width="130" height="130">
-          <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
-            <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
-          </Arc>
-        </PartDraw>
+        <Group x="0" y="0" width="130" height="130" name="Rings">
+          <ListConfiguration id="rings">
+            <ListOption id="horseshoe">
+              <Group x="0" y="0" width="130" height="130" name="rings_horseshoe">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="220" endAngle="500">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+              </Group>
+            </ListOption>
+            <ListOption id="full">
+              <Group x="0" y="0" width="130" height="130" name="rings_full">
+                <PartDraw x="0" y="0" width="130" height="130">
+                  <Arc centerX="65" centerY="64.5" width="114" height="114" startAngle="0" endAngle="360">
+                    <Stroke color="#ff161d2f" thickness="15" cap="ROUND" />
+                  </Arc>
+                </PartDraw>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
     </ComplicationSlot>
 
-    <!-- Time in a rounded pill (outlined, thinner digits in always-on) -->
-    <PartDraw x="8" y="173" width="258" height="111" name="TimePill">
-      <Variant mode="AMBIENT" target="alpha" value="0" />
-      <RoundRectangle x="0" y="0" width="258" height="111" cornerRadiusX="55.5" cornerRadiusY="55.5">
-        <Fill color="#ff161d2f" />
-      </RoundRectangle>
-    </PartDraw>
-    <!-- Always-on: outline only -->
-    <PartDraw x="6" y="171" width="262" height="115" alpha="0" name="TimePillAmbient">
-      <Variant mode="AMBIENT" target="alpha" value="255" />
-      <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="56" cornerRadiusY="56">
-        <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
-      </RoundRectangle>
-    </PartDraw>
+    <!-- Time in a box (Customize → Time shape; outlined, thinner digits in always-on) -->
+    <ListConfiguration id="timeShape">
+      <ListOption id="pill">
+        <Group x="0" y="0" width="456" height="456" name="timeShape_pill">
+          <PartDraw x="8" y="173" width="258" height="111">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <RoundRectangle x="0" y="0" width="258" height="111" cornerRadiusX="55.5" cornerRadiusY="55.5">
+              <Fill color="#ff161d2f" />
+            </RoundRectangle>
+          </PartDraw>
+          <PartDraw x="6" y="171" width="262" height="115" alpha="0">
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+            <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="56" cornerRadiusY="56">
+              <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
+            </RoundRectangle>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="rounded">
+        <Group x="0" y="0" width="456" height="456" name="timeShape_rounded">
+          <PartDraw x="8" y="173" width="258" height="111">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <RoundRectangle x="0" y="0" width="258" height="111" cornerRadiusX="24" cornerRadiusY="24">
+              <Fill color="#ff161d2f" />
+            </RoundRectangle>
+          </PartDraw>
+          <PartDraw x="6" y="171" width="262" height="115" alpha="0">
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+            <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="24.5" cornerRadiusY="24.5">
+              <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
+            </RoundRectangle>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="outline">
+        <Group x="0" y="0" width="456" height="456" name="timeShape_outline">
+          <PartDraw x="6" y="171" width="262" height="115">
+            <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="56" cornerRadiusY="56">
+              <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
+            </RoundRectangle>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="none">
+        <Group x="0" y="0" width="456" height="456" name="timeShape_none">
+          <!-- no box -->
+        </Group>
+      </ListOption>
+    </ListConfiguration>
     <DigitalClock x="12" y="166" width="250" height="128">
       <Variant mode="AMBIENT" target="alpha" value="0" />
       <TimeText format="hh:mm" hourFormat="SYNC_TO_DEVICE" align="CENTER" x="0" y="0" width="250" height="128">
@@ -245,55 +549,127 @@
       </TimeText>
     </DigitalClock>
 
-    <!-- Heart rate: blue ring with a marker at the current bpm, number, heart -->
-    <PartDraw x="290" y="145" width="157" height="157">
-      <Arc centerX="78.5" centerY="78.5" width="137" height="137" startAngle="220" endAngle="500">
-        <Stroke color="#ff7092ea" thickness="20" cap="ROUND" />
-      </Arc>
-    </PartDraw>
-    <Condition>
-      <Expressions>
-        <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-      </Expressions>
-      <Compare expression="hasHr">
-        <Group x="0" y="0" width="34" height="34" name="HrMarker">
-          <Transform target="x" value="368.5 + 68.5 * sin(rad(220 + clamp([HEART_RATE] / 175, 0, 1) * 280)) - 17" />
-          <Transform target="y" value="223.5 - 68.5 * cos(rad(220 + clamp([HEART_RATE] / 175, 0, 1) * 280)) - 17" />
-          <PartDraw x="0" y="0" width="34" height="34">
-            <Ellipse x="0.5" y="0.5" width="33" height="33">
-              <Fill color="#ff000000" />
-            </Ellipse>
+    <ListConfiguration id="rings">
+      <ListOption id="horseshoe">
+        <Group x="0" y="0" width="456" height="456" name="rings_horseshoe">
+          <!-- Heart rate: blue ring with a marker at the current bpm, number, heart -->
+          <PartDraw x="290" y="145" width="157" height="157">
+            <Arc centerX="78.5" centerY="78.5" width="137" height="137" startAngle="220" endAngle="500">
+              <Stroke color="#ff7092ea" thickness="20" cap="ROUND" />
+            </Arc>
           </PartDraw>
-          <PartDraw x="7" y="7" width="20" height="20">
-            <Ellipse x="0.5" y="0.5" width="19" height="19">
-              <Fill color="[CONFIGURATION.themeColor.0]" />
+          <Condition>
+            <Expressions>
+              <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+            </Expressions>
+            <Compare expression="hasHr">
+              <Group x="0" y="0" width="34" height="34" name="HrMarker">
+                <Transform target="x" value="368.5 + 68.5 * sin(rad(220 + clamp([HEART_RATE] / 175, 0, 1) * 280)) - 17" />
+                <Transform target="y" value="223.5 - 68.5 * cos(rad(220 + clamp([HEART_RATE] / 175, 0, 1) * 280)) - 17" />
+                <PartDraw x="0" y="0" width="34" height="34">
+                  <Ellipse x="0.5" y="0.5" width="33" height="33">
+                    <Fill color="#ff000000" />
+                  </Ellipse>
+                </PartDraw>
+                <PartDraw x="7" y="7" width="20" height="20">
+                  <Ellipse x="0.5" y="0.5" width="19" height="19">
+                    <Fill color="[CONFIGURATION.themeColor.0]" />
+                  </Ellipse>
+                </PartDraw>
+              </Group>
+              <PartText x="308" y="184" width="120" height="83">
+                <Text align="CENTER">
+                  <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+            <Default>
+              <PartText x="308" y="184" width="120" height="83">
+                <Text align="CENTER">
+                  <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]">--</Font>
+                </Text>
+              </PartText>
+            </Default>
+          </Condition>
+          <PartImage x="350" y="265" width="36" height="32" tintColor="#ffff3029">
+            <Image resource="ic_heart" />
+          </PartImage>
+        </Group>
+      </ListOption>
+      <ListOption id="full">
+        <Group x="0" y="0" width="456" height="456" name="rings_full">
+          <!-- Heart rate: blue ring with a marker at the current bpm, number, heart -->
+          <PartDraw x="290" y="145" width="157" height="157">
+            <Arc centerX="78.5" centerY="78.5" width="137" height="137" startAngle="0" endAngle="360">
+              <Stroke color="#ff7092ea" thickness="20" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+          <Condition>
+            <Expressions>
+              <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+            </Expressions>
+            <Compare expression="hasHr">
+              <Group x="0" y="0" width="34" height="34" name="HrMarker">
+                <Transform target="x" value="368.5 + 68.5 * sin(rad(0 + clamp([HEART_RATE] / 175, 0, 1) * 360)) - 17" />
+                <Transform target="y" value="223.5 - 68.5 * cos(rad(0 + clamp([HEART_RATE] / 175, 0, 1) * 360)) - 17" />
+                <PartDraw x="0" y="0" width="34" height="34">
+                  <Ellipse x="0.5" y="0.5" width="33" height="33">
+                    <Fill color="#ff000000" />
+                  </Ellipse>
+                </PartDraw>
+                <PartDraw x="7" y="7" width="20" height="20">
+                  <Ellipse x="0.5" y="0.5" width="19" height="19">
+                    <Fill color="[CONFIGURATION.themeColor.0]" />
+                  </Ellipse>
+                </PartDraw>
+              </Group>
+              <PartText x="308" y="174" width="120" height="83">
+                <Text align="CENTER">
+                  <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+            <Default>
+              <PartText x="308" y="174" width="120" height="83">
+                <Text align="CENTER">
+                  <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]">--</Font>
+                </Text>
+              </PartText>
+            </Default>
+          </Condition>
+          <PartImage x="350" y="238" width="36" height="32" tintColor="#ffff3029">
+            <Image resource="ic_heart" />
+          </PartImage>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
+
+    <!-- Weather: condition icon filling the circle, temperature in the middle -->
+    <ListConfiguration id="circles">
+      <ListOption id="filled">
+        <Group x="0" y="0" width="456" height="456" name="circles_filled">
+          <PartDraw x="78" y="298" width="104" height="104">
+            <Ellipse x="0" y="0" width="104" height="104">
+              <Fill color="#ff161d2f" />
             </Ellipse>
           </PartDraw>
         </Group>
-        <PartText x="308" y="184" width="120" height="83">
-          <Text align="CENTER">
-            <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-          </Text>
-        </PartText>
-      </Compare>
-      <Default>
-        <PartText x="308" y="184" width="120" height="83">
-          <Text align="CENTER">
-            <Font family="gs_bold" size="52" color="[CONFIGURATION.themeColor.0]">--</Font>
-          </Text>
-        </PartText>
-      </Default>
-    </Condition>
-    <PartImage x="350" y="265" width="36" height="32" tintColor="#ffff3029">
-      <Image resource="ic_heart" />
-    </PartImage>
-
-    <!-- Weather: condition icon filling the circle, temperature in the middle -->
-    <PartDraw x="78" y="298" width="104" height="104">
-      <Ellipse x="0" y="0" width="104" height="104">
-        <Fill color="#ff161d2f" />
-      </Ellipse>
-    </PartDraw>
+      </ListOption>
+      <ListOption id="outline">
+        <Group x="0" y="0" width="456" height="456" name="circles_outline">
+          <PartDraw x="78" y="298" width="104" height="104">
+            <Ellipse x="1.5" y="1.5" width="101" height="101">
+              <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
+            </Ellipse>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="none">
+        <Group x="0" y="0" width="456" height="456" name="circles_none">
+          <!-- no background -->
+        </Group>
+      </ListOption>
+    </ListConfiguration>
     <Condition>
       <Expressions>
         <Expression name="day0">[WEATHER.IS_AVAILABLE] &amp;&amp; [WEATHER.IS_DAY] &amp;&amp; ([WEATHER.CONDITION] == 1 || [WEATHER.CONDITION] == 8)</Expression>
@@ -415,11 +791,31 @@
     </Condition>
 
     <!-- Date: day, then month -->
-    <PartDraw x="212" y="303" width="129" height="129">
-      <Ellipse x="0" y="0" width="129" height="129">
-        <Fill color="#ff161d2f" />
-      </Ellipse>
-    </PartDraw>
+    <ListConfiguration id="circles">
+      <ListOption id="filled">
+        <Group x="0" y="0" width="456" height="456" name="circles_filled">
+          <PartDraw x="212" y="303" width="129" height="129">
+            <Ellipse x="0" y="0" width="129" height="129">
+              <Fill color="#ff161d2f" />
+            </Ellipse>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="outline">
+        <Group x="0" y="0" width="456" height="456" name="circles_outline">
+          <PartDraw x="212" y="303" width="129" height="129">
+            <Ellipse x="1.5" y="1.5" width="126" height="126">
+              <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" />
+            </Ellipse>
+          </PartDraw>
+        </Group>
+      </ListOption>
+      <ListOption id="none">
+        <Group x="0" y="0" width="456" height="456" name="circles_none">
+          <!-- no background -->
+        </Group>
+      </ListOption>
+    </ListConfiguration>
     <PartText x="216" y="320" width="120" height="66">
       <Text align="CENTER">
         <Font family="gs_bold" size="41" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY_Z]" /></Template></Font>

@@ -37,6 +37,12 @@ HEART = "#ffff3029"             # heart-rate heart: red, like the ❤ emoji
 
 # Horseshoe rings: 280° from 220° (bottom-left) clockwise to 140° (bottom-right)
 ARC_START, ARC_SWEEP = 220, 280
+
+# Customize → shape options: (id, label). The first is the default (the Google layout)
+TIME_SHAPES = [("pill", "Pill"), ("rounded", "Rounded box"), ("outline", "Outline"), ("none", "None")]
+RING_STYLES = [("horseshoe", "Open"), ("full", "Full circle")]
+RING_ANGLES = {"horseshoe": (ARC_START, ARC_SWEEP), "full": (0, 360)}
+CIRCLE_STYLES = [("filled", "Filled"), ("outline", "Outline"), ("none", "None")]
 HR_MAX = 175                    # heart-rate ring spans 0..175 bpm (fitted to screenshots)
 
 MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
@@ -86,15 +92,42 @@ def image(resource, x, y, w, h, extra="", tint=None):
 </PartImage>"""
 
 
-def arc(cx, cy, r, stroke, color, end_expr=None, extra=""):
-    """Horseshoe arc on mid-radius r; end_expr = fraction 0..1 of the sweep (None = full)."""
-    sweep = f"{ARC_START} + ({end_expr}) * {ARC_SWEEP}" if end_expr else None
+def arc(cx, cy, r, stroke, color, end_expr=None, extra="", ring="horseshoe"):
+    """Ring arc on mid-radius r; end_expr = fraction 0..1 of the sweep (None = whole ring)."""
+    start, total = RING_ANGLES[ring]
+    sweep = f"{start} + ({end_expr}) * {total}" if end_expr else None
     x, y, box = int_box(cx, cy, stroke + 2 * r)
     transform = f'\n    <Transform target="endAngle" value="{sweep}" />' if sweep else ""
     return f"""<PartDraw x="{x}" y="{y}" width="{box}" height="{box}"{extra}>
-  <Arc centerX="{cx - x:g}" centerY="{cy - y:g}" width="{2 * r:g}" height="{2 * r:g}" startAngle="{ARC_START}" endAngle="{ARC_START + ARC_SWEEP}">{transform}
+  <Arc centerX="{cx - x:g}" centerY="{cy - y:g}" width="{2 * r:g}" height="{2 * r:g}" startAngle="{start}" endAngle="{start + total}">{transform}
     <Stroke color="{color}" thickness="{stroke}" cap="ROUND" />
   </Arc>
+</PartDraw>"""
+
+
+def options(config_id, variants, w=SIZE, h=SIZE):
+    """ListConfiguration: one Group per option id (variants: {id: xml})."""
+    opts = "\n".join(f"""<ListOption id="{oid}">
+  <Group x="0" y="0" width="{w}" height="{h}" name="{config_id}_{oid}">
+{indent(xml, 4)}
+  </Group>
+</ListOption>""" for oid, xml in variants.items())
+    return f"""<ListConfiguration id="{config_id}">
+{indent(opts, 2)}
+</ListConfiguration>"""
+
+
+def ring_disc(cx, cy, d, color, style, stroke=3):
+    """Circle background: filled, outlined or nothing."""
+    if style == "filled":
+        return disc(cx, cy, d, color)
+    if style == "none":
+        return "<!-- no background -->"
+    x, y, box = int_box(cx, cy, d)
+    return f"""<PartDraw x="{x}" y="{y}" width="{box}" height="{box}">
+  <Ellipse x="{cx - d / 2 - x + stroke / 2:g}" y="{cy - d / 2 - y + stroke / 2:g}" width="{d - stroke:g}" height="{d - stroke:g}">
+    <Stroke color="{PINK}" thickness="{stroke}" />
+  </Ellipse>
 </PartDraw>"""
 
 
@@ -129,25 +162,46 @@ def ring_complication(slot_id, cx, cy, outer, stroke, label, provider, text_size
     lc = lambda v: v - ox                     # local x
     lcy = lambda v: v - oy                    # local y
 
-    def progress(fraction):
+    size = round(d + 1)
+
+    def progress(fraction, ring):
         # A zero-length arc would still draw a round cap: hide it at 0
-        return arc(lc(cx), lcy(cy), r, stroke, BLUE, fraction,
-                   extra="").replace("<PartDraw ", "<PartDraw ", 1).replace(
+        return arc(lc(cx), lcy(cy), r, stroke, BLUE, fraction, ring=ring).replace(
             "\n  <Arc", f'\n  <Transform target="alpha" value="({fraction}) &gt; 0 ? 255 : 0" />\n  <Arc', 1)
 
-    track = arc(lc(cx), lcy(cy), r, stroke, NAVY)
-    label_text = text(template("[COMPLICATION.TEXT]"), lc(cx), lcy(cy + text_dy), text_size,
-                      width=round(2 * r - stroke - 6), auto=True)
-    ix, iy = round(lc(cx) - icon_box / 2), round(lcy(cy + icon_dy) - icon_box / 2)
-    # Solid color through the icon's shape: providers may send colored "monochromatic"
-    # icons (Fitbit's AZM one is orange), and tintColor multiplies instead of replacing
-    icon = f"""<Group x="{ix}" y="{iy}" width="{icon_box}" height="{icon_box}" name="Icon">
+    inner = r - stroke / 2
+
+    def content(ring):
+        """Text and icon; with a full ring they move up into the circle, off the ring."""
+        if ring == "full":
+            t_dy, i_dy = -0.2 * inner, inner - icon_box / 2 - 4
+        else:
+            t_dy, i_dy = text_dy, icon_dy
+        label_text = text(template("[COMPLICATION.TEXT]"), lc(cx), lcy(cy + t_dy), text_size,
+                          width=round(2 * r - stroke - 6), auto=True)
+        ix, iy = round(lc(cx) - icon_box / 2), round(lcy(cy + i_dy) - icon_box / 2)
+        # Solid color through the icon's shape: providers may send colored "monochromatic"
+        # icons (Fitbit's AZM one is orange), and tintColor multiplies instead of replacing
+        icon = f"""<Group x="{ix}" y="{iy}" width="{icon_box}" height="{icon_box}" name="Icon">
   <PartDraw x="0" y="0" width="{icon_box}" height="{icon_box}">
     <Rectangle x="0" y="0" width="{icon_box}" height="{icon_box}">
       <Fill color="{ICON}" />
     </Rectangle>
   </PartDraw>
 {indent(image("[COMPLICATION.MONOCHROMATIC_IMAGE]", 0, 0, icon_box, icon_box, extra=' renderMode="MASK"'), 2)}
+</Group>"""
+        return [label_text, icon]
+
+    def rings(fraction=None, with_content=True):
+        """Ring track (+ progress) and content for each Customize → Rings option."""
+        variants = {
+            ring: "\n".join([arc(lc(cx), lcy(cy), r, stroke, NAVY, ring=ring)]
+                            + ([progress(fraction, ring)] if fraction else [])
+                            + (content(ring) if with_content else []))
+            for ring, _ in RING_STYLES}
+        # Complications only take parts, groups and conditions: wrap the option list
+        return f"""<Group x="0" y="0" width="{size}" height="{size}" name="Rings">
+{indent(options("rings", variants, size, size), 2)}
 </Group>"""
 
     def body(kind, *parts):
@@ -156,35 +210,42 @@ def ring_complication(slot_id, cx, cy, outer, stroke, label, provider, text_size
 </Complication>"""
 
     return f"""<!-- {comment} -->
-<ComplicationSlot x="{ox}" y="{oy}" width="{round(d + 1)}" height="{round(d + 1)}" slotId="{slot_id}"
+<ComplicationSlot x="{ox}" y="{oy}" width="{size}" height="{size}" slotId="{slot_id}"
     displayName="{label}" supportedTypes="RANGED_VALUE GOAL_PROGRESS SHORT_TEXT EMPTY">
   <DefaultProviderPolicy
       primaryProvider="{provider}"
       primaryProviderType="RANGED_VALUE"
       defaultSystemProvider="EMPTY"
       defaultSystemProviderType="EMPTY" />
-  <BoundingOval x="0" y="0" width="{round(d + 1)}" height="{round(d + 1)}" />
-{indent(body("RANGED_VALUE", track, progress(RANGED), label_text, icon), 2)}
-{indent(body("GOAL_PROGRESS", track, progress(GOAL), label_text, icon), 2)}
-{indent(body("SHORT_TEXT", track, label_text, icon), 2)}
-{indent(body("EMPTY", track), 2)}
+  <BoundingOval x="0" y="0" width="{size}" height="{size}" />
+{indent(body("RANGED_VALUE", rings(RANGED)), 2)}
+{indent(body("GOAL_PROGRESS", rings(GOAL)), 2)}
+{indent(body("SHORT_TEXT", rings()), 2)}
+{indent(body("EMPTY", rings(with_content=False)), 2)}
 </ComplicationSlot>"""
 
 
 def heart_rate():
+    return options("rings", {ring: heart_rate_ring(ring) for ring, _ in RING_STYLES})
+
+
+def heart_rate_ring(ring):
     cx, cy, outer, stroke = 368.5, 223.5, 78.5, 20
     r = outer - stroke / 2
-    theta = f"rad({ARC_START} + clamp([HEART_RATE] / {HR_MAX}, 0, 1) * {ARC_SWEEP})"
+    start, total = RING_ANGLES[ring]
+    theta = f"rad({start} + clamp([HEART_RATE] / {HR_MAX}, 0, 1) * {total})"
     marker = f"""<Group x="0" y="0" width="34" height="34" name="HrMarker">
   <Transform target="x" value="{cx} + {r} * sin({theta}) - 17" />
   <Transform target="y" value="{cy} - {r} * cos({theta}) - 17" />
 {indent(disc(17, 17, 33, "#ff000000"), 2)}
 {indent(disc(17, 17, 19, PINK), 2)}
 </Group>"""
-    number = text(template("round([HEART_RATE])"), cx, cy + 1.5, 52, width=120)
-    dashes = text("--", cx, cy + 1.5, 52, width=120)
+    # Full ring: number and heart move up so the heart clears the ring's bottom
+    ny, hy = (cy - 8, cy + 30) if ring == "full" else (cy + 1.5, 281)
+    number = text(template("round([HEART_RATE])"), cx, ny, 52, width=120)
+    dashes = text("--", cx, ny, 52, width=120)
     return f"""<!-- Heart rate: blue ring with a marker at the current bpm, number, heart -->
-{arc(cx, cy, r, stroke, BLUE)}
+{arc(cx, cy, r, stroke, BLUE, ring=ring)}
 <Condition>
   <Expressions>
     <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
@@ -197,7 +258,7 @@ def heart_rate():
 {indent(dashes, 4)}
   </Default>
 </Condition>
-{image("ic_heart", 350, 265, 36, 32, tint=HEART)}"""
+{image("ic_heart", round(cx - 18), round(hy - 16), 36, 32, tint=HEART)}"""
 
 
 WEATHER_ICONS = [  # (WEATHER.CONDITION values, day icon, night icon)
@@ -240,7 +301,7 @@ def weather():
         compares.append(f'<Compare expression="night{i}">\n{indent(weather_icon(night, cx, cy), 2)}\n</Compare>')
     temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), cx + 0.5, cy, 36, width=100)
     return f"""<!-- Weather: condition icon filling the circle, temperature in the middle -->
-{disc(cx, cy, 104, NAVY)}
+{options("circles", {st: ring_disc(cx, cy, 104, NAVY, st) for st, _ in CIRCLE_STYLES})}
 <Condition>
   <Expressions>
 {indent(chr(10).join(exprs), 4)}
@@ -265,25 +326,35 @@ def date():
     cx, cy = 276.5, 367.5
     month = template(chain("[MONTH]", [m + "." for m in MONTHS], quote=True))
     return f"""<!-- Date: day, then month -->
-{disc(cx, cy, 129, NAVY)}
+{options("circles", {st: ring_disc(cx, cy, 129, NAVY, st) for st, _ in CIRCLE_STYLES})}
 {text(template("[DAY_Z]"), cx, cy - 14.5, 41, width=120)}
 {text(month, cx + 1, cy + 20, 26, font="gs_bold_wide", width=120)}"""
 
 
+def time_box(shape, ambient):
+    """Background of the time for one shape; ambient draws outlines only."""
+    if shape == "none":
+        return "<!-- no box -->"
+    radius = 24 if shape == "rounded" else 55.5
+    if ambient or shape == "outline":
+        variant = "" if shape == "outline" else f"\n  {AMBIENT_SHOW}"
+        alpha = "" if shape == "outline" else ' alpha="0"'
+        return f"""<PartDraw x="6" y="171" width="262" height="115"{alpha}>{variant}
+  <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="{radius + 0.5:g}" cornerRadiusY="{radius + 0.5:g}">
+    <Stroke color="{PINK}" thickness="3" />
+  </RoundRectangle>
+</PartDraw>"""
+    return f"""<PartDraw x="8" y="173" width="258" height="111">
+  {AMBIENT_HIDE}
+  <RoundRectangle x="0" y="0" width="258" height="111" cornerRadiusX="{radius:g}" cornerRadiusY="{radius:g}">
+    <Fill color="{NAVY}" />
+  </RoundRectangle>
+</PartDraw>"""
+
+
 def time():
-    pill = """<PartDraw x="8" y="173" width="258" height="111" name="TimePill">
-  {hide}
-  <RoundRectangle x="0" y="0" width="258" height="111" cornerRadiusX="55.5" cornerRadiusY="55.5">
-    <Fill color="{navy}" />
-  </RoundRectangle>
-</PartDraw>
-<!-- Always-on: outline only -->
-<PartDraw x="6" y="171" width="262" height="115" alpha="0" name="TimePillAmbient">
-  {show}
-  <RoundRectangle x="1.5" y="1.5" width="259" height="112" cornerRadiusX="56" cornerRadiusY="56">
-    <Stroke color="{pink}" thickness="3" />
-  </RoundRectangle>
-</PartDraw>""".format(hide=AMBIENT_HIDE, show=AMBIENT_SHOW, navy=NAVY, pink=PINK)
+    boxes = {shape: "\n".join(dict.fromkeys([time_box(shape, False), time_box(shape, True)]))
+             for shape, _ in TIME_SHAPES}
     cx, cy, size = 137, 230, 80
     h = round(size * 1.6)
     y = round(cy - h / 2 + CAP_SHIFT * size)
@@ -295,8 +366,8 @@ def time():
     <Font family="{font}" size="{size}" color="{PINK}" />
   </TimeText>
 </DigitalClock>"""
-    return f"""<!-- Time in a rounded pill (outlined, thinner digits in always-on) -->
-{pill}
+    return f"""<!-- Time in a box (Customize → Time shape; outlined, thinner digits in always-on) -->
+{options("timeShape", boxes)}
 {clock("gs_time", AMBIENT_HIDE)}
 {clock("gs_time_ambient", AMBIENT_SHOW, ' alpha="0"')}"""
 
@@ -307,10 +378,21 @@ def color_option(option):
             f'    colors="{text_color} {icon_color}" />')
 
 
+def list_config(config_id, prefix, items):
+    opts = "\n".join(f'  <ListOption id="{oid}" displayName="{prefix}_{oid}" screenReaderText="{prefix}_{oid}" />'
+                     for oid, _ in items)
+    return f"""<ListConfiguration id="{config_id}" displayName="{prefix}_label" screenReaderText="{prefix}_label" defaultValue="{items[0][0]}">
+{opts}
+</ListConfiguration>"""
+
+
 def strings():
     """values/strings.xml: slot names and the color option labels."""
-    options = "\n".join(f'    <string name="colors_{oid}">{label.replace("&", "&amp;")}</string>'
-                        for oid, label, _, _ in COLOR_OPTIONS)
+    entries = [(f"colors_{oid}", label) for oid, label, _, _ in COLOR_OPTIONS]
+    for prefix, items in (("time", TIME_SHAPES), ("rings", RING_STYLES), ("circles", CIRCLE_STYLES)):
+        entries += [(f"{prefix}_{oid}", label) for oid, label in items]
+    lines = "\n".join(f'    <string name="{name}">{label.replace("&", "&amp;")}</string>'
+                      for name, label in entries)
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by activeface/generate_watchface.py -->
 <resources>
@@ -318,7 +400,10 @@ def strings():
     <string name="mysteps_slot_label">MySteps</string>
     <string name="azm_slot_label">Top left</string>
     <string name="colors_label">Colors</string>
-{options}
+    <string name="time_label">Time shape</string>
+    <string name="rings_label">Rings</string>
+    <string name="circles_label">Circles</string>
+{lines}
 </resources>
 """
 
@@ -346,6 +431,9 @@ def watchface():
     <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="{COLOR_OPTIONS[0][0]}">
 {indent(chr(10).join(color_option(o) for o in COLOR_OPTIONS), 6)}
     </ColorConfiguration>
+{indent(list_config("timeShape", "time", TIME_SHAPES), 4)}
+{indent(list_config("rings", "rings", RING_STYLES), 4)}
+{indent(list_config("circles", "circles", CIRCLE_STYLES), 4)}
   </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">

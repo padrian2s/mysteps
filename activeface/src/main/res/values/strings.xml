@@ -5,10 +5,22 @@
     <string name="mysteps_slot_label">MySteps</string>
     <string name="azm_slot_label">Top left</string>
     <string name="colors_label">Colors</string>
+    <string name="time_label">Time shape</string>
+    <string name="rings_label">Rings</string>
+    <string name="circles_label">Circles</string>
     <string name="colors_pink">Pink &amp; blue</string>
     <string name="colors_morning">Morning Glow</string>
     <string name="colors_lilac">Lilac Bliss</string>
     <string name="colors_midnight">Midnight Zen</string>
     <string name="colors_teal">Fitbit Teal</string>
     <string name="colors_azm">Zone Minutes</string>
+    <string name="time_pill">Pill</string>
+    <string name="time_rounded">Rounded box</string>
+    <string name="time_outline">Outline</string>
+    <string name="time_none">None</string>
+    <string name="rings_horseshoe">Open</string>
+    <string name="rings_full">Full circle</string>
+    <string name="circles_filled">Filled</string>
+    <string name="circles_outline">Outline</string>
+    <string name="circles_none">None</string>
 </resources>
