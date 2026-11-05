@@ -43,6 +43,13 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - The XML is generated: edit `metroface/generate_watchface.py`, then run `python3 metroface/generate_watchface.py`
 - Requires Wear OS 6 (API 36)
 
+### MySteps Active Watch Face (`activeface/`)
+- Watch Face Format (v4) face laid out like Google's "Active" face (positions, rings and colors measured on a Pixel Watch 3)
+- Rings: top left (Active Zone Minutes by default), top **MySteps**, heart rate with a bpm marker; time pill; weather (big condition icon behind the temperature); date (day, then month)
+- Why it exists: Google's face is handed to the low-power display chip, which lights it up on a wrist raise without waking Android, so complications show stale data until you tap. This face can't be offloaded (TimeText), so a wrist raise wakes the watch and MySteps refreshes immediately
+- Font: Google Sans Flex (OFL), rounded static instances; icons: Material Symbols (Apache 2.0). Rebuild them with `python3 activeface/tools/build_assets.py <GoogleSansFlex.ttf> <symbols-svg-dir>`
+- The XML is generated: edit `activeface/generate_watchface.py`, then run `python3 activeface/generate_watchface.py`
+
 ### Hourly Progress Tracking
 - Tracks how many hours you've met your step goal within your active interval
 - Displayed on the complication (e.g. `❤3/5`) and in the app
@@ -61,6 +68,10 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 # Metro watch face (optional)
 ./gradlew :metroface:assembleDebug
 adb install metroface/build/outputs/apk/debug/metroface-debug.apk
+
+# MySteps Active watch face (optional)
+./gradlew :activeface:assembleDebug
+adb install activeface/build/outputs/apk/debug/activeface-debug.apk
 ```
 
 ## Usage

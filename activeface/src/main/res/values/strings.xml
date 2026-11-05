@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch_face_name">MySteps Active</string>
+    <string name="mysteps_slot_label">MySteps</string>
+    <string name="azm_slot_label">Top left</string>
+</resources>
