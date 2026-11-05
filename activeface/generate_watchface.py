@@ -197,7 +197,7 @@ WEATHER_ICONS = [  # (WEATHER.CONDITION values, day icon, night icon)
     ((15,), "ic_wx_wind", "ic_wx_wind"),
 ]
 ICON_SIZES = {  # trimmed PNG sizes (tools/build_assets.py), for the aspect ratio
-    "ic_wx_sunny": (176, 176), "ic_wx_night": (158, 157), "ic_wx_partly_day": (168, 153),
+    "ic_wx_sunny": (176, 176), "ic_wx_night": (113, 160), "ic_wx_partly_day": (168, 153),
     "ic_wx_partly_night": (166, 157), "ic_wx_cloud": (176, 128), "ic_wx_fog": (160, 160),
     "ic_wx_rain": (160, 161), "ic_wx_snow": (160, 168), "ic_wx_storm": (160, 176),
     "ic_wx_wind": (160, 136),

@@ -25,7 +25,7 @@ WHITE = "#ffffff"  # tinted in the watch face
 ICONS = {  # resource: (symbol, flip horizontally)
     "ic_heart": ("favorite", False),
     "ic_wx_sunny": ("sunny", False),
-    "ic_wx_night": ("bedtime", False),
+    "ic_wx_night": ("nightlight", False),
     "ic_wx_partly_day": ("partly_cloudy_day", False),
     "ic_wx_partly_night": ("partly_cloudy_night", False),
     "ic_wx_cloud": ("cloud", False),
