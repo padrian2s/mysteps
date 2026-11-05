@@ -19,7 +19,8 @@ SIZE = 456
 NAVY = "#ff161d2f"
 PINK = "#ffce7fb3"
 BLUE = "#ff7092ea"
-ICON = PINK                     # icons use the text color
+ICON = "#ff30adcc"              # icons: light blue
+HEART = "#ffff3029"             # heart-rate heart: red, like the ❤ emoji
 
 # Horseshoe rings: 280° from 220° (bottom-left) clockwise to 140° (bottom-right)
 ARC_START, ARC_SWEEP = 220, 280
@@ -183,7 +184,7 @@ def heart_rate():
 {indent(dashes, 4)}
   </Default>
 </Condition>
-{image("ic_heart", 350, 265, 36, 32, tint=ICON)}"""
+{image("ic_heart", 350, 265, 36, 32, tint=HEART)}"""
 
 
 WEATHER_ICONS = [  # (WEATHER.CONDITION values, day icon, night icon)

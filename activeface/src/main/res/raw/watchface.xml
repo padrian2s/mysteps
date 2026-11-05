@@ -35,7 +35,7 @@
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -64,7 +64,7 @@
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -86,7 +86,7 @@
         <Group x="38" y="76" width="28" height="28" name="Icon">
           <PartDraw x="0" y="0" width="28" height="28">
             <Rectangle x="0" y="0" width="28" height="28">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="28" height="28" renderMode="MASK">
@@ -133,7 +133,7 @@
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -162,7 +162,7 @@
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -184,7 +184,7 @@
         <Group x="47" y="93" width="36" height="36" name="Icon">
           <PartDraw x="0" y="0" width="36" height="36">
             <Rectangle x="0" y="0" width="36" height="36">
-              <Fill color="#ffce7fb3" />
+              <Fill color="#ff30adcc" />
             </Rectangle>
           </PartDraw>
           <PartImage x="0" y="0" width="36" height="36" renderMode="MASK">
@@ -267,7 +267,7 @@
         </PartText>
       </Default>
     </Condition>
-    <PartImage x="350" y="265" width="36" height="32" tintColor="#ffce7fb3">
+    <PartImage x="350" y="265" width="36" height="32" tintColor="#ffff3029">
       <Image resource="ic_heart" />
     </PartImage>
 
@@ -297,82 +297,82 @@
         <Expression name="night7">[WEATHER.IS_AVAILABLE] &amp;&amp; ([WEATHER.CONDITION] == 15)</Expression>
       </Expressions>
       <Compare expression="day0">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_sunny" />
         </PartImage>
       </Compare>
       <Compare expression="night0">
-        <PartImage x="104" y="313" width="52" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="104" y="313" width="52" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_night" />
         </PartImage>
       </Compare>
       <Compare expression="day1">
-        <PartImage x="93" y="316" width="74" height="67" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="316" width="74" height="67" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_partly_day" />
         </PartImage>
       </Compare>
       <Compare expression="night1">
-        <PartImage x="93" y="315" width="74" height="70" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="315" width="74" height="70" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_partly_night" />
         </PartImage>
       </Compare>
       <Compare expression="day2">
-        <PartImage x="93" y="323" width="74" height="54" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="323" width="74" height="54" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_cloud" />
         </PartImage>
       </Compare>
       <Compare expression="night2">
-        <PartImage x="93" y="323" width="74" height="54" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="323" width="74" height="54" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_cloud" />
         </PartImage>
       </Compare>
       <Compare expression="day3">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_fog" />
         </PartImage>
       </Compare>
       <Compare expression="night3">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_fog" />
         </PartImage>
       </Compare>
       <Compare expression="day4">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_rain" />
         </PartImage>
       </Compare>
       <Compare expression="night4">
-        <PartImage x="93" y="313" width="74" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="313" width="74" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_rain" />
         </PartImage>
       </Compare>
       <Compare expression="day5">
-        <PartImage x="95" y="313" width="70" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="95" y="313" width="70" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_snow" />
         </PartImage>
       </Compare>
       <Compare expression="night5">
-        <PartImage x="95" y="313" width="70" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="95" y="313" width="70" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_snow" />
         </PartImage>
       </Compare>
       <Compare expression="day6">
-        <PartImage x="96" y="313" width="67" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="96" y="313" width="67" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_storm" />
         </PartImage>
       </Compare>
       <Compare expression="night6">
-        <PartImage x="96" y="313" width="67" height="74" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="96" y="313" width="67" height="74" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_storm" />
         </PartImage>
       </Compare>
       <Compare expression="day7">
-        <PartImage x="93" y="318" width="74" height="63" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="318" width="74" height="63" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_wind" />
         </PartImage>
       </Compare>
       <Compare expression="night7">
-        <PartImage x="93" y="318" width="74" height="63" tintColor="#ffce7fb3" alpha="90">
+        <PartImage x="93" y="318" width="74" height="63" tintColor="#ff30adcc" alpha="90">
           <Image resource="ic_wx_wind" />
         </PartImage>
       </Compare>
