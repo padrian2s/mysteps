@@ -71,7 +71,7 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="278" width="142" height="71">
+        <PartText x="37" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
@@ -107,7 +107,7 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="278" width="142" height="71">
+        <PartText x="37" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
@@ -120,7 +120,7 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="278" width="142" height="71">
+        <PartText x="37" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
           </Text>
@@ -133,7 +133,7 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="278" width="142" height="71">
+        <PartText x="37" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
           </Text>
@@ -164,14 +164,9 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="278" width="142" height="71">
+        <PartText x="264" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <PartText x="286" y="337" width="99" height="26" alpha="140">
-          <Text align="CENTER">
-            <Font family="sg_regular" size="16.1" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.12">PAȘI / H</Font>
           </Text>
         </PartText>
       </Complication>
@@ -189,14 +184,9 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="278" width="142" height="71">
+        <PartText x="264" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <PartText x="286" y="337" width="99" height="26" alpha="140">
-          <Text align="CENTER">
-            <Font family="sg_regular" size="16.1" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.12">PAȘI / H</Font>
           </Text>
         </PartText>
       </Complication>
@@ -207,14 +197,9 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="278" width="142" height="71">
+        <PartText x="264" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
-        <PartText x="286" y="337" width="99" height="26" alpha="140">
-          <Text align="CENTER">
-            <Font family="sg_regular" size="16.1" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.12">PAȘI / H</Font>
           </Text>
         </PartText>
       </Complication>
@@ -225,14 +210,9 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="278" width="142" height="71">
+        <PartText x="264" y="287" width="142" height="71">
           <Text align="CENTER">
             <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-          </Text>
-        </PartText>
-        <PartText x="286" y="337" width="99" height="26" alpha="140">
-          <Text align="CENTER">
-            <Font family="sg_regular" size="16.1" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.12">PAȘI / H</Font>
           </Text>
         </PartText>
       </Complication>
@@ -257,21 +237,21 @@
             <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="205" y="272" width="129" height="79">
+        <PartText x="205" y="280" width="129" height="79">
           <Text align="START">
             <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
           </Text>
         </PartText>
       </Compare>
       <Default>
-        <PartText x="205" y="272" width="129" height="79">
+        <PartText x="205" y="280" width="129" height="79">
           <Text align="START">
             <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
           </Text>
         </PartText>
       </Default>
     </Condition>
-    <PartImage x="165" y="299" width="29" height="26" tintColor="#ffe5493f">
+    <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
       <Image resource="ic_heart" />
     </PartImage>
 

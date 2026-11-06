@@ -158,7 +158,7 @@ GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_
 
 # ---- Bottom row: three columns, flex-centered with a 22 px gap (design px) ----------
 LABEL_SIZE, LABEL_LS = 13, 0.12
-ROW_BOTTOM = 450 - 118
+ROW_BOTTOM = 450 - 111
 LABEL_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 / 2          # line-height: normal (1.276 em)
 # Numbers are bigger than the mock-up's 22 / 26 px (asked for on the watch)
 VALUE_SIZE = 36                                   # zone minutes and steps this hour
@@ -170,8 +170,8 @@ HEART_SIZE = 28                                   # ♥ glyph box; drawn as an i
 
 def columns():
     """Column centers (design px) for typical values, like the design's flexbox."""
-    # Only the steps number has a label (zone minutes and bpm read on their own)
-    labels = ["", "", "PAȘI / H"]
+    # No labels: the numbers read on their own (colors tell them apart)
+    labels = ["", "", ""]
     values = [text_width("77", "sg_medium", VALUE_SIZE),
               HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
               text_width("180", "sg_medium", VALUE_SIZE)]
