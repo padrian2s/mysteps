@@ -166,7 +166,7 @@
         </PartDraw>
         <PartText x="264" y="287" width="142" height="71">
           <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
           </Text>
         </PartText>
       </Complication>

@@ -207,7 +207,12 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
             parts.append(glowing_arc(r, stroke, color, fraction, glow) if glow
                          else arc(r, stroke, color, fraction))
         if kind != "EMPTY":
-            parts.append(text(template("[COMPLICATION.TEXT]"), p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE),
+            label_expr = "[COMPLICATION.TEXT]"
+            if full_at_max_one and kind == "RANGED_VALUE":
+                # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
+                label_expr = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
+                              "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
+            parts.append(text(template(label_expr), p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE),
                               color=value_color, width=s(VALUE_SIZE * 3.2)))
         else:
             parts.append(text("--", p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE), color=value_color,
