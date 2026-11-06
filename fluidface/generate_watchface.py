@@ -58,6 +58,9 @@ RED = "#ffe5493f"                        # heart-rate ring and heart
 ORANGE = "#ffe39a5a"                     # temperature
 HR_MAX = 145                             # the inner ring spans 0..145 bpm (89 bpm ≈ 62 %)
 
+# Date and temperature, bigger than the mock-up (12-14 px read badly on the wrist)
+DAY_SIZE, MONTH_SIZE, TEMP_SIZE = 34, 17, 24
+
 MONTHS = ["IAN", "FEB", "MAR", "APR", "MAI", "IUN", "IUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 
 AMBIENT_HIDE = '<Variant mode="AMBIENT" target="alpha" value="0" />'
@@ -154,21 +157,24 @@ RANGED = ("(clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_
 GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"
 
 # ---- Bottom row: three columns, flex-centered with a 22 px gap (design px) ----------
-LABEL_SIZE, LABEL_LS = 10, 0.14
-ROW_BOTTOM = 450 - 108
-LABEL_CY = ROW_BOTTOM - 10 * 1.276 / 2          # line-height: normal (1.276 em)
-VALUE_CY = ROW_BOTTOM - 10 * 1.276 - 3 - 22 / 2  # 22 px numbers, gap 3
-BPM_CY = ROW_BOTTOM - 10 * 1.276 - 3 - 26 / 2    # 26 px heart-rate row
-HEART_SIZE = 18                                   # ♥ glyph box; drawn as an icon
+LABEL_SIZE, LABEL_LS = 13, 0.12
+ROW_BOTTOM = 450 - 118
+LABEL_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 / 2          # line-height: normal (1.276 em)
+# Numbers are bigger than the mock-up's 22 / 26 px (asked for on the watch)
+VALUE_SIZE = 36                                   # zone minutes and steps this hour
+BPM_SIZE = 40                                     # heart-rate number
+VALUE_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 - 3 - VALUE_SIZE / 2  # gap 3 above the label line
+BPM_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 - 3 - BPM_SIZE / 2
+HEART_SIZE = 28                                   # ♥ glyph box; drawn as an icon
 
 
 def columns():
     """Column centers (design px) for typical values, like the design's flexbox."""
     # Only the steps number has a label (zone minutes and bpm read on their own)
     labels = ["", "", "PAȘI / H"]
-    values = [text_width("77", "sg_medium", 22),
-              HEART_SIZE + 6 + text_width("89", "sg_medium", 26),
-              text_width("180", "sg_medium", 22)]
+    values = [text_width("77", "sg_medium", VALUE_SIZE),
+              HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
+              text_width("180", "sg_medium", VALUE_SIZE)]
     widths = [max(v, text_width(l, "sg_regular", LABEL_SIZE, LABEL_LS) if l else 0) for l, v in zip(labels, values)]
     x = 225 - (sum(widths) + 2 * 22) / 2
     centers = []
@@ -201,10 +207,11 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
             parts.append(glowing_arc(r, stroke, color, fraction, glow) if glow
                          else arc(r, stroke, color, fraction))
         if kind != "EMPTY":
-            parts.append(text(template("[COMPLICATION.TEXT]"), p(COLS[col]), p(VALUE_CY), s(22),
-                              color=value_color, width=s(70)))
+            parts.append(text(template("[COMPLICATION.TEXT]"), p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE),
+                              color=value_color, width=s(VALUE_SIZE * 3.2)))
         else:
-            parts.append(text("--", p(COLS[col]), p(VALUE_CY), s(22), color=value_color, width=s(70)))
+            parts.append(text("--", p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE), color=value_color,
+                              width=s(VALUE_SIZE * 3.2)))
         if LABELS[col]:
             parts.append(label(col))
         return f"""<Complication type="{kind}">
@@ -232,13 +239,14 @@ def heart_rate():
     """Inner red ring (bpm / HR_MAX), heart and number in the middle column."""
     r, w = RING_HR
     frac = f"[HEART_RATE] / {HR_MAX}"
-    num_w = text_width("89", "sg_medium", 26)
+    num_w = text_width("89", "sg_medium", BPM_SIZE)
     group_w = HEART_SIZE + 6 + num_w
     hx = p(COLS[1] - group_w / 2)                     # heart box left
     nx = p(COLS[1] - group_w / 2 + HEART_SIZE + 6)    # number left
-    hs = s(15)                                        # visible heart in the 18 px glyph box
-    number = text(template("round([HEART_RATE])"), nx, p(BPM_CY), s(26), align="START", width=s(60))
-    dashes = text("--", nx, p(BPM_CY), s(26), align="START", width=s(60))
+    hs = s(HEART_SIZE * 0.83)                         # visible heart in the glyph box
+    number = text(template("round([HEART_RATE])"), nx, p(BPM_CY), s(BPM_SIZE), align="START",
+                  width=s(BPM_SIZE * 2.6))
+    dashes = text("--", nx, p(BPM_CY), s(BPM_SIZE), align="START", width=s(BPM_SIZE * 2.6))
     return f"""<!-- Heart rate: inner ring, ♥ and bpm -->
 {arc(r, w, RED, alpha=20, extra=f"{chr(10)}  {AMBIENT_HIDE}")}
 <Condition>
@@ -274,9 +282,9 @@ def seconds_dot():
 def date():
     month = template(chain("[MONTH]", [m + "." for m in MONTHS]))
     return f"""<!-- Date: day of the month, month below -->
-{text(template("[DAY]"), C, p(84 + 13), s(26), width=s(80))}
-{text(month, C + s(12 * 0.18) / 2, p(84 + 26 + 2 + 12 * 1.276 / 2), s(12), font="sg_medium",
-      width=s(80), spacing=0.18, extra=' alpha="153"')}"""
+{text(template("[DAY]"), C, p(84 + DAY_SIZE / 2), s(DAY_SIZE), width=s(DAY_SIZE * 3))}
+{text(month, C + s(MONTH_SIZE * 0.14) / 2, p(84 + DAY_SIZE + 2 + MONTH_SIZE * 1.276 / 2), s(MONTH_SIZE),
+      font="sg_medium", width=s(MONTH_SIZE * 7), spacing=0.14, extra=' alpha="170"')}"""
 
 
 def time():
@@ -310,21 +318,22 @@ def time():
 
 def temperature():
     """Orange dot with a halo, then the temperature, centered as one group."""
-    cy = p(450 - 76 - 14 * 1.276 / 2)
-    tw = text_width("25°", "sg_medium", 14, 0.02)
-    gw = 8 + 6 + tw
-    dot_cx = p(225 - gw / 2 + 4)
-    tx = p(225 - gw / 2 + 14)
-    temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), tx, cy, s(14), color=ORANGE,
-                align="START", width=s(50), spacing=0.02)
+    size, dot = TEMP_SIZE, TEMP_SIZE * 0.45
+    cy = p(450 - 76 - size * 1.276 / 2)
+    tw = text_width("25°", "sg_medium", size, 0.02)
+    gw = dot + 6 + tw
+    dot_cx = p(225 - gw / 2 + dot / 2)
+    tx = p(225 - gw / 2 + dot + 6)
+    temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), tx, cy, s(size), color=ORANGE,
+                align="START", width=s(size * 3.5), spacing=0.02)
     return f"""<!-- Temperature -->
 <Condition>
   <Expressions>
     <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
   </Expressions>
   <Compare expression="hasWeather">
-{indent(disc(dot_cx, cy, s(14), ORANGE, extra=' alpha="64"'), 4)}
-{indent(disc(dot_cx, cy, s(8), ORANGE), 4)}
+{indent(disc(dot_cx, cy, s(dot * 1.75), ORANGE, extra=' alpha="64"'), 4)}
+{indent(disc(dot_cx, cy, s(dot), ORANGE), 4)}
 {indent(temp, 4)}
   </Compare>
 </Condition>"""
