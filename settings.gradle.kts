@@ -23,3 +23,4 @@ rootProject.name = "MySteps"
 include(":app")
 include(":metroface")
 include(":activeface")
+include(":fluidface")

@@ -52,6 +52,14 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - Font: Google Sans Flex (OFL), rounded static instances; icons: Material Symbols (Apache 2.0). Rebuild them with `python3 activeface/tools/build_assets.py <GoogleSansFlex.ttf> <symbols-svg-dir>`
 - The XML is generated: edit `activeface/generate_watchface.py`, then run `python3 activeface/generate_watchface.py`
 
+### MySteps Fluid Watch Face (`fluidface/`)
+- Watch Face Format (v4) face from the "Cadran Fluid v2" design: three rings touching at the rim (outer **Active Zone Minutes**, middle **MySteps** steps this hour, inner heart rate), date on top, big light time with an accent colon that pulses each second, zone minutes / ♥ bpm / steps this hour below, temperature at the bottom, a seconds dot on the outer ring
+- Like activeface it isn't offloadable, so a wrist raise refreshes MySteps immediately
+- Tap the outer band for the Zone Minutes provider, anywhere inside for MySteps (the watch clips each complication to its single bounding shape, so both slots are centered ovals)
+- Customize → Colors: Sand & blue (default), Mint & pink, Lilac Bliss, Fitbit Teal, Zone Minutes, Silver
+- Font: Space Grotesk (OFL), static weights with tabular digits; the time font has the design's -0.05 em tracking built in. Rebuild with `python3 fluidface/tools/build_assets.py <SpaceGrotesk[wght].ttf>`
+- The XML is generated: edit `fluidface/generate_watchface.py`, then run `python3 fluidface/generate_watchface.py`
+
 ### Hourly Progress Tracking
 - Tracks how many hours you've met your step goal within your active interval
 - Displayed on the complication (e.g. `❤3/5`) and in the app
@@ -74,6 +82,10 @@ adb install metroface/build/outputs/apk/debug/metroface-debug.apk
 # MySteps Active watch face (optional)
 ./gradlew :activeface:assembleDebug
 adb install activeface/build/outputs/apk/debug/activeface-debug.apk
+
+# MySteps Fluid watch face (optional)
+./gradlew :fluidface:assembleDebug
+adb install fluidface/build/outputs/apk/debug/fluidface-debug.apk
 ```
 
 ## Usage
