@@ -6,6 +6,9 @@
     <string name="azm_slot_label">Outer ring (Zone Minutes)</string>
     <string name="colors_label">Colors</string>
     <string name="font_label">Font</string>
+    <string name="layout_label">Layout</string>
+    <string name="layout_classic">Classic</string>
+    <string name="layout_heart">Heart in the time</string>
     <string name="font_sg">Space Grotesk</string>
     <string name="font_jb">JetBrains Mono</string>
     <string name="colors_sand">Sand &amp; blue</string>

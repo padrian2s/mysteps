@@ -57,6 +57,7 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - Like activeface it isn't offloadable, so a wrist raise refreshes MySteps immediately
 - Tap the outer band for the Zone Minutes provider, anywhere inside for MySteps (the watch clips each complication to its single bounding shape, so both slots are centered ovals)
 - Customize → Colors: Sand & blue (default), Mint & pink, Lilac Bliss, Fitbit Teal, Zone Minutes, Silver, plus early-Ubuntu inspired themes: Warty Brown, Human, Human Earth, Human Spirit, Gaia, Ambiance, Aubergine
+- Customize → Layout: Classic, or Heart in the time (♥ and bpm between hours and minutes, zone minutes and steps alone below)
 - Customize → Font: Space Grotesk (default, the design's) or JetBrains Mono (both OFL), static weights with tabular digits; the time fonts have the design's -0.05 em tracking built in. Rebuild with `python3 fluidface/tools/build_assets.py <SpaceGrotesk[wght].ttf> <JetBrainsMono[wght].ttf>`
 - The XML is generated: edit `fluidface/generate_watchface.py`, then run `python3 fluidface/generate_watchface.py`
 

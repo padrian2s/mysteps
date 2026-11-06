@@ -88,23 +88,43 @@ def font(name):
     return FAMILY + name[2:] if name.startswith("sg_") else name
 
 
-def per_font(make, w=None, h=None):
-    """Customize → Font: one Group per family, each holding make() built in that family."""
-    global FAMILY
+# Customize → Layout: (id, label). "heart" is the second mock-up: ♥ and bpm between the
+# hours and minutes instead of the colon, zone minutes and steps alone on the row below
+LAYOUTS = [("classic", "Classic"), ("heart", "Heart in the time")]
+LAYOUT = "classic"
+
+
+def per_option(config_id, items, var, make):
+    """ListConfiguration with one Group per option, each holding make() built while the
+    module global var is set to that option."""
     variants = {}
-    for fid, _ in FAMILIES:
-        FAMILY = fid
-        variants[fid] = make()
-    FAMILY = FAMILIES[0][0]
-    w, h = w or SIZE, h or SIZE
-    opts = "\n".join(f"""<ListOption id="{fid}">
-  <Group x="0" y="0" width="{w}" height="{h}" name="font_{fid}">
+    for oid, _ in items:
+        globals()[var] = oid
+        variants[oid] = make()
+    globals()[var] = items[0][0]
+    opts = "\n".join(f"""<ListOption id="{oid}">
+  <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="{config_id}_{oid}">
 {indent(xml, 4)}
   </Group>
-</ListOption>""" for fid, xml in variants.items())
-    return f"""<ListConfiguration id="font">
+</ListOption>""" for oid, xml in variants.items())
+    return f"""<ListConfiguration id="{config_id}">
 {indent(opts, 2)}
 </ListConfiguration>"""
+
+
+def per_font(make):
+    """Customize → Font: make() once per family."""
+    return per_option("font", FAMILIES, "FAMILY", make)
+
+
+def per_layout(make):
+    """Customize → Layout: make() once per layout."""
+    return per_option("layout", LAYOUTS, "LAYOUT", make)
+
+
+def per_style(make):
+    """Every layout x font combination."""
+    return per_layout(lambda: per_font(make))
 
 
 def text_width(content, font, size, spacing=0.0):
@@ -147,9 +167,9 @@ def template(expr, fmt="%s"):
     return f'<Template>{fmt}<Parameter expression="{expr}" /></Template>'
 
 
-def image(resource, x, y, w, h, extra="", tint=None):
+def image(resource, x, y, w, h, extra="", tint=None, inner=""):
     t = f' tintColor="{tint}"' if tint else ""
-    return f"""<PartImage x="{round(x)}" y="{round(y)}" width="{round(w)}" height="{round(h)}"{t}{extra}>
+    return f"""<PartImage x="{round(x)}" y="{round(y)}" width="{round(w)}" height="{round(h)}"{t}{extra}>{inner}
   <Image resource="{resource}" />
 </PartImage>"""
 
@@ -204,14 +224,29 @@ BPM_SIZE = 40                                     # heart-rate number
 VALUE_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 - 3 - VALUE_SIZE / 2  # gap 3 above the label line
 BPM_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 - 3 - BPM_SIZE / 2
 HEART_SIZE = 28                                   # ♥ glyph box; drawn as an icon
+# Heart layout (design px): middle gap of the number row, time size and gap, ♥ and bpm
+HEART_GAP = 62
+HEART_ROW_CY = 316
+HEART_TIME_SIZE, HEART_TIME_GAP, HEART_TIME_CY = 88, 60, 219
+HEART_ICON, HEART_ICON_CY = 20, 203
+HEART_BPM_SIZE, HEART_BPM_CY = 30, 244     # bigger than the mock-up's, asked for on the watch
+
+
+def value_cy():
+    return HEART_ROW_CY if LAYOUT == "heart" else VALUE_CY
 
 
 def cols():
     """Column centers (design px) for typical values, like the design's flexbox. No labels:
     the numbers read on their own (colors tell them apart)."""
-    widths = [text_width("77", "sg_medium", VALUE_SIZE),
-              HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
-              text_width("180", "sg_medium", VALUE_SIZE)]
+    if LAYOUT == "heart":
+        # Two numbers far apart; the middle one is empty (the bpm is in the time)
+        widths = [text_width("77", "sg_medium", VALUE_SIZE), HEART_GAP,
+                  text_width("180", "sg_medium", VALUE_SIZE)]
+    else:
+        widths = [text_width("77", "sg_medium", VALUE_SIZE),
+                  HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
+                  text_width("180", "sg_medium", VALUE_SIZE)]
     x = 225 - (sum(widths) + 2 * 22) / 2
     centers = []
     for w in widths:
@@ -236,18 +271,18 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
                          else arc(r, stroke, color, fraction))
         def number():
             if kind == "EMPTY":
-                return text("--", p(cols()[col]), p(VALUE_CY), s(VALUE_SIZE), color=value_color,
+                return text("--", p(cols()[col]), p(value_cy()), s(VALUE_SIZE), color=value_color,
                             width=s(VALUE_SIZE * 3.2))
             label_expr = "[COMPLICATION.TEXT]"
             if full_at_max_one and kind == "RANGED_VALUE":
                 # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
                 label_expr = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
                               "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            return text(template(label_expr), p(cols()[col]), p(VALUE_CY), s(VALUE_SIZE),
+            return text(template(label_expr), p(cols()[col]), p(value_cy()), s(VALUE_SIZE),
                         color=value_color, width=s(VALUE_SIZE * 3.2))
         # Complications only take parts, groups and conditions: wrap the font options
         parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
-{indent(per_font(number), 2)}
+{indent(per_style(number), 2)}
 </Group>""")
         return f"""<Complication type="{kind}">
 {indent(chr(10).join(parts), 2)}
@@ -271,13 +306,25 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
 
 
 def heart_rate():
-    return per_font(heart_rate_variant)
+    """Inner red ring (bpm / HR_MAX), then ♥ and bpm placed by the layout."""
+    r, w = RING_HR
+    frac = f"[HEART_RATE] / {HR_MAX}"
+    return f"""<!-- Heart rate: inner ring -->
+{arc(r, w, RED, alpha=20, extra=f"{chr(10)}  {AMBIENT_HIDE}")}
+<Condition>
+  <Expressions>
+    <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
+  </Expressions>
+  <Compare expression="hasHrRing">
+{indent(arc(r, w, RED, frac), 4)}
+  </Compare>
+</Condition>
+{per_style(heart_rate_variant)}"""
 
 
 def heart_rate_variant():
-    """Inner red ring (bpm / HR_MAX), heart and number in the middle column."""
-    r, w = RING_HR
-    frac = f"[HEART_RATE] / {HR_MAX}"
+    if LAYOUT == "heart":
+        return heart_in_time()
     num_w = text_width("89", "sg_medium", BPM_SIZE)
     group_w = HEART_SIZE + 6 + num_w
     hx = p(cols()[1] - group_w / 2)                   # heart box left
@@ -286,14 +333,12 @@ def heart_rate_variant():
     number = text(template("round([HEART_RATE])"), nx, p(BPM_CY), s(BPM_SIZE), align="START",
                   width=s(BPM_SIZE * 2.6))
     dashes = text("--", nx, p(BPM_CY), s(BPM_SIZE), align="START", width=s(BPM_SIZE * 2.6))
-    return f"""<!-- Heart rate: inner ring, ♥ and bpm -->
-{arc(r, w, RED, alpha=20, extra=f"{chr(10)}  {AMBIENT_HIDE}")}
+    return f"""<!-- Heart rate: ♥ and bpm in the middle of the row -->
 <Condition>
   <Expressions>
     <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
   </Expressions>
   <Compare expression="hasHr">
-{indent(arc(r, w, RED, frac), 4)}
 {indent(number, 4)}
   </Compare>
   <Default>
@@ -301,6 +346,31 @@ def heart_rate_variant():
   </Default>
 </Condition>
 {image("ic_heart", hx + (s(HEART_SIZE) - hs) / 2, p(BPM_CY) - hs * 0.89 / 2, hs, hs * 0.89, tint=RED)}"""
+
+
+def heart_in_time():
+    """Heart layout: a glowing ♥ with the bpm under it, between hours and minutes."""
+    hs = s(HEART_ICON)
+    hx, hy = C - hs / 2, p(HEART_ICON_CY) - hs * 0.89 / 2
+    glow = s(HEART_ICON * 1.35)
+    number = text(template("round([HEART_RATE])"), C, p(HEART_BPM_CY), s(HEART_BPM_SIZE),
+                  color=RED, width=s(HEART_BPM_SIZE * 3))
+    dashes = text("--", C, p(HEART_BPM_CY), s(HEART_BPM_SIZE), color=RED, width=s(HEART_BPM_SIZE * 3))
+    return f"""<!-- Heart rate: ♥ and bpm in place of the colon -->
+{image("ic_heart", C - glow / 2, p(HEART_ICON_CY) - glow * 0.89 / 2, glow, glow * 0.89, tint=RED,
+       extra=' alpha="60"', inner=f"{chr(10)}  {AMBIENT_HIDE}")}
+{image("ic_heart", hx, hy, hs, hs * 0.89, tint=RED)}
+<Condition>
+  <Expressions>
+    <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+  </Expressions>
+  <Compare expression="hasHr">
+{indent(number, 4)}
+  </Compare>
+  <Default>
+{indent(dashes, 4)}
+  </Default>
+</Condition>"""
 
 
 def seconds_dot():
@@ -328,11 +398,13 @@ def date():
 
 def time():
     """hh : mm, light 100 px digits (tabular, -0.05 em), accent colon pulsing each second."""
-    size = 100
+    heart = LAYOUT == "heart"
+    size = HEART_TIME_SIZE if heart else 100
     ls = -0.05
-    cy = p((450 - 24) / 2)
-    # margin 0 2px; a monospace colon is as wide as a digit: keep the gap proportional
-    colon_w = min(text_width(":", "sg_light", size, ls), 0.3 * size) + 4
+    cy = p(HEART_TIME_CY if heart else (450 - 24) / 2)
+    # margin 0 2px; a monospace colon is as wide as a digit: keep the gap proportional.
+    # The heart layout leaves room for the ♥ and bpm instead
+    colon_w = HEART_TIME_GAP if heart else min(text_width(":", "sg_light", size, ls), 0.3 * size) + 4
     digits_w = text_width("00", "sg_light", size, ls)
     left = 225 - (2 * digits_w + colon_w) / 2
     hh_right, mm_left = left + digits_w, left + digits_w + colon_w
@@ -350,9 +422,10 @@ def time():
     pulse = ('\n  <Transform target="alpha" value="[SECOND] % 2 == 0 ? 255 : 140" />'
              '\n  <Variant mode="AMBIENT" target="alpha" value="255" />')
     # sg_time has the tracking in its advances, like the browser (after every glyph)
+    colon = "" if heart else "\n" + text(":", p(colon_cx) - s(size * ls) / 2, cy, s(size), font="sg_light",
+                                          color=ACCENT, width=s(40), inner=pulse)
     return f"""<!-- Time -->
-{clock("hh", p(hh_right), "END")}
-{text(":", p(colon_cx) - s(size * ls) / 2, cy, s(size), font="sg_light", color=ACCENT, width=s(40), inner=pulse)}
+{clock("hh", p(hh_right), "END")}{colon}
 {clock("mm", p(mm_left), "START")}"""
 
 
@@ -408,6 +481,7 @@ def color_option(option):
 def strings():
     lines = "\n".join(f'    <string name="colors_{oid}">{label.replace("&", "&amp;")}</string>'
                       for oid, label, _, _ in COLOR_OPTIONS)
+    layouts = "\n".join(f'    <string name="layout_{lid}">{label}</string>' for lid, label in LAYOUTS)
     fonts = "\n".join(f'    <string name="font_{fid}">{label}</string>' for fid, label in FAMILIES)
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by fluidface/generate_watchface.py -->
@@ -417,6 +491,8 @@ def strings():
     <string name="azm_slot_label">Outer ring (Zone Minutes)</string>
     <string name="colors_label">Colors</string>
     <string name="font_label">Font</string>
+    <string name="layout_label">Layout</string>
+{layouts}
 {fonts}
 {lines}
 </resources>
@@ -437,7 +513,7 @@ def watchface():
         heart_rate(),
         seconds_dot(),
         per_font(date),
-        per_font(time),
+        per_style(time),
         weather(),
     ])
     return f"""<?xml version="1.0" encoding="utf-8"?>
@@ -452,6 +528,9 @@ def watchface():
     </ColorConfiguration>
     <ListConfiguration id="font" displayName="font_label" screenReaderText="font_label" defaultValue="{FAMILIES[0][0]}">
 {indent(chr(10).join(f'<ListOption id="{fid}" displayName="font_{fid}" screenReaderText="font_{fid}" />' for fid, _ in FAMILIES), 6)}
+    </ListConfiguration>
+    <ListConfiguration id="layout" displayName="layout_label" screenReaderText="layout_label" defaultValue="{LAYOUTS[0][0]}">
+{indent(chr(10).join(f'<ListOption id="{lid}" displayName="layout_{lid}" screenReaderText="layout_{lid}" />' for lid, _ in LAYOUTS), 6)}
     </ListConfiguration>
   </UserConfigurations>
 
