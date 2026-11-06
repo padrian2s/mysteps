@@ -11,4 +11,11 @@
     <string name="colors_teal">Fitbit Teal</string>
     <string name="colors_azm">Zone Minutes</string>
     <string name="colors_mono">Silver</string>
+    <string name="colors_warty">Warty Brown</string>
+    <string name="colors_human">Human</string>
+    <string name="colors_earth">Human Earth</string>
+    <string name="colors_spirit">Human Spirit</string>
+    <string name="colors_gaia">Gaia</string>
+    <string name="colors_ambiance">Ambiance</string>
+    <string name="colors_aubergine">Aubergine</string>
 </resources>

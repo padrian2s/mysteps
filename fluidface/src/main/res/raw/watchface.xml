@@ -18,6 +18,20 @@
           colors="#fff8c33c #fff57c3a" />
       <ColorOption id="mono" displayName="colors_mono" screenReaderText="colors_mono"
           colors="#ffe2e2e2 #ff8f9bb3" />
+      <ColorOption id="warty" displayName="colors_warty" screenReaderText="colors_warty"
+          colors="#ffe8c9a1 #ffc08850" />
+      <ColorOption id="human" displayName="colors_human" screenReaderText="colors_human"
+          colors="#fff2d2a9 #fff57900" />
+      <ColorOption id="earth" displayName="colors_earth" screenReaderText="colors_earth"
+          colors="#ffd8c3a5 #ff9aae62" />
+      <ColorOption id="spirit" displayName="colors_spirit" screenReaderText="colors_spirit"
+          colors="#ffffd9a0 #ffe95420" />
+      <ColorOption id="gaia" displayName="colors_gaia" screenReaderText="colors_gaia"
+          colors="#ffc9dca0 #ff73a24a" />
+      <ColorOption id="ambiance" displayName="colors_ambiance" screenReaderText="colors_ambiance"
+          colors="#ffdfdbd2 #fff07746" />
+      <ColorOption id="aubergine" displayName="colors_aubergine" screenReaderText="colors_aubergine"
+          colors="#fff6a37a #ffb37aa8" />
     </ColorConfiguration>
   </UserConfigurations>
 

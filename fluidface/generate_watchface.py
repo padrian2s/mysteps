@@ -51,6 +51,14 @@ COLOR_OPTIONS = [
     ("teal", "Fitbit Teal", "#ff39cccc", "#ffe2e2e2"),
     ("azm", "Zone Minutes", "#fff8c33c", "#fff57c3a"),
     ("mono", "Silver", "#ffe2e2e2", "#ff8f9bb3"),
+    # Early Ubuntu themes (approximations of their GTK palettes, brightened for a black dial)
+    ("warty", "Warty Brown", "#ffe8c9a1", "#ffc08850"),      # 4.10: brown everything
+    ("human", "Human", "#fff2d2a9", "#fff57900"),            # 5.04-9.04: tan + Human orange
+    ("earth", "Human Earth", "#ffd8c3a5", "#ff9aae62"),      # earthy tan + olive green
+    ("spirit", "Human Spirit", "#ffffd9a0", "#ffe95420"),    # warm cream + Ubuntu orange
+    ("gaia", "Gaia", "#ffc9dca0", "#ff73a24a"),              # leafy greens
+    ("ambiance", "Ambiance", "#ffdfdbd2", "#fff07746"),      # 10.04: warm grey + orange
+    ("aubergine", "Aubergine", "#fff6a37a", "#ffb37aa8"),    # orange on light aubergine
 ]
 MAIN = "[CONFIGURATION.themeColor.0]"    # time, date, bpm, steps ring
 ACCENT = "[CONFIGURATION.themeColor.1]"  # colon, zone minutes ring and numbers
