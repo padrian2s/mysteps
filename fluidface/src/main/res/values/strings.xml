@@ -5,6 +5,9 @@
     <string name="mysteps_slot_label">Middle ring (MySteps)</string>
     <string name="azm_slot_label">Outer ring (Zone Minutes)</string>
     <string name="colors_label">Colors</string>
+    <string name="font_label">Font</string>
+    <string name="font_sg">Space Grotesk</string>
+    <string name="font_jb">JetBrains Mono</string>
     <string name="colors_sand">Sand &amp; blue</string>
     <string name="colors_mint">Mint &amp; pink</string>
     <string name="colors_lilac">Lilac Bliss</string>

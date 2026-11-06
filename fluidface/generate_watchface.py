@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Generates src/main/res/raw/watchface.xml for the Fluid watch face.
 
+Fonts: Space Grotesk (the design's) or JetBrains Mono, picked in Customize → Font.
+
 Edit this file, not the XML:
 
     python3 fluidface/generate_watchface.py
@@ -73,12 +75,41 @@ MONTHS = ["IAN", "FEB", "MAR", "APR", "MAI", "IUN", "IUL", "AUG", "SEP", "OCT", 
 
 AMBIENT_HIDE = '<Variant mode="AMBIENT" target="alpha" value="0" />'
 
-FONT_FILES = {name: TTFont(RES / "font" / f"{name}.ttf") for name in ("sg_light", "sg_regular", "sg_medium", "sg_time")}
+# Customize → Font: (id = font file prefix, label); the first is the default (the design's)
+FAMILIES = [("sg", "Space Grotesk"), ("jb", "JetBrains Mono")]
+FAMILY = "sg"   # family being generated; code names fonts as "sg_<role>" and this swaps it
+
+FONT_FILES = {f"{fid}_{role}": TTFont(RES / "font" / f"{fid}_{role}.ttf")
+              for fid, _ in FAMILIES for role in ("light", "regular", "medium", "time")}
+
+
+def font(name):
+    """sg_<role> -> <current family>_<role>."""
+    return FAMILY + name[2:] if name.startswith("sg_") else name
+
+
+def per_font(make, w=None, h=None):
+    """Customize → Font: one Group per family, each holding make() built in that family."""
+    global FAMILY
+    variants = {}
+    for fid, _ in FAMILIES:
+        FAMILY = fid
+        variants[fid] = make()
+    FAMILY = FAMILIES[0][0]
+    w, h = w or SIZE, h or SIZE
+    opts = "\n".join(f"""<ListOption id="{fid}">
+  <Group x="0" y="0" width="{w}" height="{h}" name="font_{fid}">
+{indent(xml, 4)}
+  </Group>
+</ListOption>""" for fid, xml in variants.items())
+    return f"""<ListConfiguration id="font">
+{indent(opts, 2)}
+</ListConfiguration>"""
 
 
 def text_width(content, font, size, spacing=0.0):
     """Advance width in px, as the browser lays it out (letter-spacing after every glyph)."""
-    f = FONT_FILES[font]
+    f = FONT_FILES[globals()["font"](font)]
     cmap, hmtx, upm = f.getBestCmap(), f["hmtx"], f["head"].unitsPerEm
     return sum(hmtx[cmap[ord(ch)]][0] / upm + spacing for ch in content) * size
 
@@ -98,8 +129,8 @@ def chain(source, values):
 
 def text(content, cx, cy, size, font="sg_medium", color=MAIN, width=None, extra="",
          spacing=0.0, align="CENTER", inner=""):
-    """Single-line text whose cap middle sits on (cx, cy) (Space Grotesk's line box is
-    centered on its caps, within 0.5 % of the size). align=START puts the left edge at cx,
+    """Single-line text whose cap middle sits on (cx, cy) (Space Grotesk's and JetBrains
+    Mono's line boxes are centered on their caps, within 0.5 % of the size). align=START puts the left edge at cx,
     END the right edge."""
     w = round(width or SIZE)
     h = round(size * 1.6)
@@ -107,7 +138,7 @@ def text(content, cx, cy, size, font="sg_medium", color=MAIN, width=None, extra=
     ls = f' letterSpacing="{spacing:g}"' if spacing else ""
     return f"""<PartText x="{round(x)}" y="{round(cy - h / 2)}" width="{w}" height="{h}"{extra}>{inner}
   <Text align="{align}">
-    <Font family="{font}" size="{size:g}" color="{color}"{ls}>{content}</Font>
+    <Font family="{globals()["font"](font)}" size="{size:g}" color="{color}"{ls}>{content}</Font>
   </Text>
 </PartText>"""
 
@@ -165,9 +196,8 @@ RANGED = ("(clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_
 GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"
 
 # ---- Bottom row: three columns, flex-centered with a 22 px gap (design px) ----------
-LABEL_SIZE, LABEL_LS = 13, 0.12
+LABEL_SIZE = 13      # the labels are gone; the row keeps the room their line took
 ROW_BOTTOM = 450 - 111
-LABEL_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 / 2          # line-height: normal (1.276 em)
 # Numbers are bigger than the mock-up's 22 / 26 px (asked for on the watch)
 VALUE_SIZE = 36                                   # zone minutes and steps this hour
 BPM_SIZE = 40                                     # heart-rate number
@@ -176,28 +206,18 @@ BPM_CY = ROW_BOTTOM - LABEL_SIZE * 1.276 - 3 - BPM_SIZE / 2
 HEART_SIZE = 28                                   # ♥ glyph box; drawn as an icon
 
 
-def columns():
-    """Column centers (design px) for typical values, like the design's flexbox."""
-    # No labels: the numbers read on their own (colors tell them apart)
-    labels = ["", "", ""]
-    values = [text_width("77", "sg_medium", VALUE_SIZE),
+def cols():
+    """Column centers (design px) for typical values, like the design's flexbox. No labels:
+    the numbers read on their own (colors tell them apart)."""
+    widths = [text_width("77", "sg_medium", VALUE_SIZE),
               HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
               text_width("180", "sg_medium", VALUE_SIZE)]
-    widths = [max(v, text_width(l, "sg_regular", LABEL_SIZE, LABEL_LS) if l else 0) for l, v in zip(labels, values)]
     x = 225 - (sum(widths) + 2 * 22) / 2
     centers = []
     for w in widths:
         centers.append(x + w / 2)
         x += w + 22
-    return labels, centers
-
-
-LABELS, COLS = columns()
-
-
-def label(i):
-    return text(LABELS[i], p(COLS[i]) + s(LABEL_SIZE * LABEL_LS) / 2, p(LABEL_CY), s(LABEL_SIZE),
-                font="sg_regular", width=s(80), spacing=LABEL_LS, extra=' alpha="140"')
+    return centers
 
 
 def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col, value_color,
@@ -214,19 +234,21 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
                 fraction = f"([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : {fraction})"
             parts.append(glowing_arc(r, stroke, color, fraction, glow) if glow
                          else arc(r, stroke, color, fraction))
-        if kind != "EMPTY":
+        def number():
+            if kind == "EMPTY":
+                return text("--", p(cols()[col]), p(VALUE_CY), s(VALUE_SIZE), color=value_color,
+                            width=s(VALUE_SIZE * 3.2))
             label_expr = "[COMPLICATION.TEXT]"
             if full_at_max_one and kind == "RANGED_VALUE":
                 # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
                 label_expr = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
                               "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            parts.append(text(template(label_expr), p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE),
-                              color=value_color, width=s(VALUE_SIZE * 3.2)))
-        else:
-            parts.append(text("--", p(COLS[col]), p(VALUE_CY), s(VALUE_SIZE), color=value_color,
-                              width=s(VALUE_SIZE * 3.2)))
-        if LABELS[col]:
-            parts.append(label(col))
+            return text(template(label_expr), p(cols()[col]), p(VALUE_CY), s(VALUE_SIZE),
+                        color=value_color, width=s(VALUE_SIZE * 3.2))
+        # Complications only take parts, groups and conditions: wrap the font options
+        parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
+{indent(per_font(number), 2)}
+</Group>""")
         return f"""<Complication type="{kind}">
 {indent(chr(10).join(parts), 2)}
 </Complication>"""
@@ -249,13 +271,17 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
 
 
 def heart_rate():
+    return per_font(heart_rate_variant)
+
+
+def heart_rate_variant():
     """Inner red ring (bpm / HR_MAX), heart and number in the middle column."""
     r, w = RING_HR
     frac = f"[HEART_RATE] / {HR_MAX}"
     num_w = text_width("89", "sg_medium", BPM_SIZE)
     group_w = HEART_SIZE + 6 + num_w
-    hx = p(COLS[1] - group_w / 2)                     # heart box left
-    nx = p(COLS[1] - group_w / 2 + HEART_SIZE + 6)    # number left
+    hx = p(cols()[1] - group_w / 2)                   # heart box left
+    nx = p(cols()[1] - group_w / 2 + HEART_SIZE + 6)  # number left
     hs = s(HEART_SIZE * 0.83)                         # visible heart in the glyph box
     number = text(template("round([HEART_RATE])"), nx, p(BPM_CY), s(BPM_SIZE), align="START",
                   width=s(BPM_SIZE * 2.6))
@@ -305,7 +331,8 @@ def time():
     size = 100
     ls = -0.05
     cy = p((450 - 24) / 2)
-    colon_w = text_width(":", "sg_light", size, ls) + 4        # margin 0 2px
+    # margin 0 2px; a monospace colon is as wide as a digit: keep the gap proportional
+    colon_w = min(text_width(":", "sg_light", size, ls), 0.3 * size) + 4
     digits_w = text_width("00", "sg_light", size, ls)
     left = 225 - (2 * digits_w + colon_w) / 2
     hh_right, mm_left = left + digits_w, left + digits_w + colon_w
@@ -317,7 +344,7 @@ def time():
         x = x_edge if align == "START" else x_edge - w
         return f"""<DigitalClock x="{round(x)}" y="{round(cy - h / 2)}" width="{w}" height="{h}">
   <TimeText format="{fmt}" hourFormat="SYNC_TO_DEVICE" align="{align}" x="0" y="0" width="{w}" height="{h}">
-    <Font family="sg_time" size="{s(size):g}" color="{MAIN}" />
+    <Font family="{font('sg_time')}" size="{s(size):g}" color="{MAIN}" />
   </TimeText>
 </DigitalClock>"""
     pulse = ('\n  <Transform target="alpha" value="[SECOND] % 2 == 0 ? 255 : 140" />'
@@ -373,6 +400,7 @@ def color_option(option):
 def strings():
     lines = "\n".join(f'    <string name="colors_{oid}">{label.replace("&", "&amp;")}</string>'
                       for oid, label, _, _ in COLOR_OPTIONS)
+    fonts = "\n".join(f'    <string name="font_{fid}">{label}</string>' for fid, label in FAMILIES)
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by fluidface/generate_watchface.py -->
 <resources>
@@ -380,6 +408,8 @@ def strings():
     <string name="mysteps_slot_label">Middle ring (MySteps)</string>
     <string name="azm_slot_label">Outer ring (Zone Minutes)</string>
     <string name="colors_label">Colors</string>
+    <string name="font_label">Font</string>
+{fonts}
 {lines}
 </resources>
 """
@@ -398,9 +428,9 @@ def watchface():
                   "Middle ring + right number: MySteps, steps this hour", RING_STEPS[0] + RING_STEPS[1] / 2 + 1, full_at_max_one=True),
         heart_rate(),
         seconds_dot(),
-        date(),
-        time(),
-        temperature(),
+        per_font(date),
+        per_font(time),
+        per_font(temperature),
     ])
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by fluidface/generate_watchface.py — edit that file, not this one. -->
@@ -412,6 +442,9 @@ def watchface():
     <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="{COLOR_OPTIONS[0][0]}">
 {indent(chr(10).join(color_option(o) for o in COLOR_OPTIONS), 6)}
     </ColorConfiguration>
+    <ListConfiguration id="font" displayName="font_label" screenReaderText="font_label" defaultValue="{FAMILIES[0][0]}">
+{indent(chr(10).join(f'<ListOption id="{fid}" displayName="font_{fid}" screenReaderText="font_{fid}" />' for fid, _ in FAMILIES), 6)}
+    </ListConfiguration>
   </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">
@@ -424,4 +457,4 @@ def watchface():
 if __name__ == "__main__":
     OUT.write_text(watchface())
     (RES / "values/strings.xml").write_text(strings())
-    print(f"wrote {OUT}", "columns:", [round(c, 1) for c in COLS])
+    print(f"wrote {OUT}", "columns:", [round(c, 1) for c in cols()])

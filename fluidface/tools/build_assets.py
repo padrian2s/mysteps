@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Builds the fonts in src/main/res/font from Space Grotesk (OFL, github.com/google/fonts
-ofl/spacegrotesk):
+"""Builds the fonts in src/main/res/font from Space Grotesk and JetBrains Mono (both OFL,
+github.com/google/fonts ofl/spacegrotesk and ofl/jetbrainsmono):
 
-    python3 fluidface/tools/build_assets.py <SpaceGrotesk[wght].ttf>
+    python3 fluidface/tools/build_assets.py <SpaceGrotesk[wght].ttf> <JetBrainsMono[wght].ttf>
 
 Static weights, subset to Latin + Romanian, with tabular digits baked into the cmap
 (the design uses font-variant-numeric: tabular-nums, which WFF can't request).
@@ -15,7 +15,8 @@ from fontTools.varLib import instancer
 from fontTools import subset
 
 RES = Path(__file__).resolve().parent.parent / "src/main/res"
-FONTS = {"sg_light": 300, "sg_regular": 400, "sg_medium": 500, "sg_time": 300}
+FONTS = {prefix + "_" + role: wght for prefix in ("sg", "jb")
+         for role, wght in (("light", 300), ("regular", 400), ("medium", 500), ("time", 300))}
 # TimeText has no letterSpacing: sg_time carries the design's -0.05 em in its digit advances
 TIME_TRACKING = -50
 UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
@@ -36,10 +37,11 @@ def tnum_map(font):
     return out
 
 
-def build(src):
+def build(sources):
     for name, wght in FONTS.items():
+        src = sources[name.split("_")[0]]
         f = instancer.instantiateVariableFont(TTFont(src), {"wght": wght})
-        tnum = tnum_map(f)
+        tnum = tnum_map(f) if "GSUB" in f else {}
         for table in f["cmap"].tables:
             for cp, glyph in list(table.cmap.items()):
                 if glyph in tnum:
@@ -50,7 +52,7 @@ def build(src):
         s = subset.Subsetter(opts)
         s.populate(unicodes=UNICODES)
         s.subset(f)
-        if name == "sg_time":
+        if name.endswith("_time"):
             hm, cm = f["hmtx"], f.getBestCmap()
             for glyph in {cm[c] for c in range(0x30, 0x3A)}:
                 adv, lsb = hm[glyph]
@@ -62,4 +64,4 @@ def build(src):
 
 
 if __name__ == "__main__":
-    build(sys.argv[1])
+    build({"sg": sys.argv[1], "jb": sys.argv[2]})

@@ -33,6 +33,10 @@
       <ColorOption id="aubergine" displayName="colors_aubergine" screenReaderText="colors_aubergine"
           colors="#fff6a37a #ffb37aa8" />
     </ColorConfiguration>
+    <ListConfiguration id="font" displayName="font_label" screenReaderText="font_label" defaultValue="sg">
+      <ListOption id="sg" displayName="font_sg" screenReaderText="font_sg" />
+      <ListOption id="jb" displayName="font_jb" screenReaderText="font_jb" />
+    </ListConfiguration>
   </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">
@@ -85,11 +89,28 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="37" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="39" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
         <PartDraw x="0" y="0" width="456" height="456" alpha="31">
@@ -121,11 +142,28 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="37" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="39" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
         <PartDraw x="0" y="0" width="456" height="456" alpha="31">
@@ -134,11 +172,28 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="37" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="39" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="EMPTY">
         <PartDraw x="0" y="0" width="456" height="456" alpha="31">
@@ -147,11 +202,28 @@
             <Stroke color="[CONFIGURATION.themeColor.1]" thickness="14" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="37" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="37" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="39" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
     </ComplicationSlot>
 
@@ -178,11 +250,28 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="264" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="262" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
         <PartDraw x="0" y="0" width="456" height="456" alpha="20">
@@ -198,11 +287,28 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="264" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="262" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
         <PartDraw x="0" y="0" width="456" height="456" alpha="20">
@@ -211,11 +317,28 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="264" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="262" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
       <Complication type="EMPTY">
         <PartDraw x="0" y="0" width="456" height="456" alpha="20">
@@ -224,50 +347,113 @@
             <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8" cap="ROUND" />
           </Arc>
         </PartDraw>
-        <PartText x="264" y="287" width="142" height="71">
-          <Text align="CENTER">
-            <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-          </Text>
-        </PartText>
+        <Group x="0" y="0" width="456" height="456" name="Number">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <PartText x="264" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <PartText x="262" y="287" width="142" height="71">
+                  <Text align="CENTER">
+                    <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
       </Complication>
     </ComplicationSlot>
 
-    <!-- Heart rate: inner ring, ♥ and bpm -->
-    <PartDraw x="0" y="0" width="456" height="456" alpha="20">
-      <Variant mode="AMBIENT" target="alpha" value="0" />
-      <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-        <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
-      </Arc>
-    </PartDraw>
-    <Condition>
-      <Expressions>
-        <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-      </Expressions>
-      <Compare expression="hasHr">
-        <PartDraw x="0" y="0" width="456" height="456">
-          <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
-          <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-            <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
-            <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-        <PartText x="205" y="280" width="129" height="79">
-          <Text align="START">
-            <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-          </Text>
-        </PartText>
-      </Compare>
-      <Default>
-        <PartText x="205" y="280" width="129" height="79">
-          <Text align="START">
-            <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
-          </Text>
-        </PartText>
-      </Default>
-    </Condition>
-    <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
-      <Image resource="ic_heart" />
-    </PartImage>
+    <ListConfiguration id="font">
+      <ListOption id="sg">
+        <Group x="0" y="0" width="456" height="456" name="font_sg">
+          <!-- Heart rate: inner ring, ♥ and bpm -->
+          <PartDraw x="0" y="0" width="456" height="456" alpha="20">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+          <Condition>
+            <Expressions>
+              <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+            </Expressions>
+            <Compare expression="hasHr">
+              <PartDraw x="0" y="0" width="456" height="456">
+                <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
+                <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+                  <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
+                  <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+                </Arc>
+              </PartDraw>
+              <PartText x="205" y="280" width="129" height="79">
+                <Text align="START">
+                  <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+            <Default>
+              <PartText x="205" y="280" width="129" height="79">
+                <Text align="START">
+                  <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                </Text>
+              </PartText>
+            </Default>
+          </Condition>
+          <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
+            <Image resource="ic_heart" />
+          </PartImage>
+        </Group>
+      </ListOption>
+      <ListOption id="jb">
+        <Group x="0" y="0" width="456" height="456" name="font_jb">
+          <!-- Heart rate: inner ring, ♥ and bpm -->
+          <PartDraw x="0" y="0" width="456" height="456" alpha="20">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+          <Condition>
+            <Expressions>
+              <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+            </Expressions>
+            <Compare expression="hasHr">
+              <PartDraw x="0" y="0" width="456" height="456">
+                <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
+                <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+                  <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
+                  <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+                </Arc>
+              </PartDraw>
+              <PartText x="206" y="280" width="129" height="79">
+                <Text align="START">
+                  <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+            <Default>
+              <PartText x="206" y="280" width="129" height="79">
+                <Text align="START">
+                  <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                </Text>
+              </PartText>
+            </Default>
+          </Condition>
+          <PartImage x="167" y="307" width="29" height="26" tintColor="#ffe5493f">
+            <Image resource="ic_heart" />
+          </PartImage>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
 
     <!-- Seconds dot on the outer ring (hidden in always-on) -->
     <Group x="0" y="0" width="14" height="14" name="SecondsDot">
@@ -286,59 +472,141 @@
       </PartDraw>
     </Group>
 
-    <!-- Date: day of the month, month below -->
-    <PartText x="165" y="41" width="126" height="67">
-      <Text align="CENTER">
-        <Font family="sg_medium" size="42" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY]" /></Template></Font>
-      </Text>
-    </PartText>
-    <PartText x="156" y="95" width="147" height="34" alpha="170">
-      <Text align="CENTER">
-        <Font family="sg_medium" size="21" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.14"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;IAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAI.&quot; : ([MONTH] == 6 ? &quot;IUN.&quot; : ([MONTH] == 7 ? &quot;IUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
-      </Text>
-    </PartText>
+    <ListConfiguration id="font">
+      <ListOption id="sg">
+        <Group x="0" y="0" width="456" height="456" name="font_sg">
+          <!-- Date: day of the month, month below -->
+          <PartText x="165" y="41" width="126" height="67">
+            <Text align="CENTER">
+              <Font family="sg_medium" size="42" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY]" /></Template></Font>
+            </Text>
+          </PartText>
+          <PartText x="156" y="95" width="147" height="34" alpha="170">
+            <Text align="CENTER">
+              <Font family="sg_medium" size="21" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.14"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;IAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAI.&quot; : ([MONTH] == 6 ? &quot;IUN.&quot; : ([MONTH] == 7 ? &quot;IUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
+            </Text>
+          </PartText>
+        </Group>
+      </ListOption>
+      <ListOption id="jb">
+        <Group x="0" y="0" width="456" height="456" name="font_jb">
+          <!-- Date: day of the month, month below -->
+          <PartText x="165" y="41" width="126" height="67">
+            <Text align="CENTER">
+              <Font family="jb_medium" size="42" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY]" /></Template></Font>
+            </Text>
+          </PartText>
+          <PartText x="156" y="95" width="147" height="34" alpha="170">
+            <Text align="CENTER">
+              <Font family="jb_medium" size="21" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.14"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;IAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAI.&quot; : ([MONTH] == 6 ? &quot;IUN.&quot; : ([MONTH] == 7 ? &quot;IUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
+            </Text>
+          </PartText>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
 
-    <!-- Time -->
-    <DigitalClock x="48" y="114" width="166" height="198">
-      <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="166" height="198">
-        <Font family="sg_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
-      </TimeText>
-    </DigitalClock>
-    <PartText x="206" y="114" width="50" height="198">
-      <Transform target="alpha" value="[SECOND] % 2 == 0 ? 255 : 140" />
-      <Variant mode="AMBIENT" target="alpha" value="255" />
-      <Text align="CENTER">
-        <Font family="sg_light" size="123.6" color="[CONFIGURATION.themeColor.1]">:</Font>
-      </Text>
-    </PartText>
-    <DigitalClock x="242" y="114" width="166" height="198">
-      <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="166" height="198">
-        <Font family="sg_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
-      </TimeText>
-    </DigitalClock>
+    <ListConfiguration id="font">
+      <ListOption id="sg">
+        <Group x="0" y="0" width="456" height="456" name="font_sg">
+          <!-- Time -->
+          <DigitalClock x="48" y="114" width="166" height="198">
+            <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="166" height="198">
+              <Font family="sg_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
+            </TimeText>
+          </DigitalClock>
+          <PartText x="206" y="114" width="50" height="198">
+            <Transform target="alpha" value="[SECOND] % 2 == 0 ? 255 : 140" />
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+            <Text align="CENTER">
+              <Font family="sg_light" size="123.6" color="[CONFIGURATION.themeColor.1]">:</Font>
+            </Text>
+          </PartText>
+          <DigitalClock x="242" y="114" width="166" height="198">
+            <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="166" height="198">
+              <Font family="sg_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
+            </TimeText>
+          </DigitalClock>
+        </Group>
+      </ListOption>
+      <ListOption id="jb">
+        <Group x="0" y="0" width="456" height="456" name="font_jb">
+          <!-- Time -->
+          <DigitalClock x="46" y="114" width="161" height="198">
+            <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="161" height="198">
+              <Font family="jb_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
+            </TimeText>
+          </DigitalClock>
+          <PartText x="206" y="114" width="50" height="198">
+            <Transform target="alpha" value="[SECOND] % 2 == 0 ? 255 : 140" />
+            <Variant mode="AMBIENT" target="alpha" value="255" />
+            <Text align="CENTER">
+              <Font family="jb_light" size="123.6" color="[CONFIGURATION.themeColor.1]">:</Font>
+            </Text>
+          </PartText>
+          <DigitalClock x="249" y="114" width="161" height="198">
+            <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="161" height="198">
+              <Font family="jb_time" size="123.6" color="[CONFIGURATION.themeColor.0]" />
+            </TimeText>
+          </DigitalClock>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
 
-    <!-- Temperature -->
-    <Condition>
-      <Expressions>
-        <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
-      </Expressions>
-      <Compare expression="hasWeather">
-        <PartDraw x="187" y="381" width="24" height="24" alpha="64">
-          <Ellipse x="0.5" y="0.6" width="23.4" height="23.4">
-            <Fill color="#ffe39a5a" />
-          </Ellipse>
-        </PartDraw>
-        <PartDraw x="192" y="386" width="14" height="14">
-          <Ellipse x="0.5" y="0.6" width="13.4" height="13.4">
-            <Fill color="#ffe39a5a" />
-          </Ellipse>
-        </PartDraw>
-        <PartText x="213" y="369" width="104" height="48">
-          <Text align="START">
-            <Font family="sg_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
-          </Text>
-        </PartText>
-      </Compare>
-    </Condition>
+    <ListConfiguration id="font">
+      <ListOption id="sg">
+        <Group x="0" y="0" width="456" height="456" name="font_sg">
+          <!-- Temperature -->
+          <Condition>
+            <Expressions>
+              <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
+            </Expressions>
+            <Compare expression="hasWeather">
+              <PartDraw x="187" y="381" width="24" height="24" alpha="64">
+                <Ellipse x="0.5" y="0.6" width="23.4" height="23.4">
+                  <Fill color="#ffe39a5a" />
+                </Ellipse>
+              </PartDraw>
+              <PartDraw x="192" y="386" width="14" height="14">
+                <Ellipse x="0.5" y="0.6" width="13.4" height="13.4">
+                  <Fill color="#ffe39a5a" />
+                </Ellipse>
+              </PartDraw>
+              <PartText x="213" y="369" width="104" height="48">
+                <Text align="START">
+                  <Font family="sg_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+          </Condition>
+        </Group>
+      </ListOption>
+      <ListOption id="jb">
+        <Group x="0" y="0" width="456" height="456" name="font_jb">
+          <!-- Temperature -->
+          <Condition>
+            <Expressions>
+              <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
+            </Expressions>
+            <Compare expression="hasWeather">
+              <PartDraw x="185" y="381" width="24" height="24" alpha="64">
+                <Ellipse x="0" y="0.6" width="23.4" height="23.4">
+                  <Fill color="#ffe39a5a" />
+                </Ellipse>
+              </PartDraw>
+              <PartDraw x="190" y="386" width="14" height="14">
+                <Ellipse x="0" y="0.6" width="13.4" height="13.4">
+                  <Fill color="#ffe39a5a" />
+                </Ellipse>
+              </PartDraw>
+              <PartText x="211" y="369" width="104" height="48">
+                <Text align="START">
+                  <Font family="jb_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+                </Text>
+              </PartText>
+            </Compare>
+          </Condition>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
   </Scene>
 </WatchFace>
