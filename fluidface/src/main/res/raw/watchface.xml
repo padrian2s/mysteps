@@ -552,61 +552,56 @@
       </ListOption>
     </ListConfiguration>
 
-    <ListConfiguration id="font">
-      <ListOption id="sg">
-        <Group x="0" y="0" width="456" height="456" name="font_sg">
-          <!-- Temperature -->
-          <Condition>
-            <Expressions>
-              <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
-            </Expressions>
-            <Compare expression="hasWeather">
-              <PartDraw x="187" y="381" width="24" height="24" alpha="64">
-                <Ellipse x="0.5" y="0.6" width="23.4" height="23.4">
-                  <Fill color="#ffe39a5a" />
-                </Ellipse>
-              </PartDraw>
-              <PartDraw x="192" y="386" width="14" height="14">
-                <Ellipse x="0.5" y="0.6" width="13.4" height="13.4">
-                  <Fill color="#ffe39a5a" />
-                </Ellipse>
-              </PartDraw>
-              <PartText x="213" y="369" width="104" height="48">
-                <Text align="START">
-                  <Font family="sg_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
-                </Text>
-              </PartText>
-            </Compare>
-          </Condition>
+    <Condition>
+      <Expressions>
+        <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
+      </Expressions>
+      <Compare expression="hasWeather">
+        <Group x="0" y="0" width="456" height="456" name="Weather">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <!-- Temperature -->
+                <PartDraw x="187" y="381" width="24" height="24" alpha="64">
+                  <Ellipse x="0.5" y="0.6" width="23.4" height="23.4">
+                    <Fill color="#ffe39a5a" />
+                  </Ellipse>
+                </PartDraw>
+                <PartDraw x="192" y="386" width="14" height="14">
+                  <Ellipse x="0.5" y="0.6" width="13.4" height="13.4">
+                    <Fill color="#ffe39a5a" />
+                  </Ellipse>
+                </PartDraw>
+                <PartText x="213" y="369" width="104" height="48">
+                  <Text align="START">
+                    <Font family="sg_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <!-- Temperature -->
+                <PartDraw x="185" y="381" width="24" height="24" alpha="64">
+                  <Ellipse x="0" y="0.6" width="23.4" height="23.4">
+                    <Fill color="#ffe39a5a" />
+                  </Ellipse>
+                </PartDraw>
+                <PartDraw x="190" y="386" width="14" height="14">
+                  <Ellipse x="0" y="0.6" width="13.4" height="13.4">
+                    <Fill color="#ffe39a5a" />
+                  </Ellipse>
+                </PartDraw>
+                <PartText x="211" y="369" width="104" height="48">
+                  <Text align="START">
+                    <Font family="jb_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+                  </Text>
+                </PartText>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
         </Group>
-      </ListOption>
-      <ListOption id="jb">
-        <Group x="0" y="0" width="456" height="456" name="font_jb">
-          <!-- Temperature -->
-          <Condition>
-            <Expressions>
-              <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
-            </Expressions>
-            <Compare expression="hasWeather">
-              <PartDraw x="185" y="381" width="24" height="24" alpha="64">
-                <Ellipse x="0" y="0.6" width="23.4" height="23.4">
-                  <Fill color="#ffe39a5a" />
-                </Ellipse>
-              </PartDraw>
-              <PartDraw x="190" y="386" width="14" height="14">
-                <Ellipse x="0" y="0.6" width="13.4" height="13.4">
-                  <Fill color="#ffe39a5a" />
-                </Ellipse>
-              </PartDraw>
-              <PartText x="211" y="369" width="104" height="48">
-                <Text align="START">
-                  <Font family="jb_medium" size="29.7" color="#ffe39a5a" letterSpacing="0.02"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
-                </Text>
-              </PartText>
-            </Compare>
-          </Condition>
-        </Group>
-      </ListOption>
-    </ListConfiguration>
+      </Compare>
+    </Condition>
   </Scene>
 </WatchFace>
