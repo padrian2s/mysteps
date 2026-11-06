@@ -616,157 +616,159 @@
       </Complication>
     </ComplicationSlot>
 
-    <!-- Heart rate: inner ring -->
-    <PartDraw x="0" y="0" width="456" height="456" alpha="20">
+    <!-- Heart rate: inner ring, ♥ and bpm (screen on only) -->
+    <Group x="0" y="0" width="456" height="456" name="HeartRate">
       <Variant mode="AMBIENT" target="alpha" value="0" />
-      <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-        <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
-      </Arc>
-    </PartDraw>
-    <Condition>
-      <Expressions>
-        <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
-      </Expressions>
-      <Compare expression="hasHrRing">
-        <PartDraw x="0" y="0" width="456" height="456">
-          <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
-          <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-            <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
-            <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
-          </Arc>
-        </PartDraw>
-      </Compare>
-    </Condition>
-    <ListConfiguration id="layout">
-      <ListOption id="classic">
-        <Group x="0" y="0" width="456" height="456" name="layout_classic">
-          <ListConfiguration id="font">
-            <ListOption id="sg">
-              <Group x="0" y="0" width="456" height="456" name="font_sg">
-                <!-- Heart rate: ♥ and bpm in the middle of the row -->
-                <Condition>
-                  <Expressions>
-                    <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                  </Expressions>
-                  <Compare expression="hasHr">
-                    <PartText x="205" y="280" width="129" height="79">
-                      <Text align="START">
-                        <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                      </Text>
-                    </PartText>
-                  </Compare>
-                  <Default>
-                    <PartText x="205" y="280" width="129" height="79">
-                      <Text align="START">
-                        <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
-                      </Text>
-                    </PartText>
-                  </Default>
-                </Condition>
-                <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
-                  <Image resource="ic_heart" />
-                </PartImage>
-              </Group>
-            </ListOption>
-            <ListOption id="jb">
-              <Group x="0" y="0" width="456" height="456" name="font_jb">
-                <!-- Heart rate: ♥ and bpm in the middle of the row -->
-                <Condition>
-                  <Expressions>
-                    <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                  </Expressions>
-                  <Compare expression="hasHr">
-                    <PartText x="206" y="280" width="129" height="79">
-                      <Text align="START">
-                        <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                      </Text>
-                    </PartText>
-                  </Compare>
-                  <Default>
-                    <PartText x="206" y="280" width="129" height="79">
-                      <Text align="START">
-                        <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
-                      </Text>
-                    </PartText>
-                  </Default>
-                </Condition>
-                <PartImage x="167" y="307" width="29" height="26" tintColor="#ffe5493f">
-                  <Image resource="ic_heart" />
-                </PartImage>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
-        </Group>
-      </ListOption>
-      <ListOption id="heart">
-        <Group x="0" y="0" width="456" height="456" name="layout_heart">
-          <ListConfiguration id="font">
-            <ListOption id="sg">
-              <Group x="0" y="0" width="456" height="456" name="font_sg">
-                <!-- Heart rate: ♥ and bpm in place of the colon -->
-                <PartImage x="211" y="186" width="33" height="30" tintColor="#ffe5493f" alpha="60">
-                  <Variant mode="AMBIENT" target="alpha" value="0" />
-                  <Image resource="ic_heart" />
-                </PartImage>
-                <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
-                  <Image resource="ic_heart" />
-                </PartImage>
-                <Condition>
-                  <Expressions>
-                    <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                  </Expressions>
-                  <Compare expression="hasHr">
-                    <PartText x="172" y="222" width="111" height="59">
-                      <Text align="CENTER">
-                        <Font family="sg_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                      </Text>
-                    </PartText>
-                  </Compare>
-                  <Default>
-                    <PartText x="172" y="222" width="111" height="59">
-                      <Text align="CENTER">
-                        <Font family="sg_medium" size="37.1" color="#ffe5493f">--</Font>
-                      </Text>
-                    </PartText>
-                  </Default>
-                </Condition>
-              </Group>
-            </ListOption>
-            <ListOption id="jb">
-              <Group x="0" y="0" width="456" height="456" name="font_jb">
-                <!-- Heart rate: ♥ and bpm in place of the colon -->
-                <PartImage x="211" y="186" width="33" height="30" tintColor="#ffe5493f" alpha="60">
-                  <Variant mode="AMBIENT" target="alpha" value="0" />
-                  <Image resource="ic_heart" />
-                </PartImage>
-                <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
-                  <Image resource="ic_heart" />
-                </PartImage>
-                <Condition>
-                  <Expressions>
-                    <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                  </Expressions>
-                  <Compare expression="hasHr">
-                    <PartText x="172" y="222" width="111" height="59">
-                      <Text align="CENTER">
-                        <Font family="jb_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                      </Text>
-                    </PartText>
-                  </Compare>
-                  <Default>
-                    <PartText x="172" y="222" width="111" height="59">
-                      <Text align="CENTER">
-                        <Font family="jb_medium" size="37.1" color="#ffe5493f">--</Font>
-                      </Text>
-                    </PartText>
-                  </Default>
-                </Condition>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
-        </Group>
-      </ListOption>
-    </ListConfiguration>
+      <PartDraw x="0" y="0" width="456" height="456" alpha="20">
+        <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+          <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+        </Arc>
+      </PartDraw>
+      <Condition>
+        <Expressions>
+          <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
+        </Expressions>
+        <Compare expression="hasHrRing">
+          <PartDraw x="0" y="0" width="456" height="456">
+            <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
+              <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+        </Compare>
+      </Condition>
+      <ListConfiguration id="layout">
+        <ListOption id="classic">
+          <Group x="0" y="0" width="456" height="456" name="layout_classic">
+            <ListConfiguration id="font">
+              <ListOption id="sg">
+                <Group x="0" y="0" width="456" height="456" name="font_sg">
+                  <!-- Heart rate: ♥ and bpm in the middle of the row -->
+                  <Condition>
+                    <Expressions>
+                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                    </Expressions>
+                    <Compare expression="hasHr">
+                      <PartText x="205" y="280" width="129" height="79">
+                        <Text align="START">
+                          <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                        </Text>
+                      </PartText>
+                    </Compare>
+                    <Default>
+                      <PartText x="205" y="280" width="129" height="79">
+                        <Text align="START">
+                          <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                        </Text>
+                      </PartText>
+                    </Default>
+                  </Condition>
+                  <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                </Group>
+              </ListOption>
+              <ListOption id="jb">
+                <Group x="0" y="0" width="456" height="456" name="font_jb">
+                  <!-- Heart rate: ♥ and bpm in the middle of the row -->
+                  <Condition>
+                    <Expressions>
+                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                    </Expressions>
+                    <Compare expression="hasHr">
+                      <PartText x="206" y="280" width="129" height="79">
+                        <Text align="START">
+                          <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                        </Text>
+                      </PartText>
+                    </Compare>
+                    <Default>
+                      <PartText x="206" y="280" width="129" height="79">
+                        <Text align="START">
+                          <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                        </Text>
+                      </PartText>
+                    </Default>
+                  </Condition>
+                  <PartImage x="167" y="307" width="29" height="26" tintColor="#ffe5493f">
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                </Group>
+              </ListOption>
+            </ListConfiguration>
+          </Group>
+        </ListOption>
+        <ListOption id="heart">
+          <Group x="0" y="0" width="456" height="456" name="layout_heart">
+            <ListConfiguration id="font">
+              <ListOption id="sg">
+                <Group x="0" y="0" width="456" height="456" name="font_sg">
+                  <!-- Heart rate: ♥ and bpm in place of the colon -->
+                  <PartImage x="211" y="186" width="33" height="30" tintColor="#ffe5493f" alpha="60">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                  <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                  <Condition>
+                    <Expressions>
+                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                    </Expressions>
+                    <Compare expression="hasHr">
+                      <PartText x="172" y="222" width="111" height="59">
+                        <Text align="CENTER">
+                          <Font family="sg_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                        </Text>
+                      </PartText>
+                    </Compare>
+                    <Default>
+                      <PartText x="172" y="222" width="111" height="59">
+                        <Text align="CENTER">
+                          <Font family="sg_medium" size="37.1" color="#ffe5493f">--</Font>
+                        </Text>
+                      </PartText>
+                    </Default>
+                  </Condition>
+                </Group>
+              </ListOption>
+              <ListOption id="jb">
+                <Group x="0" y="0" width="456" height="456" name="font_jb">
+                  <!-- Heart rate: ♥ and bpm in place of the colon -->
+                  <PartImage x="211" y="186" width="33" height="30" tintColor="#ffe5493f" alpha="60">
+                    <Variant mode="AMBIENT" target="alpha" value="0" />
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                  <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
+                    <Image resource="ic_heart" />
+                  </PartImage>
+                  <Condition>
+                    <Expressions>
+                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                    </Expressions>
+                    <Compare expression="hasHr">
+                      <PartText x="172" y="222" width="111" height="59">
+                        <Text align="CENTER">
+                          <Font family="jb_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                        </Text>
+                      </PartText>
+                    </Compare>
+                    <Default>
+                      <PartText x="172" y="222" width="111" height="59">
+                        <Text align="CENTER">
+                          <Font family="jb_medium" size="37.1" color="#ffe5493f">--</Font>
+                        </Text>
+                      </PartText>
+                    </Default>
+                  </Condition>
+                </Group>
+              </ListOption>
+            </ListConfiguration>
+          </Group>
+        </ListOption>
+      </ListConfiguration>
+    </Group>
 
     <!-- Seconds dot on the outer ring (hidden in always-on) -->
     <Group x="0" y="0" width="14" height="14" name="SecondsDot">

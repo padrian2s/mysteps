@@ -309,17 +309,21 @@ def heart_rate():
     """Inner red ring (bpm / HR_MAX), then ♥ and bpm placed by the layout."""
     r, w = RING_HR
     frac = f"[HEART_RATE] / {HR_MAX}"
-    return f"""<!-- Heart rate: inner ring -->
-{arc(r, w, RED, alpha=20, extra=f"{chr(10)}  {AMBIENT_HIDE}")}
-<Condition>
-  <Expressions>
-    <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
-  </Expressions>
-  <Compare expression="hasHrRing">
-{indent(arc(r, w, RED, frac), 4)}
-  </Compare>
-</Condition>
-{per_style(heart_rate_variant)}"""
+    # Hidden in always-on: the bpm only updates while the screen is on
+    return f"""<!-- Heart rate: inner ring, ♥ and bpm (screen on only) -->
+<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
+  {AMBIENT_HIDE}
+{indent(arc(r, w, RED, alpha=20), 2)}
+  <Condition>
+    <Expressions>
+      <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
+    </Expressions>
+    <Compare expression="hasHrRing">
+{indent(arc(r, w, RED, frac), 6)}
+    </Compare>
+  </Condition>
+{indent(per_style(heart_rate_variant), 2)}
+</Group>"""
 
 
 def heart_rate_variant():
