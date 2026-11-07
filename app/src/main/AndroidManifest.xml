@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Live heart rate screen (Fluid watch face tap) -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" android:maxSdkVersion="35" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
 
     <application
         android:allowBackup="true"
@@ -90,6 +93,13 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <!-- Big live pulse, launched by the Fluid watch face when the time or the heart is tapped -->
+        <activity
+            android:name=".presentation.HeartRateActivity"
+            android:exported="true"
+            android:taskAffinity=""
+            android:excludeFromRecents="true" />
 
         <activity
             android:name=".presentation.MainActivity"

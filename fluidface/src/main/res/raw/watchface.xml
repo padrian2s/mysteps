@@ -960,5 +960,85 @@
         </Group>
       </Compare>
     </Condition>
+
+    <!-- Taps on the time / heart open the big live pulse -->
+    <ListConfiguration id="layout">
+      <ListOption id="classic">
+        <Group x="0" y="0" width="456" height="456" name="layout_classic">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <Group x="43" y="158" width="371" height="111" name="TimeTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="371" height="111">
+                    <Rectangle x="0" y="0" width="371" height="111">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+                <Group x="153" y="285" width="123" height="69" name="HeartTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="123" height="69">
+                    <Rectangle x="0" y="0" width="123" height="69">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <Group x="43" y="158" width="371" height="111" name="TimeTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="371" height="111">
+                    <Rectangle x="0" y="0" width="371" height="111">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+                <Group x="154" y="285" width="121" height="69" name="HeartTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="121" height="69">
+                    <Rectangle x="0" y="0" width="121" height="69">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
+      </ListOption>
+      <ListOption id="heart">
+        <Group x="0" y="0" width="456" height="456" name="layout_heart">
+          <ListConfiguration id="font">
+            <ListOption id="sg">
+              <Group x="0" y="0" width="456" height="456" name="font_sg">
+                <Group x="30" y="161" width="396" height="120" name="HeartTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="396" height="120">
+                    <Rectangle x="0" y="0" width="396" height="120">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+              </Group>
+            </ListOption>
+            <ListOption id="jb">
+              <Group x="0" y="0" width="456" height="456" name="font_jb">
+                <Group x="30" y="161" width="396" height="120" name="HeartTap">
+                  <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
+                  <PartDraw x="0" y="0" width="396" height="120">
+                    <Rectangle x="0" y="0" width="396" height="120">
+                      <Fill color="#00000000" />
+                    </Rectangle>
+                  </PartDraw>
+                </Group>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
+      </ListOption>
+    </ListConfiguration>
   </Scene>
 </WatchFace>
