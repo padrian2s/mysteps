@@ -616,27 +616,55 @@
       </Complication>
     </ComplicationSlot>
 
-    <!-- Heart rate: inner ring, ♥ and bpm (screen on only) -->
+    <!-- Heart rate: inner zone ring, ♥ and bpm (screen on only) -->
     <Group x="0" y="0" width="456" height="456" name="HeartRate">
       <Variant mode="AMBIENT" target="alpha" value="0" />
-      <PartDraw x="0" y="0" width="456" height="456" alpha="20">
-        <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-          <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
-        </Arc>
-      </PartDraw>
       <Condition>
         <Expressions>
-          <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
+          <Expression name="hrCardio">[HEART_RATE] &gt;= 130</Expression>
+          <Expression name="hrActive">[HEART_RATE] &gt;= 100</Expression>
+          <Expression name="hrRest">[HEART_RATE] &gt; 0</Expression>
         </Expressions>
-        <Compare expression="hasHrRing">
-          <PartDraw x="0" y="0" width="456" height="456">
-            <Transform target="alpha" value="([HEART_RATE] / 145) &gt; 0 ? 255 : 0" />
+        <Compare expression="hrCardio">
+          <PartDraw x="0" y="0" width="456" height="456" alpha="22">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
             <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
-              <Transform target="endAngle" value="clamp([HEART_RATE] / 145, 0, 1) * 360" />
+              <Stroke color="#ffe5493f" thickness="14.6" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+          <PartDraw x="0" y="0" width="456" height="456" alpha="45">
+            <Variant mode="AMBIENT" target="alpha" value="0" />
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe5493f" thickness="9.8" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+          <PartDraw x="0" y="0" width="456" height="456">
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
               <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
             </Arc>
           </PartDraw>
         </Compare>
+        <Compare expression="hrActive">
+          <PartDraw x="0" y="0" width="456" height="456" alpha="210">
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe39a5a" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+        </Compare>
+        <Compare expression="hrRest">
+          <PartDraw x="0" y="0" width="456" height="456" alpha="95">
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+        </Compare>
+        <Default>
+          <PartDraw x="0" y="0" width="456" height="456" alpha="20">
+            <Arc centerX="228" centerY="228" width="405" height="405" startAngle="0" endAngle="360">
+              <Stroke color="#ffe5493f" thickness="5" cap="ROUND" />
+            </Arc>
+          </PartDraw>
+        </Default>
       </Condition>
       <ListConfiguration id="layout">
         <ListOption id="classic">

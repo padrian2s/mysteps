@@ -66,7 +66,7 @@ MAIN = "[CONFIGURATION.themeColor.0]"    # time, date, bpm, steps ring
 ACCENT = "[CONFIGURATION.themeColor.1]"  # colon, zone minutes ring and numbers
 RED = "#ffe5493f"                        # heart-rate ring and heart
 ORANGE = "#ffe39a5a"                     # temperature
-HR_MAX = 145                             # the inner ring spans 0..145 bpm (89 bpm ≈ 62 %)
+HR_ACTIVE, HR_CARDIO = 100, 130          # inner ring zones: rest dim red, active orange, cardio bright red
 
 # Date and temperature, bigger than the mock-up (12-14 px read badly on the wrist)
 DAY_SIZE, MONTH_SIZE, TEMP_SIZE = 34, 17, 24
@@ -306,21 +306,30 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
 
 
 def heart_rate():
-    """Inner red ring (bpm / HR_MAX), then ♥ and bpm placed by the layout."""
+    """Inner ring, always a full circle colored by heart rate zone (not a progress bar:
+    a resting 65 bpm used to read as a half-done ring), then ♥ and bpm placed by the layout."""
     r, w = RING_HR
-    frac = f"[HEART_RATE] / {HR_MAX}"
+    zones = "".join(f"""
+    <Compare expression="{name}">
+{indent(ring, 6)}
+    </Compare>""" for name, ring in (
+        ("hrCardio", glowing_arc(r, w, RED, None, 6)),
+        ("hrActive", arc(r, w, ORANGE, alpha=210)),
+        ("hrRest", arc(r, w, RED, alpha=95)),
+    ))
     # Hidden in always-on: the bpm only updates while the screen is on
-    return f"""<!-- Heart rate: inner ring, ♥ and bpm (screen on only) -->
+    return f"""<!-- Heart rate: inner zone ring, ♥ and bpm (screen on only) -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
   {AMBIENT_HIDE}
-{indent(arc(r, w, RED, alpha=20), 2)}
   <Condition>
     <Expressions>
-      <Expression name="hasHrRing">[HEART_RATE] &gt; 0</Expression>
-    </Expressions>
-    <Compare expression="hasHrRing">
-{indent(arc(r, w, RED, frac), 6)}
-    </Compare>
+      <Expression name="hrCardio">[HEART_RATE] &gt;= {HR_CARDIO}</Expression>
+      <Expression name="hrActive">[HEART_RATE] &gt;= {HR_ACTIVE}</Expression>
+      <Expression name="hrRest">[HEART_RATE] &gt; 0</Expression>
+    </Expressions>{zones}
+    <Default>
+{indent(arc(r, w, RED, alpha=20), 6)}
+    </Default>
   </Condition>
 {indent(per_style(heart_rate_variant), 2)}
 </Group>"""
