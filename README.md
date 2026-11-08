@@ -59,6 +59,7 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - Customize → Colors: Sand & blue (default), Mint & pink, Lilac Bliss, Fitbit Teal, Zone Minutes, Silver, plus early-Ubuntu inspired themes: Warty Brown, Human, Human Earth, Human Spirit, Gaia, Ambiance, Aubergine
 - Customize → Layout: Classic, or Heart in the time (♥ and bpm between hours and minutes, zone minutes and steps alone below)
 - Customize → Font: Space Grotesk (default, the design's) or JetBrains Mono (both OFL), static weights with tabular digits; the time fonts have the design's -0.05 em tracking built in. Rebuild with `python3 fluidface/tools/build_assets.py <SpaceGrotesk[wght].ttf> <JetBrainsMono[wght].ttf>`
+- Customize → Steps number / Zone Minutes number / Heart rate number: on/off switches that hide the number but keep its ring (in Heart in the time, the ♥ stays)
 - Tap the time or the ♥/bpm: MySteps opens a full-screen live heart rate (`HeartRateActivity`, asks for the heart rate permission once)
 - The XML is generated: edit `fluidface/generate_watchface.py`, then run `python3 fluidface/generate_watchface.py`
 

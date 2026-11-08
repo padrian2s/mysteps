@@ -7,6 +7,9 @@
     <string name="colors_label">Colors</string>
     <string name="font_label">Font</string>
     <string name="layout_label">Layout</string>
+    <string name="showSteps_label">Steps number</string>
+    <string name="showAzm_label">Zone Minutes number</string>
+    <string name="showHr_label">Heart rate number</string>
     <string name="layout_classic">Classic</string>
     <string name="layout_heart">Heart in the time</string>
     <string name="font_sg">Space Grotesk</string>

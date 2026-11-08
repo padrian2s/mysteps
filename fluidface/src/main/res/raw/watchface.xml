@@ -41,6 +41,9 @@
       <ListOption id="classic" displayName="layout_classic" screenReaderText="layout_classic" />
       <ListOption id="heart" displayName="layout_heart" screenReaderText="layout_heart" />
     </ListConfiguration>
+    <BooleanConfiguration id="showSteps" displayName="showSteps_label" screenReaderText="showSteps_label" defaultValue="TRUE" />
+    <BooleanConfiguration id="showAzm" displayName="showAzm_label" screenReaderText="showAzm_label" defaultValue="TRUE" />
+    <BooleanConfiguration id="showHr" displayName="showHr_label" screenReaderText="showHr_label" defaultValue="TRUE" />
   </UserConfigurations>
 
   <Scene backgroundColor="#ff000000">
@@ -94,56 +97,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="37" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showAzm">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showAzm">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="37" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="39" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="39" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="50" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="51" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="50" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="51" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
@@ -177,56 +186,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="37" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showAzm">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showAzm">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="37" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="39" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="39" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="50" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="51" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="50" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="51" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
@@ -237,56 +252,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="37" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showAzm">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showAzm">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="37" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="39" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="39" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="50" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="51" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="50" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="51" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="EMPTY">
@@ -297,56 +318,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="37" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showAzm">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showAzm">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="37" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="39" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="39" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="50" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="51" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="50" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="51" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
     </ComplicationSlot>
@@ -375,56 +402,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="264" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showSteps">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showSteps">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="264" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="262" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="262" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="250" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="249" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="250" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="249" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="GOAL_PROGRESS">
@@ -442,56 +475,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="264" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showSteps">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showSteps">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="264" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="262" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="262" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="250" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="249" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="250" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="249" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="SHORT_TEXT">
@@ -502,56 +541,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="264" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showSteps">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showSteps">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="264" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="262" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="262" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="250" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="249" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="250" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="249" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
       <Complication type="EMPTY">
@@ -562,56 +607,62 @@
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
-          <ListConfiguration id="layout">
-            <ListOption id="classic">
-              <Group x="0" y="0" width="456" height="456" name="layout_classic">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="264" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
+          <BooleanConfiguration id="showSteps">
+            <BooleanOption id="TRUE">
+              <Group x="0" y="0" width="456" height="456" name="showSteps">
+                <ListConfiguration id="layout">
+                  <ListOption id="classic">
+                    <Group x="0" y="0" width="456" height="456" name="layout_classic">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="264" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="262" y="287" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="262" y="287" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
+                  <ListOption id="heart">
+                    <Group x="0" y="0" width="456" height="456" name="layout_heart">
+                      <ListConfiguration id="font">
+                        <ListOption id="sg">
+                          <Group x="0" y="0" width="456" height="456" name="font_sg">
+                            <PartText x="250" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                        <ListOption id="jb">
+                          <Group x="0" y="0" width="456" height="456" name="font_jb">
+                            <PartText x="249" y="305" width="142" height="71">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Group>
+                        </ListOption>
+                      </ListConfiguration>
                     </Group>
                   </ListOption>
                 </ListConfiguration>
               </Group>
-            </ListOption>
-            <ListOption id="heart">
-              <Group x="0" y="0" width="456" height="456" name="layout_heart">
-                <ListConfiguration id="font">
-                  <ListOption id="sg">
-                    <Group x="0" y="0" width="456" height="456" name="font_sg">
-                      <PartText x="250" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                  <ListOption id="jb">
-                    <Group x="0" y="0" width="456" height="456" name="font_jb">
-                      <PartText x="249" y="305" width="142" height="71">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="44.5" color="[CONFIGURATION.themeColor.1]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Group>
-                  </ListOption>
-                </ListConfiguration>
-              </Group>
-            </ListOption>
-          </ListConfiguration>
+            </BooleanOption>
+          </BooleanConfiguration>
         </Group>
       </Complication>
     </ComplicationSlot>
@@ -672,56 +723,68 @@
             <ListConfiguration id="font">
               <ListOption id="sg">
                 <Group x="0" y="0" width="456" height="456" name="font_sg">
-                  <!-- Heart rate: ♥ and bpm in the middle of the row -->
-                  <Condition>
-                    <Expressions>
-                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                    </Expressions>
-                    <Compare expression="hasHr">
-                      <PartText x="205" y="280" width="129" height="79">
-                        <Text align="START">
-                          <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Compare>
-                    <Default>
-                      <PartText x="205" y="280" width="129" height="79">
-                        <Text align="START">
-                          <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Default>
-                  </Condition>
-                  <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
-                    <Image resource="ic_heart" />
-                  </PartImage>
+                  <BooleanConfiguration id="showHr">
+                    <BooleanOption id="TRUE">
+                      <Group x="0" y="0" width="456" height="456" name="showHr">
+                        <!-- Heart rate: ♥ and bpm in the middle of the row -->
+                        <Condition>
+                          <Expressions>
+                            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                          </Expressions>
+                          <Compare expression="hasHr">
+                            <PartText x="205" y="280" width="129" height="79">
+                              <Text align="START">
+                                <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Compare>
+                          <Default>
+                            <PartText x="205" y="280" width="129" height="79">
+                              <Text align="START">
+                                <Font family="sg_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Default>
+                        </Condition>
+                        <PartImage x="165" y="307" width="29" height="26" tintColor="#ffe5493f">
+                          <Image resource="ic_heart" />
+                        </PartImage>
+                      </Group>
+                    </BooleanOption>
+                  </BooleanConfiguration>
                 </Group>
               </ListOption>
               <ListOption id="jb">
                 <Group x="0" y="0" width="456" height="456" name="font_jb">
-                  <!-- Heart rate: ♥ and bpm in the middle of the row -->
-                  <Condition>
-                    <Expressions>
-                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                    </Expressions>
-                    <Compare expression="hasHr">
-                      <PartText x="206" y="280" width="129" height="79">
-                        <Text align="START">
-                          <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Compare>
-                    <Default>
-                      <PartText x="206" y="280" width="129" height="79">
-                        <Text align="START">
-                          <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
-                        </Text>
-                      </PartText>
-                    </Default>
-                  </Condition>
-                  <PartImage x="167" y="307" width="29" height="26" tintColor="#ffe5493f">
-                    <Image resource="ic_heart" />
-                  </PartImage>
+                  <BooleanConfiguration id="showHr">
+                    <BooleanOption id="TRUE">
+                      <Group x="0" y="0" width="456" height="456" name="showHr">
+                        <!-- Heart rate: ♥ and bpm in the middle of the row -->
+                        <Condition>
+                          <Expressions>
+                            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                          </Expressions>
+                          <Compare expression="hasHr">
+                            <PartText x="206" y="280" width="129" height="79">
+                              <Text align="START">
+                                <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Compare>
+                          <Default>
+                            <PartText x="206" y="280" width="129" height="79">
+                              <Text align="START">
+                                <Font family="jb_medium" size="49.5" color="[CONFIGURATION.themeColor.0]">--</Font>
+                              </Text>
+                            </PartText>
+                          </Default>
+                        </Condition>
+                        <PartImage x="167" y="307" width="29" height="26" tintColor="#ffe5493f">
+                          <Image resource="ic_heart" />
+                        </PartImage>
+                      </Group>
+                    </BooleanOption>
+                  </BooleanConfiguration>
                 </Group>
               </ListOption>
             </ListConfiguration>
@@ -740,25 +803,31 @@
                   <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
                     <Image resource="ic_heart" />
                   </PartImage>
-                  <Condition>
-                    <Expressions>
-                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                    </Expressions>
-                    <Compare expression="hasHr">
-                      <PartText x="172" y="222" width="111" height="59">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Compare>
-                    <Default>
-                      <PartText x="172" y="222" width="111" height="59">
-                        <Text align="CENTER">
-                          <Font family="sg_medium" size="37.1" color="#ffe5493f">--</Font>
-                        </Text>
-                      </PartText>
-                    </Default>
-                  </Condition>
+                  <BooleanConfiguration id="showHr">
+                    <BooleanOption id="TRUE">
+                      <Group x="0" y="0" width="456" height="456" name="showHr">
+                        <Condition>
+                          <Expressions>
+                            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                          </Expressions>
+                          <Compare expression="hasHr">
+                            <PartText x="172" y="222" width="111" height="59">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Compare>
+                          <Default>
+                            <PartText x="172" y="222" width="111" height="59">
+                              <Text align="CENTER">
+                                <Font family="sg_medium" size="37.1" color="#ffe5493f">--</Font>
+                              </Text>
+                            </PartText>
+                          </Default>
+                        </Condition>
+                      </Group>
+                    </BooleanOption>
+                  </BooleanConfiguration>
                 </Group>
               </ListOption>
               <ListOption id="jb">
@@ -771,25 +840,31 @@
                   <PartImage x="216" y="190" width="25" height="22" tintColor="#ffe5493f">
                     <Image resource="ic_heart" />
                   </PartImage>
-                  <Condition>
-                    <Expressions>
-                      <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
-                    </Expressions>
-                    <Compare expression="hasHr">
-                      <PartText x="172" y="222" width="111" height="59">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                        </Text>
-                      </PartText>
-                    </Compare>
-                    <Default>
-                      <PartText x="172" y="222" width="111" height="59">
-                        <Text align="CENTER">
-                          <Font family="jb_medium" size="37.1" color="#ffe5493f">--</Font>
-                        </Text>
-                      </PartText>
-                    </Default>
-                  </Condition>
+                  <BooleanConfiguration id="showHr">
+                    <BooleanOption id="TRUE">
+                      <Group x="0" y="0" width="456" height="456" name="showHr">
+                        <Condition>
+                          <Expressions>
+                            <Expression name="hasHr">[HEART_RATE] &gt; 0</Expression>
+                          </Expressions>
+                          <Compare expression="hasHr">
+                            <PartText x="172" y="222" width="111" height="59">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="37.1" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                              </Text>
+                            </PartText>
+                          </Compare>
+                          <Default>
+                            <PartText x="172" y="222" width="111" height="59">
+                              <Text align="CENTER">
+                                <Font family="jb_medium" size="37.1" color="#ffe5493f">--</Font>
+                              </Text>
+                            </PartText>
+                          </Default>
+                        </Condition>
+                      </Group>
+                    </BooleanOption>
+                  </BooleanConfiguration>
                 </Group>
               </ListOption>
             </ListConfiguration>
