@@ -434,8 +434,10 @@ def temperature():
     <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
   </Expressions>
   <Compare expression="hasWeather">
-{indent(disc(p(225 - gw / 2 + dot / 2), cy, s(dot), ORANGE), 4)}
-{indent(temp, 4)}
+    <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Weather">
+{indent(disc(p(225 - gw / 2 + dot / 2), cy, s(dot), ORANGE), 6)}
+{indent(temp, 6)}
+    </Group>
   </Compare>
 </Condition>"""
 
