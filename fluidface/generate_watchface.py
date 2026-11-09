@@ -66,8 +66,8 @@ MAIN = "[CONFIGURATION.themeColor.0]"    # time, date, bpm, steps ring
 ACCENT = "[CONFIGURATION.themeColor.1]"  # colon, zone minutes ring and numbers
 RED = "#ffe5493f"                        # heart-rate ring and heart
 ORANGE = "#ffe39a5a"                     # temperature
-# Dotted rings: steps one dot per 50 (max 30 dots), Zone Minutes one per minute (max 45).
-# A met MySteps hour carries no goal (max 1): show the 300-step goal's 6 dots, all lit
+# Black dots on the filled rings: steps one per 50 (max 30), Zone Minutes one per minute (max 45).
+# A met MySteps hour carries no goal (max 1): dots for the 300-step goal (6)
 STEP_GOAL_DOTS = 6
 HR_ACTIVE, HR_CARDIO = 100, 130          # inner ring zones: rest dim red, active orange, cardio bright red
 
@@ -273,25 +273,24 @@ def cols():
     return centers
 
 
-def dotted_ring(r, d, color, track_alpha, value, maxv, unit, cap, goal_met=None, fallback=None):
-    """Ring of dots, one per unit (e.g. 50 steps, 1 minute) of the goal maxv, at most cap
-    dots (beyond that each dot is worth maxv / cap). Dots up to value are lit, the rest dim.
-    goal_met / fallback: when goal_met is true the data has no goal, so fallback dots, all lit."""
+def ring_ticks(r, d, value, maxv, unit, cap, goal_met=None, fallback=None):
+    """Black dots on the filled part of a progress ring, one per unit (e.g. 50 steps,
+    1 minute) of the goal maxv, at most cap (beyond that a dot is worth maxv / cap).
+    goal_met / fallback: when goal_met is true the data has no goal: fallback dots, ring full."""
     n = f"clamp(round({maxv} / {unit}), 1, {cap})"
-    lit = f"floor({value} * {n} / {maxv} + 0.001)"
+    done = f"({value} * {n} / {maxv})"      # filled length in dots
     if goal_met:
         n = f"({goal_met} ? {fallback} : {n})"
-        lit = f"({goal_met} ? {fallback} : {lit})"
+        done = f"({goal_met} ? {fallback} : {done})"
     box = d + 2
     dots = []
-    for i in range(cap):
+    for i in range(1, cap):                 # none at 12 o'clock, where the ring starts
         theta = f"rad({i} * 360 / {n})"
-        dots.append(f"""<Group x="0" y="0" width="{box}" height="{box}" name="Dot{i}">
+        dots.append(f"""<Group x="0" y="0" width="{box}" height="{box}" name="Tick{i}">
   <Transform target="x" value="{C:g} + {r} * sin({theta}) - {box / 2:g}" />
   <Transform target="y" value="{C:g} - {r} * cos({theta}) - {box / 2:g}" />
-  <Transform target="alpha" value="{i} &lt; {n} ? 255 : 0" />
-{indent(disc(box / 2, box / 2, d, color, extra=f' alpha="{track_alpha}"', inner=f"{chr(10)}  {AMBIENT_HIDE}"), 2)}
-{indent(disc(box / 2, box / 2, d, color, inner=f'{chr(10)}  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : 0" />'), 2)}
+  <Transform target="alpha" value="{i} &lt; {n} &amp;&amp; {i} &lt; {done} ? 255 : 0" />
+{indent(disc(box / 2, box / 2, d, "#ff000000"), 2)}
 </Group>""")
     return "\n".join(dots)
 
@@ -303,16 +302,20 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
     centered oval of that radius: the outer slot covers the screen, the inner one the
     disc inside, so taps on the outer band go to the outer ring's provider."""
     def body(kind, fraction):
-        if kind in ("RANGED_VALUE", "GOAL_PROGRESS"):
+        parts = [arc(r, stroke, color, alpha=track_alpha, extra=f"\n  {AMBIENT_HIDE}")]
+        if fraction:
+            met = None
+            if full_at_max_one:
+                # MySteps sends value 0 of max 1 once the hour's goal is met: full ring then
+                met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
+                fraction = f"({met} ? 1 : {fraction})"
+            parts.append(glowing_arc(r, stroke, color, fraction, glow) if glow
+                         else arc(r, stroke, color, fraction))
             value, maxv = (("[COMPLICATION.RANGED_VALUE_VALUE]", "[COMPLICATION.RANGED_VALUE_MAX]")
                            if kind == "RANGED_VALUE" else
                            ("[COMPLICATION.GOAL_PROGRESS_VALUE]", "[COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"))
-            # MySteps sends value 0 of max 1 once the hour's goal is met: all dots lit then
-            met = "[COMPLICATION.RANGED_VALUE_MAX] == 1" if full_at_max_one and kind == "RANGED_VALUE" else None
-            parts = [dotted_ring(r, dot, color, 90, value, maxv, unit, cap,
-                                 met, STEP_GOAL_DOTS)]
-        else:
-            parts = [arc(r, stroke, color, alpha=track_alpha, extra=f"\n  {AMBIENT_HIDE}")]
+            parts.append(ring_ticks(r, dot, value, maxv, unit, cap,
+                                    met if kind == "RANGED_VALUE" else None, STEP_GOAL_DOTS))
         def number():
             if kind == "EMPTY":
                 return text("--", p(cols()[col]), p(value_cy()), s(VALUE_SIZE), color=value_color,
@@ -589,11 +592,11 @@ def watchface():
         ring_slot(1, "azm_slot_label",
                   "com.fitbit.FitbitMobile/com.google.android.wearable.fitbit.mainapp.complications.offloadable.azm.OffloadableAZMComplicationDataSourceService",
                   *RING_AZM, 8, ACCENT, 31, 0, ACCENT,
-                  "Outer ring + left number: Active Zone Minutes (Fitbit) by default", C, "showAzm", 12, 1, 45),
+                  "Outer ring + left number: Active Zone Minutes (Fitbit) by default", C, "showAzm", 5, 1, 45),
         ring_slot(0, "mysteps_slot_label",
                   "com.adrianp.mysteps/com.adrianp.mysteps.complication.HourlyStepsComplicationService",
                   *RING_STEPS, 0, MAIN, 20, 2, ACCENT,
-                  "Middle ring + right number: MySteps, steps this hour", RING_STEPS[0] + RING_STEPS[1] / 2 + 1, "showSteps", 10, 50, 30, full_at_max_one=True),
+                  "Middle ring + right number: MySteps, steps this hour", RING_STEPS[0] + RING_STEPS[1] / 2 + 1, "showSteps", 4, 50, 30, full_at_max_one=True),
         heart_rate(),
         seconds_dot(),
         per_font(date),
