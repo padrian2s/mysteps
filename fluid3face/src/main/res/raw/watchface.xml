@@ -1672,12 +1672,12 @@
     </PartText>
 
     <!-- Time -->
-    <DigitalClock x="41" y="130" width="154" height="175">
+    <DigitalClock x="34" y="130" width="154" height="175">
       <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="154" height="175">
         <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
     </DigitalClock>
-    <DigitalClock x="261" y="130" width="154" height="175">
+    <DigitalClock x="268" y="130" width="154" height="175">
       <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="154" height="175">
         <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
@@ -1696,90 +1696,90 @@
                 <Expression name="hrCardio">[HEART_RATE] &gt; 0 &amp;&amp; [HEART_RATE] &gt;= 130</Expression>
               </Expressions>
               <Compare expression="hrRest">
-                <PartImage x="220" y="185" width="17" height="15" tintColor="#ff8f9bb3">
+                <PartImage x="217" y="175" width="22" height="19" tintColor="#ff8f9bb3">
                   <Image resource="ic_heart" />
                 </PartImage>
-                <PartText x="167" y="192" width="122" height="65">
+                <PartText x="146" y="184" width="164" height="88">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="40.5" color="#ff8f9bb3"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                    <Font family="jost_regular" size="54.7" color="#ff8f9bb3"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                   </Text>
                 </PartText>
-                <PartDraw x="201" y="250" width="19" height="6" alpha="60">
+                <PartDraw x="201" y="260" width="19" height="6" alpha="60">
                   <Rectangle x="0" y="0" width="19" height="6">
                     <Fill color="#ff8f9bb3" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="203" y="252" width="15" height="2">
+                <PartDraw x="203" y="262" width="15" height="2">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ff8f9bb3" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="221" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="221" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe39a5a" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="239" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="239" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe5493f" />
                   </Rectangle>
                 </PartDraw>
               </Compare>
               <Compare expression="hrActive">
-                <PartImage x="220" y="185" width="17" height="15" tintColor="#ffe39a5a">
+                <PartImage x="217" y="175" width="22" height="19" tintColor="#ffe39a5a">
                   <Image resource="ic_heart" />
                 </PartImage>
-                <PartText x="167" y="192" width="122" height="65">
+                <PartText x="146" y="184" width="164" height="88">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="40.5" color="#ffe39a5a"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                    <Font family="jost_regular" size="54.7" color="#ffe39a5a"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                   </Text>
                 </PartText>
-                <PartDraw x="203" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="203" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ff8f9bb3" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="219" y="250" width="19" height="6" alpha="60">
+                <PartDraw x="219" y="260" width="19" height="6" alpha="60">
                   <Rectangle x="0" y="0" width="19" height="6">
                     <Fill color="#ffe39a5a" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="221" y="252" width="15" height="2">
+                <PartDraw x="221" y="262" width="15" height="2">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe39a5a" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="239" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="239" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe5493f" />
                   </Rectangle>
                 </PartDraw>
               </Compare>
               <Compare expression="hrCardio">
-                <PartImage x="220" y="185" width="17" height="15" tintColor="#ffe5493f">
+                <PartImage x="217" y="175" width="22" height="19" tintColor="#ffe5493f">
                   <Image resource="ic_heart" />
                 </PartImage>
-                <PartText x="167" y="192" width="122" height="65">
+                <PartText x="146" y="184" width="164" height="88">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="40.5" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                    <Font family="jost_regular" size="54.7" color="#ffe5493f"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                   </Text>
                 </PartText>
-                <PartDraw x="203" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="203" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ff8f9bb3" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="221" y="252" width="15" height="2" alpha="64">
+                <PartDraw x="221" y="262" width="15" height="2" alpha="64">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe39a5a" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="237" y="250" width="19" height="6" alpha="60">
+                <PartDraw x="237" y="260" width="19" height="6" alpha="60">
                   <Rectangle x="0" y="0" width="19" height="6">
                     <Fill color="#ffe5493f" />
                   </Rectangle>
                 </PartDraw>
-                <PartDraw x="239" y="252" width="15" height="2">
+                <PartDraw x="239" y="262" width="15" height="2">
                   <Rectangle x="0" y="0" width="15" height="2">
                     <Fill color="#ffe5493f" />
                   </Rectangle>
@@ -1791,12 +1791,12 @@
                 <Expression name="noHr">[HEART_RATE] &lt;= 0</Expression>
               </Expressions>
               <Compare expression="noHr">
-                <PartImage x="220" y="185" width="17" height="15" tintColor="#ff8f9bb3">
+                <PartImage x="217" y="175" width="22" height="19" tintColor="#ff8f9bb3">
                   <Image resource="ic_heart" />
                 </PartImage>
-                <PartText x="167" y="192" width="122" height="65">
+                <PartText x="146" y="184" width="164" height="88">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="40.5" color="#ff8f9bb3">--</Font>
+                    <Font family="jost_regular" size="54.7" color="#ff8f9bb3">--</Font>
                   </Text>
                 </PartText>
               </Compare>
@@ -1834,10 +1834,10 @@
     </AnalogClock>
 
     <!-- Tap on the time / heart rate: big live pulse -->
-    <Group x="61" y="163" width="334" height="109" name="HeartTap">
+    <Group x="55" y="163" width="347" height="109" name="HeartTap">
       <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
-      <PartDraw x="0" y="0" width="334" height="109">
-        <Rectangle x="0" y="0" width="334" height="109">
+      <PartDraw x="0" y="0" width="347" height="109">
+        <Rectangle x="0" y="0" width="347" height="109">
           <Fill color="#00000000" />
         </Rectangle>
       </PartDraw>

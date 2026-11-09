@@ -214,14 +214,14 @@ GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_
 # ---- Time: hh [♥ / bpm / zone pills] mm ---------------------------------------------
 TIME_SIZE = 108
 TIME_CY = (450 - 20) / 2                    # padding-bottom 20
-HEART_SIZE, BPM_SIZE = 20, 40
+HEART_SIZE, BPM_SIZE = 26, 54      # the design's 20 / 40, bigger (asked on the watch)
 PILL_W, PILL_H, PILL_GAP = 14, 2, 4
 MID_H = HEART_SIZE + 2 + BPM_SIZE + 2 + 5 + PILL_H
 MID_TOP = TIME_CY - MID_H / 2
 HEART_CY = MID_TOP + HEART_SIZE / 2
 BPM_CY = MID_TOP + HEART_SIZE + 2 + BPM_SIZE / 2
 PILLS_CY = MID_TOP + HEART_SIZE + 2 + BPM_SIZE + 2 + 5 + PILL_H / 2
-MID_W = max(text_width("89", "jost_light", BPM_SIZE), 3 * PILL_W + 2 * PILL_GAP) + 2 * 8
+MID_W = max(text_width("89", "jost_regular", BPM_SIZE), 3 * PILL_W + 2 * PILL_GAP) + 2 * 8
 DIGITS_W = text_width("00", "jost_time", TIME_SIZE)    # tracking is in the advances
 TIME_LEFT = 225 - (2 * DIGITS_W + MID_W) / 2
 
@@ -378,7 +378,7 @@ def heart_rate():
     Hidden in always-on (the bpm only updates while the screen is on)."""
     hs = s(HEART_SIZE * 0.83)
     heart = lambda color: image("ic_heart", C - hs / 2, p(HEART_CY) - hs * 0.89 / 2, hs, hs * 0.89, tint=color)
-    bpm = lambda color: text(template("round([HEART_RATE])"), C, p(BPM_CY), s(BPM_SIZE), color=color,
+    bpm = lambda color: text(template("round([HEART_RATE])"), C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=color,
                              width=s(BPM_SIZE * 3))
     pills_x = 225 - (3 * PILL_W + 2 * PILL_GAP) / 2
 
@@ -394,7 +394,7 @@ def heart_rate():
                             extra="" if lit else ' alpha="64"'))
         return "\n".join(out)
 
-    no_hr = text("--", C, p(BPM_CY), s(BPM_SIZE), color=ZONES[0][1], width=s(BPM_SIZE * 3))
+    no_hr = text("--", C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=ZONES[0][1], width=s(BPM_SIZE * 3))
     return f"""<!-- Heart rate between hours and minutes, colored by zone (screen on only) -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
   {AMBIENT_HIDE}
