@@ -1672,13 +1672,13 @@
     </PartText>
 
     <!-- Time -->
-    <DigitalClock x="57" y="130" width="138" height="175">
-      <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="138" height="175">
+    <DigitalClock x="41" y="130" width="154" height="175">
+      <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="154" height="175">
         <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
     </DigitalClock>
-    <DigitalClock x="261" y="130" width="138" height="175">
-      <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="138" height="175">
+    <DigitalClock x="261" y="130" width="154" height="175">
+      <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="154" height="175">
         <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
       </TimeText>
     </DigitalClock>
@@ -1834,10 +1834,10 @@
     </AnalogClock>
 
     <!-- Tap on the time / heart rate: big live pulse -->
-    <Group x="77" y="163" width="303" height="109" name="HeartTap">
+    <Group x="61" y="163" width="334" height="109" name="HeartTap">
       <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
-      <PartDraw x="0" y="0" width="303" height="109">
-        <Rectangle x="0" y="0" width="303" height="109">
+      <PartDraw x="0" y="0" width="334" height="109">
+        <Rectangle x="0" y="0" width="334" height="109">
           <Fill color="#00000000" />
         </Rectangle>
       </PartDraw>

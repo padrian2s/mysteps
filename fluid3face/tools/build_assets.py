@@ -5,7 +5,7 @@
 
 Fonts: Jost (OFL, github.com/google/fonts ofl/jost), static weights subset to Latin +
 Romanian, with tabular digits baked into the cmap (the design uses tabular-nums, which
-WFF can't request). jost_time also carries the design's -0.02 em tracking in its digit
+WFF can't request). jost_time (bold, asked on the watch) also carries the design's -0.02 em tracking in its digit
 advances (TimeText takes no letterSpacing).
 
 Hands: the design's short dauphine hands (two facets, one lit and one shaded, pointed
@@ -20,7 +20,7 @@ from fontTools import subset
 from PIL import Image, ImageDraw, ImageFilter
 
 RES = Path(__file__).resolve().parent.parent / "src/main/res"
-FONTS = {"jost_extralight": 200, "jost_light": 300, "jost_regular": 400, "jost_time": 200}
+FONTS = {"jost_extralight": 200, "jost_light": 300, "jost_regular": 400, "jost_time": 700}
 TIME_TRACKING = -20          # -0.02 em at 1000 units per em
 UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
             + [0x218, 0x219, 0x21A, 0x21B, 0x2026, 0x2013, 0x2014, 0x2022])

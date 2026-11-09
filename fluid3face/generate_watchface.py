@@ -356,7 +356,7 @@ def date():
 
 
 def time():
-    """hh and mm in extra-light 108 px digits (tabular, -0.02 em)."""
+    """hh and mm in bold 108 px digits (tabular, -0.02 em); the design had extra-light."""
     h = round(s(TIME_SIZE) * 1.6)
     w = round(s(DIGITS_W + 20))
     cy = p(TIME_CY)
