@@ -475,9 +475,9 @@
           <BooleanConfiguration id="showAzm">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showAzm">
-                <PartText x="73" y="319" width="106" height="49">
+                <PartText x="35" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -915,9 +915,9 @@
           <BooleanConfiguration id="showAzm">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showAzm">
-                <PartText x="73" y="319" width="106" height="49">
+                <PartText x="35" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -936,9 +936,9 @@
           <BooleanConfiguration id="showAzm">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showAzm">
-                <PartText x="73" y="319" width="106" height="49">
+                <PartText x="35" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.1]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -957,9 +957,9 @@
           <BooleanConfiguration id="showAzm">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showAzm">
-                <PartText x="73" y="319" width="106" height="49">
+                <PartText x="35" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.1]">--</Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.1]">--</Font>
                   </Text>
                 </PartText>
               </Group>
@@ -1273,9 +1273,9 @@
           <BooleanConfiguration id="showSteps">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showSteps">
-                <PartText x="268" y="319" width="106" height="49">
+                <PartText x="252" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -1578,9 +1578,9 @@
           <BooleanConfiguration id="showSteps">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showSteps">
-                <PartText x="268" y="319" width="106" height="49">
+                <PartText x="252" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -1599,9 +1599,9 @@
           <BooleanConfiguration id="showSteps">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showSteps">
-                <PartText x="268" y="319" width="106" height="49">
+                <PartText x="252" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[COMPLICATION.TEXT]" /></Template></Font>
                   </Text>
                 </PartText>
               </Group>
@@ -1620,9 +1620,9 @@
           <BooleanConfiguration id="showSteps">
             <BooleanOption id="TRUE">
               <Group x="0" y="0" width="456" height="456" name="showSteps">
-                <PartText x="268" y="319" width="106" height="49">
+                <PartText x="252" y="302" width="156" height="71">
                   <Text align="CENTER">
-                    <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.0]">--</Font>
+                    <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.0]">--</Font>
                   </Text>
                 </PartText>
               </Group>
@@ -1660,14 +1660,14 @@
     </Group>
 
     <!-- Date: day of the month, month below -->
-    <PartText x="182" y="50" width="91" height="49">
+    <PartText x="161" y="40" width="134" height="71">
       <Text align="CENTER">
-        <Font family="jost_light" size="30.4" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY]" /></Template></Font>
+        <Font family="jost_regular" size="44.6" color="[CONFIGURATION.themeColor.0]"><Template>%s<Parameter expression="[DAY]" /></Template></Font>
       </Text>
     </PartText>
-    <PartText x="174" y="90" width="109" height="20" alpha="153">
+    <PartText x="147" y="98" width="162" height="32" alpha="170">
       <Text align="CENTER">
-        <Font family="jost_regular" size="12.2" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.32"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;IAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAI.&quot; : ([MONTH] == 6 ? &quot;IUN.&quot; : ([MONTH] == 7 ? &quot;IUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
+        <Font family="jost_regular" size="20.3" color="[CONFIGURATION.themeColor.0]" letterSpacing="0.2"><Template>%s<Parameter expression="([MONTH] == 1 ? &quot;IAN.&quot; : ([MONTH] == 2 ? &quot;FEB.&quot; : ([MONTH] == 3 ? &quot;MAR.&quot; : ([MONTH] == 4 ? &quot;APR.&quot; : ([MONTH] == 5 ? &quot;MAI.&quot; : ([MONTH] == 6 ? &quot;IUN.&quot; : ([MONTH] == 7 ? &quot;IUL.&quot; : ([MONTH] == 8 ? &quot;AUG.&quot; : ([MONTH] == 9 ? &quot;SEP.&quot; : ([MONTH] == 10 ? &quot;OCT.&quot; : ([MONTH] == 11 ? &quot;NOV.&quot; : &quot;DEC.&quot;)))))))))))" /></Template></Font>
       </Text>
     </PartText>
 
@@ -1813,14 +1813,14 @@
       </Expressions>
       <Compare expression="hasWeather">
         <Group x="0" y="0" width="456" height="456" name="Weather">
-          <PartDraw x="209" y="397" width="6" height="6">
-            <Ellipse x="0.65" y="0.85" width="5.1" height="5.1">
+          <PartDraw x="192" y="382" width="12" height="12">
+            <Ellipse x="0.6" y="0.8" width="10.4" height="10.4">
               <Fill color="#ffe39a5a" />
             </Ellipse>
           </PartDraw>
-          <PartText x="221" y="388" width="61" height="24">
+          <PartText x="209" y="362" width="130" height="52">
             <Text align="START">
-              <Font family="jost_regular" size="15.2" color="#ffe39a5a" letterSpacing="0.08"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+              <Font family="jost_regular" size="32.4" color="#ffe39a5a" letterSpacing="0.08"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
             </Text>
           </PartText>
         </Group>

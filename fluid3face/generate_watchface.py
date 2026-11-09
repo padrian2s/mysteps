@@ -73,6 +73,11 @@ SECONDS_R = 204
 # (max 45). A met MySteps hour carries no goal (max 1): ticks of the 300-step goal (6)
 STEP_GOAL_TICKS = 6
 
+# Text sizes (design px), well above the mock-up's (12-30 px read badly on the wrist):
+# day 30 -> 44, month 12 -> 20, temperature 15 -> 32, zone minutes / steps 30 -> 44
+DATE_TOP = 52
+DAY_SIZE, MONTH_SIZE, TEMP_SIZE = 44, 20, 32
+
 MONTHS = ["IAN", "FEB", "MAR", "APR", "MAI", "IUN", "IUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 AMBIENT_HIDE = '<Variant mode="AMBIENT" target="alpha" value="0" />'
 HR_ACTIVITY = "com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity"
@@ -221,12 +226,12 @@ DIGITS_W = text_width("00", "jost_time", TIME_SIZE)    # tracking is in the adva
 TIME_LEFT = 225 - (2 * DIGITS_W + MID_W) / 2
 
 # ---- Bottom row: zone minutes and steps, 150 px apart --------------------------------
-VALUE_SIZE = 30
-VALUE_CY = 450 - 96 - VALUE_SIZE / 2
+VALUE_SIZE = 44
+VALUE_CY = 333
 
 
 def value_cols():
-    w1, w2 = text_width("77", "jost_light", VALUE_SIZE), text_width("180", "jost_light", VALUE_SIZE)
+    w1, w2 = text_width("77", "jost_regular", VALUE_SIZE), text_width("180", "jost_regular", VALUE_SIZE)
     left = 225 - (w1 + 150 + w2) / 2
     return left + w1 / 2, left + w1 + 150 + w2 / 2
 
@@ -277,14 +282,14 @@ def ring_slot(slot_id, name, provider, ring, color, track_alpha, cx, toggle_id, 
             parts.append(ring_ticks(r, w, value, maxv, unit, cap,
                                     met if kind == "RANGED_VALUE" else None, STEP_GOAL_TICKS))
         if kind == "EMPTY":
-            number = text("--", p(cx), p(VALUE_CY), s(VALUE_SIZE), color=color, width=s(VALUE_SIZE * 3.5))
+            number = text("--", p(cx), p(VALUE_CY), s(VALUE_SIZE), font="jost_regular", color=color, width=s(VALUE_SIZE * 3.5))
         else:
             label = "[COMPLICATION.TEXT]"
             if full_at_max_one and kind == "RANGED_VALUE":
                 # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
                 label = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
                          "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            number = text(template(label), p(cx), p(VALUE_CY), s(VALUE_SIZE), color=color,
+            number = text(template(label), p(cx), p(VALUE_CY), s(VALUE_SIZE), font="jost_regular", color=color,
                           width=s(VALUE_SIZE * 3.5))
         parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
 {indent(toggle(toggle_id, number), 2)}
@@ -344,11 +349,10 @@ def hands():
 
 def date():
     month = template(chain("[MONTH]", [m + "." for m in MONTHS]))
-    month_size = 12
     return f"""<!-- Date: day of the month, month below -->
-{text(template("[DAY]"), C, p(58 + 15), s(30), width=s(30 * 3))}
-{text(month, C, p(58 + 30 + 2 + month_size * LINE / 2), s(month_size), font="jost_regular",
-      width=s(month_size * 9), spacing=0.32, extra=' alpha="153"')}"""
+{text(template("[DAY]"), C, p(DATE_TOP + DAY_SIZE / 2), s(DAY_SIZE), font="jost_regular", width=s(DAY_SIZE * 3))}
+{text(month, C, p(DATE_TOP + DAY_SIZE + 2 + MONTH_SIZE * LINE / 2), s(MONTH_SIZE), font="jost_regular",
+      width=s(MONTH_SIZE * 8), spacing=0.2, extra=' alpha="170"')}"""
 
 
 def time():
@@ -422,7 +426,7 @@ def tap_area():
 
 def temperature():
     """Orange dot, then the temperature, centered as one group."""
-    size, dot = 15, 5
+    size, dot = TEMP_SIZE, TEMP_SIZE * 0.32
     cy = p(450 - 44 - size * LINE / 2)
     tw = text_width("25°", "jost_regular", size, 0.08)
     gw = dot + 6 + tw
