@@ -24,9 +24,12 @@
     <string name="handSize_large">Large</string>
     <string name="handSize_hidden">Hidden</string>
     <string name="timeFont_label">Time weight</string>
-    <string name="timeFont_bold">Bold</string>
-    <string name="timeFont_regular">Regular</string>
     <string name="timeFont_light">Light</string>
+    <string name="timeFont_regular">Regular</string>
+    <string name="timeFont_bold">Bold</string>
+    <string name="timeFont_strong">Strong</string>
+    <string name="timeFont_vstrong">Very strong</string>
+    <string name="timeFont_ultra">Ultra bold</string>
     <string name="timeSize_label">Time size</string>
     <string name="timeSize_small">Small</string>
     <string name="timeSize_normal">Normal</string>

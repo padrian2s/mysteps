@@ -20,7 +20,8 @@ from fontTools import subset
 from PIL import Image, ImageDraw, ImageFilter
 
 RES = Path(__file__).resolve().parent.parent / "src/main/res"
-FONTS = {"jost_extralight": 200, "jost_light": 300, "jost_regular": 400, "jost_time": 700}
+FONTS = {"jost_extralight": 200, "jost_light": 300, "jost_regular": 400, "jost_time": 700,
+         "jost_time_strong": 760, "jost_time_vstrong": 830, "jost_time_ultra": 900}
 TIME_TRACKING = -20          # -0.02 em at 1000 units per em
 UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
             + [0x218, 0x219, 0x21A, 0x21B, 0x2026, 0x2013, 0x2014, 0x2022])
@@ -62,7 +63,7 @@ def build_fonts(src):
         s = subset.Subsetter(opts)
         s.populate(unicodes=UNICODES)
         s.subset(f)
-        if name == "jost_time":
+        if name.startswith("jost_time"):
             hm, cm = f["hmtx"], f.getBestCmap()
             for glyph in {cm[c] for c in range(0x30, 0x3A)}:
                 adv, lsb = hm[glyph]

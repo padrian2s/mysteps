@@ -38,9 +38,12 @@
       <ListOption id="hidden" displayName="handSize_hidden" screenReaderText="handSize_hidden" />
     </ListConfiguration>
     <ListConfiguration id="timeFont" displayName="timeFont_label" screenReaderText="timeFont_label" defaultValue="bold">
-      <ListOption id="bold" displayName="timeFont_bold" screenReaderText="timeFont_bold" />
-      <ListOption id="regular" displayName="timeFont_regular" screenReaderText="timeFont_regular" />
       <ListOption id="light" displayName="timeFont_light" screenReaderText="timeFont_light" />
+      <ListOption id="regular" displayName="timeFont_regular" screenReaderText="timeFont_regular" />
+      <ListOption id="bold" displayName="timeFont_bold" screenReaderText="timeFont_bold" />
+      <ListOption id="strong" displayName="timeFont_strong" screenReaderText="timeFont_strong" />
+      <ListOption id="vstrong" displayName="timeFont_vstrong" screenReaderText="timeFont_vstrong" />
+      <ListOption id="ultra" displayName="timeFont_ultra" screenReaderText="timeFont_ultra" />
     </ListConfiguration>
     <ListConfiguration id="timeSize" displayName="timeSize_label" screenReaderText="timeSize_label" defaultValue="normal">
       <ListOption id="small" displayName="timeSize_small" screenReaderText="timeSize_small" />
@@ -5050,47 +5053,47 @@
 
     <!-- Time -->
     <ListConfiguration id="timeFont">
-      <ListOption id="bold">
-        <Group x="0" y="0" width="456" height="456" name="timeFont_bold">
+      <ListOption id="light">
+        <Group x="0" y="0" width="456" height="456" name="timeFont_light">
           <ListConfiguration id="timeSize">
             <ListOption id="small">
               <Group x="0" y="0" width="456" height="456" name="timeSize_small">
-                <DigitalClock x="49" y="140" width="139" height="156">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="139" height="156">
-                    <Font family="jost_time" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="57" y="140" width="131" height="156">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="131" height="156">
+                    <Font family="jost_light" size="97.3" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="140" width="139" height="156">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="139" height="156">
-                    <Font family="jost_time" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="140" width="131" height="156">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="131" height="156">
+                    <Font family="jost_light" size="97.3" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>
             </ListOption>
             <ListOption id="normal">
               <Group x="0" y="0" width="456" height="456" name="timeSize_normal">
-                <DigitalClock x="34" y="130" width="154" height="175">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="154" height="175">
-                    <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="43" y="130" width="145" height="175">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="145" height="175">
+                    <Font family="jost_light" size="109.4" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="130" width="154" height="175">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="154" height="175">
-                    <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="130" width="145" height="175">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="145" height="175">
+                    <Font family="jost_light" size="109.4" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>
             </ListOption>
             <ListOption id="large">
               <Group x="0" y="0" width="456" height="456" name="timeSize_large">
-                <DigitalClock x="22" y="122" width="166" height="191">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="166" height="191">
-                    <Font family="jost_time" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="32" y="122" width="156" height="191">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="156" height="191">
+                    <Font family="jost_light" size="119.6" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="122" width="166" height="191">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="166" height="191">
-                    <Font family="jost_time" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="122" width="156" height="191">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="156" height="191">
+                    <Font family="jost_light" size="119.6" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>
@@ -5146,47 +5149,191 @@
           </ListConfiguration>
         </Group>
       </ListOption>
-      <ListOption id="light">
-        <Group x="0" y="0" width="456" height="456" name="timeFont_light">
+      <ListOption id="bold">
+        <Group x="0" y="0" width="456" height="456" name="timeFont_bold">
           <ListConfiguration id="timeSize">
             <ListOption id="small">
               <Group x="0" y="0" width="456" height="456" name="timeSize_small">
-                <DigitalClock x="57" y="140" width="131" height="156">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="131" height="156">
-                    <Font family="jost_light" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="49" y="140" width="139" height="156">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="139" height="156">
+                    <Font family="jost_time" size="97.3" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="140" width="131" height="156">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="131" height="156">
-                    <Font family="jost_light" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="140" width="139" height="156">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="139" height="156">
+                    <Font family="jost_time" size="97.3" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>
             </ListOption>
             <ListOption id="normal">
               <Group x="0" y="0" width="456" height="456" name="timeSize_normal">
-                <DigitalClock x="43" y="130" width="145" height="175">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="145" height="175">
-                    <Font family="jost_light" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="34" y="130" width="154" height="175">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="154" height="175">
+                    <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="130" width="145" height="175">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="145" height="175">
-                    <Font family="jost_light" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="130" width="154" height="175">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="154" height="175">
+                    <Font family="jost_time" size="109.4" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>
             </ListOption>
             <ListOption id="large">
               <Group x="0" y="0" width="456" height="456" name="timeSize_large">
-                <DigitalClock x="32" y="122" width="156" height="191">
-                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="156" height="191">
-                    <Font family="jost_light" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="22" y="122" width="166" height="191">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="166" height="191">
+                    <Font family="jost_time" size="119.6" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
-                <DigitalClock x="268" y="122" width="156" height="191">
-                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="156" height="191">
-                    <Font family="jost_light" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                <DigitalClock x="268" y="122" width="166" height="191">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="166" height="191">
+                    <Font family="jost_time" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
+      </ListOption>
+      <ListOption id="strong">
+        <Group x="0" y="0" width="456" height="456" name="timeFont_strong">
+          <ListConfiguration id="timeSize">
+            <ListOption id="small">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_small">
+                <DigitalClock x="47" y="140" width="141" height="156">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="141" height="156">
+                    <Font family="jost_time_strong" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="140" width="141" height="156">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="141" height="156">
+                    <Font family="jost_time_strong" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="normal">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_normal">
+                <DigitalClock x="32" y="130" width="156" height="175">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="156" height="175">
+                    <Font family="jost_time_strong" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="130" width="156" height="175">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="156" height="175">
+                    <Font family="jost_time_strong" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="large">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_large">
+                <DigitalClock x="20" y="122" width="168" height="191">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="168" height="191">
+                    <Font family="jost_time_strong" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="122" width="168" height="191">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="168" height="191">
+                    <Font family="jost_time_strong" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
+      </ListOption>
+      <ListOption id="vstrong">
+        <Group x="0" y="0" width="456" height="456" name="timeFont_vstrong">
+          <ListConfiguration id="timeSize">
+            <ListOption id="small">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_small">
+                <DigitalClock x="45" y="140" width="143" height="156">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="143" height="156">
+                    <Font family="jost_time_vstrong" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="140" width="143" height="156">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="143" height="156">
+                    <Font family="jost_time_vstrong" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="normal">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_normal">
+                <DigitalClock x="30" y="130" width="158" height="175">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="158" height="175">
+                    <Font family="jost_time_vstrong" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="130" width="158" height="175">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="158" height="175">
+                    <Font family="jost_time_vstrong" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="large">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_large">
+                <DigitalClock x="17" y="122" width="171" height="191">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="171" height="191">
+                    <Font family="jost_time_vstrong" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="122" width="171" height="191">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="171" height="191">
+                    <Font family="jost_time_vstrong" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+          </ListConfiguration>
+        </Group>
+      </ListOption>
+      <ListOption id="ultra">
+        <Group x="0" y="0" width="456" height="456" name="timeFont_ultra">
+          <ListConfiguration id="timeSize">
+            <ListOption id="small">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_small">
+                <DigitalClock x="43" y="140" width="145" height="156">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="145" height="156">
+                    <Font family="jost_time_ultra" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="140" width="145" height="156">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="145" height="156">
+                    <Font family="jost_time_ultra" size="97.3" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="normal">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_normal">
+                <DigitalClock x="28" y="130" width="160" height="175">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="160" height="175">
+                    <Font family="jost_time_ultra" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="130" width="160" height="175">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="160" height="175">
+                    <Font family="jost_time_ultra" size="109.4" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+              </Group>
+            </ListOption>
+            <ListOption id="large">
+              <Group x="0" y="0" width="456" height="456" name="timeSize_large">
+                <DigitalClock x="15" y="122" width="173" height="191">
+                  <TimeText format="hh" hourFormat="SYNC_TO_DEVICE" align="END" x="0" y="0" width="173" height="191">
+                    <Font family="jost_time_ultra" size="119.6" color="[CONFIGURATION.themeColor.0]" />
+                  </TimeText>
+                </DigitalClock>
+                <DigitalClock x="268" y="122" width="173" height="191">
+                  <TimeText format="mm" hourFormat="SYNC_TO_DEVICE" align="START" x="0" y="0" width="173" height="191">
+                    <Font family="jost_time_ultra" size="119.6" color="[CONFIGURATION.themeColor.0]" />
                   </TimeText>
                 </DigitalClock>
               </Group>

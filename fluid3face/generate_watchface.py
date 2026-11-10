@@ -78,8 +78,9 @@ RING_WIDTHS = [("thin", "Thin", 3), ("normal", "Normal", 6), ("thick", "Thick", 
 BAND = max(w for _, _, w in RING_WIDTHS)
 GAPS = [("none", "None", 0), ("small", "Small", 3.5), ("medium", "Medium", 7), ("large", "Large", 10)]
 HAND_SIZES = [("small", "Small"), ("normal", "Normal"), ("large", "Large"), ("hidden", "Hidden")]
-TIME_FONTS = [("bold", "Bold", "jost_time"), ("regular", "Regular", "jost_regular"),
-              ("light", "Light", "jost_light")]
+TIME_FONTS = [("light", "Light", "jost_light"), ("regular", "Regular", "jost_regular"),
+              ("bold", "Bold", "jost_time"), ("strong", "Strong", "jost_time_strong"),
+              ("vstrong", "Very strong", "jost_time_vstrong"), ("ultra", "Ultra bold", "jost_time_ultra")]
 TIME_SIZES = [("small", "Small", 96), ("normal", "Normal", 108), ("large", "Large", 118)]
 TEXT_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "Large", 1.15)]
 LISTS = [("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
@@ -99,7 +100,8 @@ AMBIENT_HIDE = '<Variant mode="AMBIENT" target="alpha" value="0" />'
 HR_ACTIVITY = "com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity"
 
 FONT_FILES = {n: TTFont(RES / "font" / f"{n}.ttf")
-              for n in ("jost_extralight", "jost_light", "jost_regular", "jost_time")}
+              for n in ("jost_extralight", "jost_light", "jost_regular", "jost_time",
+                                   "jost_time_strong", "jost_time_vstrong", "jost_time_ultra")}
 LINE = 1.445      # Jost's normal line height (hhea 1070 + 375 per 1000); its line box
                   # is centered on the caps (cap middle 350 vs box middle 347.5)
 
