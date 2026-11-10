@@ -68,7 +68,22 @@ TOGGLES = [("showSteps", "Steps number"), ("showAzm", "Zone Minutes number"),
            ("showSeconds", "Seconds segment")]
 HR_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "Large", 1.15),
             ("xlarge", "Extra large", 1.3)]
-LISTS = [("hrSize", "Heart rate size", "normal", HR_SIZES)]
+# Zone minutes / steps numbers: (id, label, number px, label px)
+SIDE_SIZES = [("small", "Small", 24, 12), ("normal", "Normal", 30, 13), ("large", "Large", 34, 15),
+              ("xlarge", "Extra large", 38, 16)]
+# Date and temperature: (id, label, px, with the weekday); Extra large drops the
+# weekday so the pill still fits the top of the dial
+DATE_SIZES = [("small", "Small", 18, True), ("normal", "Normal", 22, True), ("large", "Large", 26, True),
+              ("xlarge", "Extra large", 31, False)]
+# Ring thickness (design px): outer segments and the inner steps ring; the thickest of
+# each still keeps the two rings apart (segments' inner edge 208, steps' outer 206)
+SEG_WIDTHS = [("thin", "Thin", 5), ("normal", "Normal", 8), ("thick", "Thick", 11), ("xthick", "Extra thick", 12)]
+STEPS_WIDTHS = [("thin", "Thin", 2), ("normal", "Normal", 4), ("thick", "Thick", 7), ("xthick", "Extra thick", 10)]
+LISTS = [("hrSize", "Heart rate size", "normal", HR_SIZES),
+         ("segWidth", "Zone Minutes segments thickness", "normal", SEG_WIDTHS),
+         ("stepsWidth", "Steps ring thickness", "normal", STEPS_WIDTHS),
+         ("sideSize", "Zone minutes / steps size", "normal", SIDE_SIZES),
+         ("dateSize", "Date and temperature size", "normal", DATE_SIZES)]
 
 # Heart rate zones as in the design: rest < 100, active 100-129, cardio >= 130
 # (id, condition, pill color, text color, heart color, label, bpm sample for the width)
@@ -92,7 +107,14 @@ FONT_FILES = {n: TTFont(RES / "font" / f"{n}.ttf")
 
 # Rings (design px): outer 60 segments, inner steps ring
 SEG_R, SEG_W, SEG_GAP = 214, 8, 5
-SEG_HALF = (2 * math.pi * SEG_R / 60 - SEG_W - SEG_GAP) / 2 / SEG_R * 180 / math.pi   # degrees
+
+
+def seg_half(w):
+    """Half a segment's arc in degrees at width w: the round caps take w, gaps stay 5 px."""
+    return (2 * math.pi * SEG_R / 60 - w - SEG_GAP) / 2 / SEG_R * 180 / math.pi
+
+
+SEG_HALF = seg_half(SEG_W)
 SEG_DIM = 46                     # opacity .18
 STEPS_R, STEPS_W = 201, 4
 STEPS_TRACK = 36                 # opacity .14
@@ -101,20 +123,25 @@ STEPS_TRACK = 36                 # opacity .14
 # side numbers 22 -> 28, labels 10 -> 13, date pill 12 -> 15, bpm 21 -> 28
 TIME_SIZE, TIME_LINE = 138, 0.82
 HOURS_CY, MINUTES_CY = 225 - TIME_SIZE * TIME_LINE / 2, 225 + TIME_SIZE * TIME_LINE / 2
-SIDE_SIZE, LABEL_SIZE, LABEL_SPACING = 28, 13, 0.14
+LABEL_SPACING = 0.14
 SIDE_GAP = 5
-SIDE_NUM_CY = 225 - (SIDE_SIZE + SIDE_GAP + LABEL_SIZE) / 2 + SIDE_SIZE / 2
-SIDE_LABEL_CY = 225 + (SIDE_SIZE + SIDE_GAP + LABEL_SIZE) / 2 - LABEL_SIZE / 2
-SIDE_LEFT_X, SIDE_RIGHT_X = 28 + 40, 450 - 28 - 40
-DATE_SIZE, DATE_SPACING, DATE_TOP = 22, 0.06, 66      # asked bigger on the watch
+# Columns centered between the inner ring (x 26) and the time's digits (x 123)
+SIDE_LEFT_X, SIDE_RIGHT_X = 74, 450 - 74
+DATE_SPACING, DATE_BOTTOM = 0.06, 110     # pill bottom, just above the hours
 BPM_SIZE, PILL_LABEL_SIZE, PILL_HEART = 36, 14, 26    # asked bigger on the watch
 PILL_BOTTOM = 398
 PILL_WORD_MAX = 1.0      # the zone word only fits up to size Normal; above, the color says it
 
 
-def date_height():
+def date_height(size):
     """Date pill: Inter caps (0.73 em) + 8 px above and below + the 1 px border."""
-    return DATE_SIZE * 0.73 + 2 * 8 + 2
+    return size * 0.73 + 2 * 8 + 2
+
+
+def side_centers(num, label):
+    """Middles of the number and the label, the pair centered on the dial's middle."""
+    total = num + SIDE_GAP + label
+    return 225 - total / 2 + num / 2, 225 + total / 2 - label / 2
 
 
 def pill_height(k):
@@ -229,27 +256,33 @@ GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_
 def side_column(cx, color, label, value, toggle_id):
     """Number over its small label, centered on x = cx (design px); without labels the
     number alone, centered on the dial's middle. Customize can hide the column."""
-    def number(cy):
-        return text(value, p(cx), p(cy), s(SIDE_SIZE), font="unbounded_bold", color=color, width=s(110))
-    with_label = "\n".join([
-        number(SIDE_NUM_CY),
-        text(label, p(cx), p(SIDE_LABEL_CY), s(LABEL_SIZE), color=INK, width=s(110),
-             spacing=LABEL_SPACING, extra=' alpha="158"')])
-    return switch(toggle_id, switch("showLabels", with_label, number(225)))
+    def at(num, lab):
+        def number(cy):
+            return text(value, p(cx), p(cy), s(num), font="unbounded_bold", color=color, width=s(140))
+        num_cy, lab_cy = side_centers(num, lab)
+        with_label = "\n".join([
+            number(num_cy),
+            text(label, p(cx), p(lab_cy), s(lab), color=INK, width=s(110),
+                 spacing=LABEL_SPACING, extra=' alpha="158"')])
+        return switch("showLabels", with_label, number(225))
+    return switch(toggle_id, choice("sideSize", [(oid, at(num, lab)) for oid, _, num, lab in SIDE_SIZES]))
 
 
 def segments(fraction):
     """60 segments on the outer ring, centered on each second's mark; the first
     round(fraction * 60) lit (at least one once there is any), the rest dim."""
     lit = f"(({fraction}) &gt; 0 ? clamp(round(clamp({fraction}, 0, 1) * 60), 1, 60) : 0)" if fraction else "0"
-    out = []
-    for i in range(60):
-        a = i * 6
-        alpha = f'\n  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : {SEG_DIM}" />' if fraction else ""
-        dim = "" if fraction else f"\n  {AMBIENT_HIDE}"
-        out.append(arc(s(SEG_R), s(SEG_W), ZONE_C, a - SEG_HALF, a + SEG_HALF,
-                       alpha=255 if fraction else SEG_DIM, extra=alpha + dim))
-    return "\n".join(out)
+
+    def at(w):
+        half, out = seg_half(w), []
+        for i in range(60):
+            a = i * 6
+            alpha = f'\n  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : {SEG_DIM}" />' if fraction else ""
+            dim = "" if fraction else f"\n  {AMBIENT_HIDE}"
+            out.append(arc(s(SEG_R), s(w), ZONE_C, a - half, a + half,
+                           alpha=255 if fraction else SEG_DIM, extra=alpha + dim))
+        return "\n".join(out)
+    return choice("segWidth", [(oid, at(w)) for oid, _, w in SEG_WIDTHS])
 
 
 def azm_slot():
@@ -282,10 +315,13 @@ def steps_slot():
     met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
 
     def ring(fraction):
-        track = arc(s(STEPS_R), s(STEPS_W), MAIN_C, alpha=STEPS_TRACK, extra=f"\n  {AMBIENT_HIDE}")
+        return choice("stepsWidth", [(oid, ring_at(fraction, w)) for oid, _, w in STEPS_WIDTHS])
+
+    def ring_at(fraction, w):
+        track = arc(s(STEPS_R), s(w), MAIN_C, alpha=STEPS_TRACK, extra=f"\n  {AMBIENT_HIDE}")
         if not fraction:
             return track
-        progress = arc(s(STEPS_R), s(STEPS_W), MAIN_C, extra=(
+        progress = arc(s(STEPS_R), s(w), MAIN_C, extra=(
             f'\n  <Transform target="alpha" value="({fraction}) &gt; 0 ? 255 : 0" />'),
             transform=f'\n    <Transform target="endAngle" value="clamp({fraction}, 0, 1) * 360" />')
         return track + "\n" + progress
@@ -297,7 +333,7 @@ def steps_slot():
 </Complication>"""
     label = template("%s", f"{met} ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) "
                            f": [COMPLICATION.TEXT]")
-    o = round(C - s(STEPS_R + STEPS_W / 2 + 1) - 1)
+    o = round(C - s(STEPS_R + max(w for *_, w in STEPS_WIDTHS) / 2 + 1) - 1)
     return f"""<!-- Inner ring + right number: MySteps, steps this hour -->
 <ComplicationSlot x="0" y="0" width="{SIZE}" height="{SIZE}" slotId="0"
     displayName="mysteps_slot_label" supportedTypes="RANGED_VALUE GOAL_PROGRESS SHORT_TEXT EMPTY">
@@ -316,7 +352,8 @@ def steps_slot():
 
 def second_segment():
     """The current second's segment, white, over the outer ring (hidden in always-on)."""
-    seg = arc(s(SEG_R), s(SEG_W), INK, -SEG_HALF, SEG_HALF)
+    seg = choice("segWidth", [(oid, arc(s(SEG_R), s(w), INK, -seg_half(w), seg_half(w)))
+                              for oid, _, w in SEG_WIDTHS])
     return f"""<!-- Current second: white segment -->
 {switch("showSeconds", f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" pivotX="0.5" pivotY="0.5" name="Second">
   <Transform target="angle" value="[SECOND] * 6" />
@@ -327,13 +364,22 @@ def second_segment():
 
 def date_pill():
     """Weekday, day and month · temperature (amber) in an outlined pill; without
-    weather only the date."""
-    date = template("%s %s %s", chain("[DAY_OF_WEEK]", DAYS), "[DAY]", chain("[MONTH]", MONTHS))
+    weather only the date. Size from Customize."""
+    return f"""<!-- Top pill: weekday, date · temperature -->
+{choice("dateSize", [(oid, date_pill_at(size, weekday)) for oid, _, size, weekday in DATE_SIZES])}"""
+
+
+def date_pill_at(size, weekday):
+    if weekday:
+        date = template("%s %s %s", chain("[DAY_OF_WEEK]", DAYS), "[DAY]", chain("[MONTH]", MONTHS))
+        date_w = text_width("MIE 28 NOV", "inter_semibold", size, DATE_SPACING)
+    else:
+        date = template("%s %s", "[DAY]", chain("[MONTH]", MONTHS))
+        date_w = text_width("28 NOV", "inter_semibold", size, DATE_SPACING)
     temp = template("%s°", "[WEATHER.TEMPERATURE]")
-    date_w = text_width("MIE 28 NOV", "inter_semibold", DATE_SIZE, DATE_SPACING)
-    temp_w = text_width("25°", "inter_semibold", DATE_SIZE, DATE_SPACING)
-    h = date_height()
-    cy = DATE_TOP + h / 2
+    temp_w = text_width("25°", "inter_semibold", size, DATE_SPACING)
+    h = date_height(size)
+    cy = DATE_BOTTOM - h / 2
     border = ("#3df2f0ea", s(1))          # rgba(242,240,234,.24)
 
     def with_weather():
@@ -341,18 +387,17 @@ def date_pill():
         dot_x = 225 - w / 2 + 1 + 13 + date_w + 8 + 1.5
         return "\n".join([
             pill(C, p(cy), s(w), s(h), stroke=border),
-            text(date, p(dot_x - 1.5 - 8), p(cy), s(DATE_SIZE), align="END", width=s(date_w + 40),
+            text(date, p(dot_x - 1.5 - 8), p(cy), s(size), align="END", width=s(date_w + 40),
                  spacing=DATE_SPACING),
             pill(p(dot_x), p(cy), s(3), s(3), fill="#80f2f0ea"),
-            text(temp, p(dot_x + 1.5 + 8), p(cy), s(DATE_SIZE), color=AMBER, align="START",
+            text(temp, p(dot_x + 1.5 + 8), p(cy), s(size), color=AMBER, align="START",
                  width=s(temp_w + 40), spacing=DATE_SPACING)])
 
     def without():
         w = 13 + date_w + 13 + 2
         return "\n".join([pill(C, p(cy), s(w), s(h), stroke=border),
-                          text(date, C, p(cy), s(DATE_SIZE), width=s(date_w + 40), spacing=DATE_SPACING)])
-    return f"""<!-- Top pill: weekday, date · temperature -->
-<Condition>
+                          text(date, C, p(cy), s(size), width=s(date_w + 40), spacing=DATE_SPACING)])
+    return f"""<Condition>
   <Expressions>
     <Expression name="hasWeather">[WEATHER.IS_AVAILABLE]</Expression>
   </Expressions>

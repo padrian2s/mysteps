@@ -74,23 +74,26 @@ def main():
     text("10", c, P(g.HOURS_CY), "unbounded_time", g.TIME_SIZE, rgb(g.INK))
     text("08", c, P(g.MINUTES_CY), "unbounded_time", g.TIME_SIZE, rgb(g.LIME))
     # Side columns
+    NUM, LAB = g.SIDE_SIZES[1][2:]
+    DS = g.DATE_SIZES[1][2]
     for x, col, num, label in ((g.SIDE_LEFT_X, g.VIOLET, "77", "MIN"), (g.SIDE_RIGHT_X, g.LIME, "180", "PAȘI")):
-        text(num, P(x), P(g.SIDE_NUM_CY), "unbounded_bold", g.SIDE_SIZE, rgb(col))
-        text(label, P(x), P(g.SIDE_LABEL_CY), "inter_semibold", g.LABEL_SIZE, rgb(g.INK, 0.62),
+        num_cy, lab_cy = g.side_centers(NUM, LAB)
+        text(num, P(x), P(num_cy), "unbounded_bold", NUM, rgb(col))
+        text(label, P(x), P(lab_cy), "inter_semibold", LAB, rgb(g.INK, 0.62),
              spacing=g.LABEL_SPACING)
 
     # Date pill
-    dw = g.text_width("MIE 28 NOV", "inter_semibold", g.DATE_SIZE, g.DATE_SPACING)
-    tw = g.text_width("25°", "inter_semibold", g.DATE_SIZE, g.DATE_SPACING)
-    h = g.date_height()
-    cy = g.DATE_TOP + h / 2
+    dw = g.text_width("MIE 28 NOV", "inter_semibold", DS, g.DATE_SPACING)
+    tw = g.text_width("25°", "inter_semibold", DS, g.DATE_SPACING)
+    h = g.date_height(DS)
+    cy = g.DATE_BOTTOM - h / 2
     w = 13 + dw + 8 + 3 + 8 + tw + 13 + 2
     d.rounded_rectangle([P(225 - w / 2), P(cy - h / 2), P(225 + w / 2), P(cy + h / 2)], radius=S(h / 2),
                         outline=rgb(g.INK, 0.24), width=round(S(1)))
     dot = 225 - w / 2 + 1 + 13 + dw + 8 + 1.5
-    text("MAR 10 NOV", P(dot - 9.5), P(cy), "inter_semibold", g.DATE_SIZE, rgb(g.INK), "rm", g.DATE_SPACING)
+    text("MAR 10 NOV", P(dot - 9.5), P(cy), "inter_semibold", DS, rgb(g.INK), "rm", g.DATE_SPACING)
     d.ellipse([P(dot - 1.5), P(cy - 1.5), P(dot + 1.5), P(cy + 1.5)], fill=rgb(g.INK, 0.5))
-    text("25°", P(dot + 9.5), P(cy), "inter_semibold", g.DATE_SIZE, rgb(g.AMBER), "lm", g.DATE_SPACING)
+    text("25°", P(dot + 9.5), P(cy), "inter_semibold", DS, rgb(g.AMBER), "lm", g.DATE_SPACING)
 
     # Heart rate pill (rest zone)
     bw = g.text_width("89", "unbounded_bold", g.BPM_SIZE)
