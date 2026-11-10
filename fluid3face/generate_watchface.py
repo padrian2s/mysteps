@@ -67,7 +67,7 @@ ZONE_EXPR = {"hrRest": f"[HEART_RATE] &lt; {HR_ACTIVE}",
 
 # Rings (design px, like the mock-up's SVG): (mid radius, stroke)
 RING_AZM = (219, 6)
-RING_STEPS = (211, 3)
+RING_STEPS = (209, 6)
 SECONDS_R = 204
 # Black ticks on the filled part: steps one per 50 (max 30), Zone Minutes one per minute
 # (max 45). A met MySteps hour carries no goal (max 1): ticks of the 300-step goal (6)

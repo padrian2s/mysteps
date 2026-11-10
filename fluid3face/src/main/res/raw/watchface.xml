@@ -981,38 +981,38 @@
       <Complication type="RANGED_VALUE">
         <PartDraw x="0" y="0" width="456" height="456" alpha="26">
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]))) &gt; 0 ? 22 : 0" />
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="7.8" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="10.9" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]))) &gt; 0 ? 45 : 0" />
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="5.4" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8.5" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN]))) &gt; 0 ? 255 : 0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : (clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_MIN], [COMPLICATION.RANGED_VALUE_MAX]) - [COMPLICATION.RANGED_VALUE_MIN]) / ([COMPLICATION.RANGED_VALUE_MAX] - [COMPLICATION.RANGED_VALUE_MIN])), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" pivotX="0.5" pivotY="0.5" name="Tick1">
           <Transform target="angle" value="1 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="1 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 1 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1021,7 +1021,7 @@
           <Transform target="angle" value="2 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="2 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 2 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1030,7 +1030,7 @@
           <Transform target="angle" value="3 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="3 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 3 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1039,7 +1039,7 @@
           <Transform target="angle" value="4 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="4 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 4 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1048,7 +1048,7 @@
           <Transform target="angle" value="5 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="5 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 5 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1057,7 +1057,7 @@
           <Transform target="angle" value="6 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="6 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 6 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1066,7 +1066,7 @@
           <Transform target="angle" value="7 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="7 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 7 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1075,7 +1075,7 @@
           <Transform target="angle" value="8 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="8 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 8 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1084,7 +1084,7 @@
           <Transform target="angle" value="9 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="9 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 9 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1093,7 +1093,7 @@
           <Transform target="angle" value="10 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="10 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 10 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1102,7 +1102,7 @@
           <Transform target="angle" value="11 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="11 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 11 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1111,7 +1111,7 @@
           <Transform target="angle" value="12 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="12 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 12 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1120,7 +1120,7 @@
           <Transform target="angle" value="13 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="13 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 13 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1129,7 +1129,7 @@
           <Transform target="angle" value="14 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="14 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 14 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1138,7 +1138,7 @@
           <Transform target="angle" value="15 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="15 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 15 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1147,7 +1147,7 @@
           <Transform target="angle" value="16 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="16 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 16 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1156,7 +1156,7 @@
           <Transform target="angle" value="17 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="17 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 17 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1165,7 +1165,7 @@
           <Transform target="angle" value="18 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="18 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 18 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1174,7 +1174,7 @@
           <Transform target="angle" value="19 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="19 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 19 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1183,7 +1183,7 @@
           <Transform target="angle" value="20 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="20 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 20 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1192,7 +1192,7 @@
           <Transform target="angle" value="21 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="21 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 21 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1201,7 +1201,7 @@
           <Transform target="angle" value="22 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="22 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 22 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1210,7 +1210,7 @@
           <Transform target="angle" value="23 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="23 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 23 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1219,7 +1219,7 @@
           <Transform target="angle" value="24 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="24 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 24 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1228,7 +1228,7 @@
           <Transform target="angle" value="25 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="25 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 25 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1237,7 +1237,7 @@
           <Transform target="angle" value="26 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="26 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 26 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1246,7 +1246,7 @@
           <Transform target="angle" value="27 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="27 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 27 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1255,7 +1255,7 @@
           <Transform target="angle" value="28 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="28 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 28 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1264,7 +1264,7 @@
           <Transform target="angle" value="29 * 360 / ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30))" />
           <Transform target="alpha" value="29 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30)) &amp;&amp; 29 &lt; ([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 6 : ([COMPLICATION.RANGED_VALUE_VALUE] * clamp(round([COMPLICATION.RANGED_VALUE_MAX] / 50), 1, 30) / [COMPLICATION.RANGED_VALUE_MAX])) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1286,38 +1286,38 @@
       <Complication type="GOAL_PROGRESS">
         <PartDraw x="0" y="0" width="456" height="456" alpha="26">
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE])) &gt; 0 ? 22 : 0" />
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="7.8" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="10.9" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE])) &gt; 0 ? 45 : 0" />
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="5.4" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="8.5" cap="ROUND" />
           </Arc>
         </PartDraw>
         <PartDraw x="0" y="0" width="456" height="456">
           <Transform target="alpha" value="(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE])) &gt; 0 ? 255 : 0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
             <Transform target="endAngle" value="clamp(([COMPLICATION.RANGED_VALUE_MAX] == 1 ? 1 : [COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]), 0, 1) * 360" />
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" pivotX="0.5" pivotY="0.5" name="Tick1">
           <Transform target="angle" value="1 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="1 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 1 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1326,7 +1326,7 @@
           <Transform target="angle" value="2 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="2 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 2 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1335,7 +1335,7 @@
           <Transform target="angle" value="3 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="3 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 3 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1344,7 +1344,7 @@
           <Transform target="angle" value="4 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="4 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 4 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1353,7 +1353,7 @@
           <Transform target="angle" value="5 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="5 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 5 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1362,7 +1362,7 @@
           <Transform target="angle" value="6 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="6 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 6 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1371,7 +1371,7 @@
           <Transform target="angle" value="7 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="7 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 7 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1380,7 +1380,7 @@
           <Transform target="angle" value="8 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="8 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 8 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1389,7 +1389,7 @@
           <Transform target="angle" value="9 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="9 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 9 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1398,7 +1398,7 @@
           <Transform target="angle" value="10 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="10 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 10 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1407,7 +1407,7 @@
           <Transform target="angle" value="11 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="11 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 11 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1416,7 +1416,7 @@
           <Transform target="angle" value="12 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="12 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 12 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1425,7 +1425,7 @@
           <Transform target="angle" value="13 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="13 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 13 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1434,7 +1434,7 @@
           <Transform target="angle" value="14 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="14 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 14 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1443,7 +1443,7 @@
           <Transform target="angle" value="15 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="15 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 15 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1452,7 +1452,7 @@
           <Transform target="angle" value="16 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="16 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 16 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1461,7 +1461,7 @@
           <Transform target="angle" value="17 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="17 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 17 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1470,7 +1470,7 @@
           <Transform target="angle" value="18 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="18 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 18 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1479,7 +1479,7 @@
           <Transform target="angle" value="19 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="19 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 19 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1488,7 +1488,7 @@
           <Transform target="angle" value="20 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="20 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 20 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1497,7 +1497,7 @@
           <Transform target="angle" value="21 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="21 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 21 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1506,7 +1506,7 @@
           <Transform target="angle" value="22 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="22 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 22 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1515,7 +1515,7 @@
           <Transform target="angle" value="23 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="23 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 23 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1524,7 +1524,7 @@
           <Transform target="angle" value="24 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="24 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 24 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1533,7 +1533,7 @@
           <Transform target="angle" value="25 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="25 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 25 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1542,7 +1542,7 @@
           <Transform target="angle" value="26 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="26 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 26 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1551,7 +1551,7 @@
           <Transform target="angle" value="27 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="27 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 27 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1560,7 +1560,7 @@
           <Transform target="angle" value="28 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="28 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 28 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1569,7 +1569,7 @@
           <Transform target="angle" value="29 * 360 / clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30)" />
           <Transform target="alpha" value="29 &lt; clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) &amp;&amp; 29 &lt; ([COMPLICATION.GOAL_PROGRESS_VALUE] * clamp(round([COMPLICATION.GOAL_PROGRESS_TARGET_VALUE] / 50), 1, 30) / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]) ? 255 : 0" />
           <PartDraw x="0" y="0" width="456" height="456">
-            <Line startX="228" startY="16.7" endX="228" endY="11.7">
+            <Line startX="228" startY="20.3" endX="228" endY="12.2">
               <Stroke color="#ff000000" thickness="7.09" />
             </Line>
           </PartDraw>
@@ -1591,8 +1591,8 @@
       <Complication type="SHORT_TEXT">
         <PartDraw x="0" y="0" width="456" height="456" alpha="26">
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
@@ -1612,8 +1612,8 @@
       <Complication type="EMPTY">
         <PartDraw x="0" y="0" width="456" height="456" alpha="26">
           <Variant mode="AMBIENT" target="alpha" value="0" />
-          <Arc centerX="228" centerY="228" width="427.6" height="427.6" startAngle="0" endAngle="360">
-            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="3" cap="ROUND" />
+          <Arc centerX="228" centerY="228" width="423.6" height="423.6" startAngle="0" endAngle="360">
+            <Stroke color="[CONFIGURATION.themeColor.0]" thickness="6.1" cap="ROUND" />
           </Arc>
         </PartDraw>
         <Group x="0" y="0" width="456" height="456" name="Number">
