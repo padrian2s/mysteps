@@ -65,13 +65,29 @@ ZONE_EXPR = {"hrRest": f"[HEART_RATE] &lt; {HR_ACTIVE}",
              "hrActive": f"[HEART_RATE] &gt;= {HR_ACTIVE} &amp;&amp; [HEART_RATE] &lt; {HR_CARDIO}",
              "hrCardio": f"[HEART_RATE] &gt;= {HR_CARDIO}"}
 
-# Rings (design px, like the mock-up's SVG): (mid radius, stroke)
-RING_AZM = (219, 6)
-RING_STEPS = (209, 6)
-SECONDS_R = 204
+# Rings (design px, like the mock-up's SVG): fixed mid radii, so every width keeps
+# them apart and the ticks (cut across the widest band) never touch the other ring
+RING_AZM_R, RING_STEPS_R = 217.5, 205.5
+SECONDS_R = 198
 # Black ticks on the filled part: steps one per 50 (max 30), Zone Minutes one per minute
 # (max 45). A met MySteps hour carries no goal (max 1): ticks of the 300-step goal (6)
 STEP_GOAL_TICKS = 6
+
+# Customize lists (WFF has no sliders): (id, label, default, [(option id, label, value)])
+RING_WIDTHS = [("thin", "Thin", 3), ("normal", "Normal", 6), ("thick", "Thick", 9)]
+BAND = max(w for _, _, w in RING_WIDTHS)
+GAPS = [("none", "None", 0), ("small", "Small", 3.5), ("medium", "Medium", 7), ("large", "Large", 10)]
+HAND_SIZES = [("small", "Small"), ("normal", "Normal"), ("large", "Large"), ("hidden", "Hidden")]
+TIME_FONTS = [("bold", "Bold", "jost_time"), ("regular", "Regular", "jost_regular"),
+              ("light", "Light", "jost_light")]
+TIME_SIZES = [("small", "Small", 96), ("normal", "Normal", 108), ("large", "Large", 118)]
+TEXT_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "Large", 1.15)]
+LISTS = [("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
+         ("ringGaps", "Ring gaps", "medium", GAPS),
+         ("handSize", "Hands", "normal", HAND_SIZES),
+         ("timeFont", "Time weight", "bold", TIME_FONTS),
+         ("timeSize", "Time size", "normal", TIME_SIZES),
+         ("textSize", "Date, temperature, numbers", "normal", TEXT_SIZES)]
 
 # Text sizes (design px), well above the mock-up's (12-30 px read badly on the wrist):
 # day 30 -> 44, month 12 -> 20, temperature 15 -> 32, zone minutes / steps 30 -> 44
@@ -88,7 +104,7 @@ LINE = 1.445      # Jost's normal line height (hhea 1070 + 375 per 1000); its li
                   # is centered on the caps (cap middle 350 vs box middle 347.5)
 
 TOGGLES = [("showSteps", "Steps number"), ("showAzm", "Zone Minutes number"),
-           ("showHr", "Heart rate")]
+           ("showHr", "Heart rate"), ("showSeconds", "Seconds dot")]
 
 
 def text_width(content, font, size, spacing=0.0):
@@ -190,6 +206,18 @@ def toggle(config_id, xml):
 </BooleanConfiguration>"""
 
 
+def choice(config_id, options):
+    """Customize list: options = [(option id, xml)], only the chosen one is drawn."""
+    opts = "\n".join(f"""  <ListOption id="{oid}">
+    <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="{config_id}_{oid}">
+{indent(xml, 6)}
+    </Group>
+  </ListOption>""" for oid, xml in options)
+    return f"""<ListConfiguration id="{config_id}">
+{opts}
+</ListConfiguration>"""
+
+
 def zone_switch(make):
     """Condition drawing make(color) in the current heart rate zone's color; nothing
     without a reading."""
@@ -236,15 +264,16 @@ def value_cols():
     return left + w1 / 2, left + w1 + 150 + w2 / 2
 
 
-def ring_ticks(r, w, value, maxv, unit, cap, goal_met=None, fallback=None):
-    """Black radial cuts on the filled part of a ring (design px r, w), one per unit of
-    the goal maxv, at most cap (beyond that a tick is worth maxv / cap)."""
+def ring_ticks(r, gap, value, maxv, unit, cap, goal_met=None, fallback=None):
+    """Black radial cuts gap px wide on the filled part of a ring (design px r), across
+    the widest band, one per unit of the goal maxv, at most cap (beyond that a tick is
+    worth maxv / cap)."""
     n = f"clamp(round({maxv} / {unit}), 1, {cap})"
     done = f"({value} * {n} / {maxv})"      # filled length in ticks
     if goal_met:
         n = f"({goal_met} ? {fallback} : {n})"
         done = f"({goal_met} ? {fallback} : {done})"
-    r0, r1 = (r - w / 2 - 1) * K, (r + w / 2 + 1) * K
+    r0, r1 = (r - BAND / 2 - 1) * K, (r + BAND / 2 + 1) * K
     ticks = []
     for i in range(1, cap):                 # none at 12 o'clock, where the ring starts
         ticks.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" pivotX="0.5" pivotY="0.5" name="Tick{i}">
@@ -252,50 +281,58 @@ def ring_ticks(r, w, value, maxv, unit, cap, goal_met=None, fallback=None):
   <Transform target="alpha" value="{i} &lt; {n} &amp;&amp; {i} &lt; {done} ? 255 : 0" />
   <PartDraw x="0" y="0" width="{SIZE}" height="{SIZE}">
     <Line startX="{C:g}" startY="{C - r0:.1f}" endX="{C:g}" endY="{C - r1:.1f}">
-      <Stroke color="#ff000000" thickness="{7 * K:.2f}" />
+      <Stroke color="#ff000000" thickness="{gap * K:.2f}" />
     </Line>
   </PartDraw>
 </Group>""")
     return "\n".join(ticks)
 
 
-def ring_slot(slot_id, name, provider, ring, color, track_alpha, cx, toggle_id, unit, cap,
+def ring_slot(slot_id, name, provider, r, color, track_alpha, cx, toggle_id, unit, cap,
               comment, area, full_at_max_one=False):
     """Complication slot drawing its ring (track, glowing progress, ticks) and its number.
     The watch clips a complication to its bounding shape, so area is a centered oval of
     that radius (watch px): the outer slot covers the screen, the inner one the disc
     inside, so taps on the outer band go to the outer ring's provider."""
-    r, w = ring
-
     def body(kind, fraction):
-        parts = [arc(s(r), s(w), color, alpha=track_alpha, extra=f"\n  {AMBIENT_HIDE}")]
-        if fraction:
-            met = None
-            if full_at_max_one:
-                # MySteps sends value 0 of max 1 once the hour's goal is met: full ring then
-                met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
+        def ring(w):
+            track = arc(s(r), s(w), color, alpha=track_alpha, extra=f"\n  {AMBIENT_HIDE}")
+            return track + "\n" + glowing_arc(s(r), s(w), color, fraction, 3) if fraction else track
+        if fraction and full_at_max_one:
+            # MySteps sends value 0 of max 1 once the hour's goal is met: full ring then
+            met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
+            if kind == "RANGED_VALUE":
                 fraction = f"({met} ? 1 : {fraction})"
-            parts.append(glowing_arc(s(r), s(w), color, fraction, 3))
+        parts = [choice("ringWidth", [(oid, ring(w)) for oid, _, w in RING_WIDTHS])]
+        if fraction:
+            met = "[COMPLICATION.RANGED_VALUE_MAX] == 1" if full_at_max_one else None
             value, maxv = (("[COMPLICATION.RANGED_VALUE_VALUE]", "[COMPLICATION.RANGED_VALUE_MAX]")
                            if kind == "RANGED_VALUE" else
                            ("[COMPLICATION.GOAL_PROGRESS_VALUE]", "[COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"))
-            parts.append(ring_ticks(r, w, value, maxv, unit, cap,
-                                    met if kind == "RANGED_VALUE" else None, STEP_GOAL_TICKS))
+            parts.append(choice("ringGaps", [
+                (oid, ring_ticks(r, gap, value, maxv, unit, cap,
+                                 met if kind == "RANGED_VALUE" else None, STEP_GOAL_TICKS) if gap else "")
+                for oid, _, gap in GAPS]))
         if kind == "EMPTY":
-            number = text("--", p(cx), p(VALUE_CY), s(VALUE_SIZE), font="jost_regular", color=color, width=s(VALUE_SIZE * 3.5))
+            label = "--"
         else:
             label = "[COMPLICATION.TEXT]"
             if full_at_max_one and kind == "RANGED_VALUE":
                 # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
                 label = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
                          "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            number = text(template(label), p(cx), p(VALUE_CY), s(VALUE_SIZE), font="jost_regular", color=color,
-                          width=s(VALUE_SIZE * 3.5))
+            label = template(label)
+        number = choice("textSize", [
+            (oid, text(label, p(cx), p(VALUE_CY), s(VALUE_SIZE * k), font="jost_regular", color=color,
+                       width=s(VALUE_SIZE * k * 3.5)))
+            for oid, _, k in TEXT_SIZES])
         parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
 {indent(toggle(toggle_id, number), 2)}
 </Group>""")
         return f"""<Complication type="{kind}">
-{indent(chr(10).join(parts), 2)}
+  <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="{kind}">
+{indent(chr(10).join(parts), 4)}
+  </Group>
 </Complication>"""
 
     o = round(C - area)
@@ -320,9 +357,7 @@ def seconds_ring():
     r = s(SECONDS_R)
     theta = "rad([SECOND] * 6)"
     d, box = s(6), round(s(6) + 8)
-    return f"""<!-- Thin inner ring and the seconds dot -->
-{arc(r, 1, MAIN, alpha=31)}
-<Group x="0" y="0" width="{box:g}" height="{box:g}" name="SecondsDot">
+    dot = f"""<Group x="0" y="0" width="{box:g}" height="{box:g}" name="SecondsDot">
   <Transform target="x" value="{C:g} + {r} * sin({theta}) - {box / 2:g}" />
   <Transform target="y" value="{C:g} - {r} * cos({theta}) - {box / 2:g}" />
   {AMBIENT_HIDE}
@@ -330,6 +365,8 @@ def seconds_ring():
 {indent(disc(box / 2, box / 2, d + 3, MAIN, extra=' alpha="90"'), 2)}
 {indent(disc(box / 2, box / 2, d, MAIN), 2)}
 </Group>"""
+    return f"""<!-- Thin inner ring and the seconds dot -->
+{toggle("showSeconds", arc(r, 1, MAIN, alpha=31) + chr(10) + dot)}"""
 
 
 def hands():
@@ -340,37 +377,51 @@ def hands():
         x = math.floor(C - w / 2)     # whole px; the pivot stays on the dial center
         return (f'<{tag} resource="{res}" x="{x}" y="{round(C - h)}" width="{w}" height="{h}" '
                 f'pivotX="{(C - x) / w:.4f}" pivotY="1" />')
-    return f"""<!-- Dauphine hands, only near the rim -->
-<AnalogClock x="0" y="0" width="{SIZE}" height="{SIZE}">
-  {hand("HourHand", "hand_hour")}
-  {hand("MinuteHand", "hand_minute")}
+    def clock(size):
+        return f"""<AnalogClock x="0" y="0" width="{SIZE}" height="{SIZE}">
+  {hand("HourHand", f"hand_hour_{size}")}
+  {hand("MinuteHand", f"hand_minute_{size}")}
 </AnalogClock>"""
+    return f"""<!-- Dauphine hands, only near the rim -->
+{choice("handSize", [(oid, "" if oid == "hidden" else clock(oid)) for oid, _ in HAND_SIZES])}"""
 
 
 def date():
     month = template(chain("[MONTH]", [m + "." for m in MONTHS]))
+
+    def at(k):
+        day, mon = DAY_SIZE * k, MONTH_SIZE * k
+        return f"""{text(template("[DAY]"), C, p(DATE_TOP + day / 2), s(day), font="jost_regular", width=s(day * 3))}
+{text(month, C, p(DATE_TOP + day + 2 + mon * LINE / 2), s(mon), font="jost_regular",
+      width=s(mon * 8), spacing=0.2, extra=' alpha="170"')}"""
     return f"""<!-- Date: day of the month, month below -->
-{text(template("[DAY]"), C, p(DATE_TOP + DAY_SIZE / 2), s(DAY_SIZE), font="jost_regular", width=s(DAY_SIZE * 3))}
-{text(month, C, p(DATE_TOP + DAY_SIZE + 2 + MONTH_SIZE * LINE / 2), s(MONTH_SIZE), font="jost_regular",
-      width=s(MONTH_SIZE * 8), spacing=0.2, extra=' alpha="170"')}"""
+{choice("textSize", [(oid, at(k)) for oid, _, k in TEXT_SIZES])}"""
 
 
 def time():
-    """hh and mm in bold 108 px digits (tabular, -0.02 em); the design had extra-light."""
-    h = round(s(TIME_SIZE) * 1.6)
-    w = round(s(DIGITS_W + 20))
+    """hh and mm (tabular digits) around the heart rate; weight and size from Customize
+    (default bold 108 px; the design had extra-light)."""
+    return f"""<!-- Time -->
+{choice("timeFont", [(fid, choice("timeSize", [(sid, time_pair(font, size)) for sid, _, size in TIME_SIZES]))
+                     for fid, _, font in TIME_FONTS])}"""
+
+
+def time_pair(font, size):
+    digits = text_width("00", font, size)
+    left = 225 - (2 * digits + MID_W) / 2
+    h = round(s(size) * 1.6)
+    w = round(s(digits + 20))
     cy = p(TIME_CY)
 
     def clock(fmt, x_edge, align):
         x = x_edge if align == "START" else x_edge - w
         return f"""<DigitalClock x="{round(x)}" y="{round(cy - h / 2)}" width="{w}" height="{h}">
   <TimeText format="{fmt}" hourFormat="SYNC_TO_DEVICE" align="{align}" x="0" y="0" width="{w}" height="{h}">
-    <Font family="jost_time" size="{s(TIME_SIZE):g}" color="{MAIN}" />
+    <Font family="{font}" size="{s(size):g}" color="{MAIN}" />
   </TimeText>
 </DigitalClock>"""
-    return f"""<!-- Time -->
-{clock("hh", p(TIME_LEFT + DIGITS_W), "END")}
-{clock("mm", p(TIME_LEFT + DIGITS_W + MID_W), "START")}"""
+    return f"""{clock("hh", p(left + digits), "END")}
+{clock("mm", p(left + digits + MID_W), "START")}"""
 
 
 def heart_rate():
@@ -426,12 +477,6 @@ def tap_area():
 
 def temperature():
     """Orange dot, then the temperature, centered as one group."""
-    size, dot = TEMP_SIZE, TEMP_SIZE * 0.32
-    cy = p(450 - 44 - size * LINE / 2)
-    tw = text_width("25°", "jost_regular", size, 0.08)
-    gw = dot + 6 + tw
-    temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), p(225 - gw / 2 + dot + 6), cy, s(size),
-                font="jost_regular", color=ORANGE, align="START", width=s(size * 4), spacing=0.08)
     return f"""<!-- Temperature (while the watch has weather) -->
 <Condition>
   <Expressions>
@@ -439,11 +484,21 @@ def temperature():
   </Expressions>
   <Compare expression="hasWeather">
     <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Weather">
-{indent(disc(p(225 - gw / 2 + dot / 2), cy, s(dot), ORANGE), 6)}
-{indent(temp, 6)}
+{indent(choice("textSize", [(oid, temperature_at(TEMP_SIZE * k)) for oid, _, k in TEXT_SIZES]), 6)}
     </Group>
   </Compare>
 </Condition>"""
+
+
+def temperature_at(size):
+    dot = size * 0.32
+    cy = p(450 - 44 - size * LINE / 2)
+    tw = text_width("25°", "jost_regular", size, 0.08)
+    gw = dot + 6 + tw
+    temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), p(225 - gw / 2 + dot + 6), cy, s(size),
+                font="jost_regular", color=ORANGE, align="START", width=s(size * 4), spacing=0.08)
+    return f"""{disc(p(225 - gw / 2 + dot / 2), cy, s(dot), ORANGE)}
+{temp}"""
 
 
 def background():
@@ -462,6 +517,10 @@ def strings():
     colors = "\n".join(f'    <string name="colors_{oid}">{label.replace("&", "&amp;")}</string>'
                        for oid, label, _, _ in COLOR_OPTIONS)
     toggles = "\n".join(f'    <string name="{tid}_label">{label}</string>' for tid, label in TOGGLES)
+    toggles += "\n" + "\n".join(
+        f'    <string name="{lid}_label">{label}</string>\n' + "\n".join(
+            f'    <string name="{lid}_{o[0]}">{o[1]}</string>' for o in opts)
+        for lid, label, _, opts in LISTS)
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by fluid3face/generate_watchface.py -->
 <resources>
@@ -481,13 +540,13 @@ def watchface():
         background(),
         ring_slot(1, "azm_slot_label",
                   "com.fitbit.FitbitMobile/com.google.android.wearable.fitbit.mainapp.complications.offloadable.azm.OffloadableAZMComplicationDataSourceService",
-                  RING_AZM, ACCENT, 36, zone_x, "showAzm", 1, 45,
+                  RING_AZM_R, ACCENT, 36, zone_x, "showAzm", 1, 45,
                   "Outer ring + left number: Active Zone Minutes (Fitbit) by default", C),
         ring_slot(0, "mysteps_slot_label",
                   "com.adrianp.mysteps/com.adrianp.mysteps.complication.HourlyStepsComplicationService",
-                  RING_STEPS, MAIN, 26, steps_x, "showSteps", 50, 30,
+                  RING_STEPS_R, MAIN, 26, steps_x, "showSteps", 50, 30,
                   "Inner ring + right number: MySteps, steps this hour",
-                  s(RING_STEPS[0] + RING_STEPS[1] / 2 + 1) + 1, full_at_max_one=True),
+                  s(RING_STEPS_R + BAND / 2 + 1) + 1, full_at_max_one=True),
         seconds_ring(),
         date(),
         time(),
@@ -502,6 +561,11 @@ def watchface():
     toggles = "\n".join(
         f'<BooleanConfiguration id="{tid}" displayName="{tid}_label" screenReaderText="{tid}_label" defaultValue="TRUE" />'
         for tid, _ in TOGGLES)
+    lists = "\n".join(
+        f'<ListConfiguration id="{lid}" displayName="{lid}_label" screenReaderText="{lid}_label" defaultValue="{default}">\n'
+        + "\n".join(f'  <ListOption id="{o[0]}" displayName="{lid}_{o[0]}" screenReaderText="{lid}_{o[0]}" />' for o in opts)
+        + "\n</ListConfiguration>"
+        for lid, _, default, opts in LISTS)
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by fluid3face/generate_watchface.py — edit that file, not this one. -->
 <WatchFace width="{SIZE}" height="{SIZE}" clipShape="CIRCLE">
@@ -512,6 +576,7 @@ def watchface():
     <ColorConfiguration id="themeColor" displayName="colors_label" defaultValue="{COLOR_OPTIONS[0][0]}">
 {indent(color_opts, 6)}
     </ColorConfiguration>
+{indent(lists, 4)}
 {indent(toggles, 4)}
   </UserConfigurations>
 

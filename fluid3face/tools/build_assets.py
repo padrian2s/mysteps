@@ -26,8 +26,11 @@ UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
             + [0x218, 0x219, 0x21A, 0x21B, 0x2026, 0x2013, 0x2014, 0x2022])
 
 K = 456 / 450                # design px -> watch px
-# (name, base radius, tip radius, width, belly) in design px, as in the mock-up
-HANDS = [("hand_hour", 178, 205, 11, 0.38), ("hand_minute", 178, 223, 7, 0.26)]
+# (name, base radius, tip radius, width, belly) in design px; normal is the mock-up's,
+# small and large are the Customize → Hands options
+HANDS = [("hand_hour_small", 188, 205, 8, 0.38), ("hand_minute_small", 190, 223, 5, 0.26),
+         ("hand_hour_normal", 178, 205, 11, 0.38), ("hand_minute_normal", 178, 223, 7, 0.26),
+         ("hand_hour_large", 160, 205, 15, 0.38), ("hand_minute_large", 155, 223, 10, 0.26)]
 LIGHT, SHADE = (0xF8, 0xEE, 0xD6, 255), (0xB8, 0x9A, 0x5C, 255)
 PAD = 3                      # watch px of room around the hand for its shadow
 

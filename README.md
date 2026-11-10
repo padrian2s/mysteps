@@ -68,7 +68,7 @@ Google Fit and Google Health have **never provided hourly step count complicatio
 - A separate face (Fluid stays as it is) from the "Cadran Fluid v3" design, in Jost: two rings that fill clockwise from 12 (outer **Active Zone Minutes**, inner **MySteps** steps this hour) with black ticks on the filled part (one per minute / per 50 steps), a thin inner ring with the seconds dot, short dauphine hands near the rim
 - Big bold time with the heart rate between hours and minutes: ♥, bpm and three zone pills, colored by zone (rest < 100 grey-blue, active 100-129 orange, cardio 130+ red); hidden in always-on
 - Zone minutes and steps below, temperature at the bottom; tap the time for MySteps' full-screen live pulse
-- Customize → Colors (same themes as Fluid), and on/off switches for the steps number, the zone minutes number and the heart rate
+- Customize → Colors (same themes as Fluid); lists for ring thickness (thin / normal / thick), ring gaps (none / small / medium / large), hands (small / normal / large / hidden), time weight (bold / regular / light), time size and text size (date, temperature, numbers); on/off switches for the steps number, the zone minutes number, the heart rate and the seconds dot
 - Font: Jost (OFL). Rebuild fonts and hand images with `python3 fluid3face/tools/build_assets.py <Jost[wght].ttf>`; the XML is generated: `python3 fluid3face/generate_watchface.py`
 
 ### Hourly Progress Tracking
