@@ -252,7 +252,7 @@ def ring_ticks(r, w, value, maxv, unit, cap, goal_met=None, fallback=None):
   <Transform target="alpha" value="{i} &lt; {n} &amp;&amp; {i} &lt; {done} ? 255 : 0" />
   <PartDraw x="0" y="0" width="{SIZE}" height="{SIZE}">
     <Line startX="{C:g}" startY="{C - r0:.1f}" endX="{C:g}" endY="{C - r1:.1f}">
-      <Stroke color="#ff000000" thickness="{1.5 * K:.2f}" />
+      <Stroke color="#ff000000" thickness="{3.5 * K:.2f}" />
     </Line>
   </PartDraw>
 </Group>""")
