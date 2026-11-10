@@ -89,15 +89,15 @@ TEXT_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "La
 # the zone pills under it ("v" = small vertical stack, between the bottom numbers).
 HR_POSITIONS = [("middle", "Between hour and minutes", "mid", 225, None),
                 ("aboveDate", "Above the date", "h", 225, 62),
-                ("belowDate", "Between date and time", "h", 225, 145),
-                ("aboveHour", "Above the hour (left)", "h", "hh", 145),
-                ("aboveMin", "Above the minutes (right)", "h", "mm", 145),
+                ("belowDate", "Between date and time", "h", 225, 150),
+                ("aboveHour", "Above the hour (left)", "h", "hh", 150),
+                ("aboveMin", "Above the minutes (right)", "h", "mm", 150),
                 ("belowHour", "Below the hour (left)", "h", "hh", 280),
                 ("belowMin", "Below the minutes (right)", "h", "mm", 280),
                 ("bottomMid", "Between the bottom numbers", "v", 225, 333),
-                ("aboveTemp", "Above the temperature", "h", 225, 350)]
-DATE_SHIFT = {"aboveDate": 34}     # date moves down under the heart rate
-TEMP_SHIFT = {"aboveTemp": 14}     # temperature moves down under the heart rate
+                ("aboveTemp", "Above the temperature", "h", 225, 348)]
+DATE_SHIFT = {"aboveDate": 38}     # date moves down under the heart rate
+TEMP_SHIFT = {"aboveTemp": 18}     # temperature moves down under the heart rate
 LISTS = [("hrPos", "Heart rate position", "middle", HR_POSITIONS),
          ("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
          ("ringGaps", "Ring gaps", "medium", GAPS),
@@ -262,12 +262,18 @@ TIME_SIZE = 108
 TIME_CY = (450 - 20) / 2                    # padding-bottom 20
 HEART_SIZE, BPM_SIZE = 26, 54      # the design's 20 / 40, bigger (asked on the watch)
 PILL_W, PILL_H, PILL_GAP = 14, 2, 4
-MID_H = HEART_SIZE + 2 + BPM_SIZE + 2 + 5 + PILL_H
-MID_TOP = TIME_CY - MID_H / 2
-HEART_CY = MID_TOP + HEART_SIZE / 2
-BPM_CY = MID_TOP + HEART_SIZE + 2 + BPM_SIZE / 2
-PILLS_CY = MID_TOP + HEART_SIZE + 2 + BPM_SIZE + 2 + 5 + PILL_H / 2
-MID_W = max(text_width("89", "jost_regular", BPM_SIZE), 3 * PILL_W + 2 * PILL_GAP) + 2 * 8
+
+
+def mid_geom(k):
+    """Middle stack (♥ / bpm / pills between hh and mm) at text size k: centers of the
+    heart, bpm and pills, and the gap it leaves between the hours and minutes."""
+    hs, b = HEART_SIZE * k, BPM_SIZE * k
+    top = TIME_CY - (hs + 2 + b + 2 + 5 + PILL_H) / 2
+    gap = max(text_width("89", "jost_regular", b), 3 * PILL_W + 2 * PILL_GAP) + 2 * 8
+    return top + hs / 2, top + hs + 2 + b / 2, top + hs + 2 + b + 2 + 5 + PILL_H / 2, gap
+
+
+MID_W = mid_geom(1)[3]
 DIGITS_W = text_width("00", "jost_time", TIME_SIZE)    # tracking is in the advances
 TIME_LEFT = 225 - (2 * DIGITS_W + MID_W) / 2
 
@@ -428,7 +434,8 @@ def time():
                                                              for sid, _, size in TIME_SIZES]))
                                    for fid, _, font in TIME_FONTS])
     return f"""<!-- Time -->
-{choice("hrPos", [(pid, fonts(MID_W if pid == "middle" else 0)) for pid, *_ in HR_POSITIONS])}"""
+{choice("hrPos", [(pid, choice("textSize", [(oid, fonts(mid_geom(k)[3])) for oid, _, k in TEXT_SIZES])
+                       if pid == "middle" else fonts(0)) for pid, *_ in HR_POSITIONS])}"""
 
 
 def colon_rise(font):
@@ -467,7 +474,7 @@ def time_pair(font, size, gap):
 
 
 # ---- Heart rate block elsewhere: sizes (design px) at text size Normal ---------------
-HR_ROW_HEART, HR_ROW_BPM = 22, 36    # ♥ bpm row
+HR_ROW_HEART, HR_ROW_BPM = 26, 44    # ♥ bpm row (Large = x1.15)
 HR_CAP = 0.35                         # half of Jost's cap height, per px of font size
 
 
@@ -513,13 +520,15 @@ def hr_variants(draw):
 </Condition>"""
 
 
-def hr_middle():
-    """The design's: ♥, bpm and pills stacked between hours and minutes."""
+def hr_middle(k):
+    """The design's: ♥, bpm and pills stacked between hours and minutes, text size k."""
+    heart_cy, bpm_cy, pills_cy, _ = mid_geom(k)
+
     def draw(c, value):
-        return "\n".join([heart_icon(c, 225, HEART_CY, HEART_SIZE),
-                          text(value, C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=c,
-                               width=s(BPM_SIZE * 3)),
-                          pills(c, 225, PILLS_CY)])
+        return "\n".join([heart_icon(c, 225, heart_cy, HEART_SIZE * k),
+                          text(value, C, p(bpm_cy), s(BPM_SIZE * k), font="jost_regular", color=c,
+                               width=s(BPM_SIZE * k * 3)),
+                          pills(c, 225, pills_cy)])
     return hr_variants(draw)
 
 
@@ -534,7 +543,7 @@ def hr_row(cx, cy, k):
         return "\n".join([heart_icon(c, left + hw / 2, cy, hsz),
                           text(value, p(left + hw + 5 * k), p(cy), s(b), font="jost_regular", color=c,
                                align="START", width=s(b * 3)),
-                          pills(c, cx, cy + b * HR_CAP + 6)])
+                          pills(c, cx, cy + b * HR_CAP + 4)])
     return hr_variants(draw)
 
 
@@ -545,7 +554,7 @@ def hr_stack(cx, cy, k):
     def draw(c, value):
         return "\n".join([heart_icon(c, cx, cy - b * HR_CAP - 4 - hsz * 0.37, hsz),
                           text(value, p(cx), p(cy), s(b), font="jost_regular", color=c, width=s(b * 3)),
-                          pills(c, cx, cy + b * HR_CAP + 6)])
+                          pills(c, cx, cy + b * HR_CAP + 4)])
     return hr_variants(draw)
 
 
@@ -553,9 +562,7 @@ def heart_rate():
     """♥, bpm and the three zone pills, colored by zone, where Customize → Heart rate
     position puts them. Hidden in always-on (the bpm only updates while the screen is on)."""
     def at(layout, x, y):
-        if layout == "mid":
-            return hr_middle()
-        make = hr_row if layout == "h" else hr_stack
+        make = {"mid": lambda x, y, k: hr_middle(k), "h": hr_row, "v": hr_stack}[layout]
         return choice("textSize", [(oid, make(hr_x(x), y, k)) for oid, _, k in TEXT_SIZES])
     return f"""<!-- Heart rate, colored by zone (screen on only) -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
