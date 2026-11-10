@@ -19,6 +19,11 @@
     <string name="hrPos_belowMin">Below the minutes (right)</string>
     <string name="hrPos_bottomMid">Between the bottom numbers</string>
     <string name="hrPos_aboveTemp">Above the temperature</string>
+    <string name="hrSize_label">Heart rate size</string>
+    <string name="hrSize_small">Small</string>
+    <string name="hrSize_normal">Normal</string>
+    <string name="hrSize_large">Large</string>
+    <string name="hrSize_xlarge">Extra large</string>
     <string name="ringWidth_label">Ring thickness</string>
     <string name="ringWidth_thin">Thin</string>
     <string name="ringWidth_normal">Normal</string>

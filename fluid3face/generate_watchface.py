@@ -96,9 +96,13 @@ HR_POSITIONS = [("middle", "Between hour and minutes", "mid", 225, None),
                 ("belowMin", "Below the minutes (right)", "h", "mm", 280),
                 ("bottomMid", "Between the bottom numbers", "v", 225, 333),
                 ("aboveTemp", "Above the temperature", "h", 225, 348)]
+# Customize → Heart rate size (♥, bpm, on its own; Extra large still fits beside a Large time)
+HR_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "Large", 1.15),
+            ("xlarge", "Extra large", 1.25)]
 DATE_SHIFT = {"aboveDate": 38}     # date moves down under the heart rate
 TEMP_SHIFT = {"aboveTemp": 18}     # temperature moves down under the heart rate
 LISTS = [("hrPos", "Heart rate position", "middle", HR_POSITIONS),
+         ("hrSize", "Heart rate size", "normal", HR_SIZES),
          ("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
          ("ringGaps", "Ring gaps", "medium", GAPS),
          ("handSize", "Hands", "normal", HAND_SIZES),
@@ -265,7 +269,7 @@ PILL_W, PILL_H, PILL_GAP = 14, 2, 4
 
 
 def mid_geom(k):
-    """Middle stack (♥ / bpm / pills between hh and mm) at text size k: centers of the
+    """Middle stack (♥ / bpm / pills between hh and mm) at heart rate size k: centers of the
     heart, bpm and pills, and the gap it leaves between the hours and minutes."""
     hs, b = HEART_SIZE * k, BPM_SIZE * k
     top = TIME_CY - (hs + 2 + b + 2 + 5 + PILL_H) / 2
@@ -434,7 +438,7 @@ def time():
                                                              for sid, _, size in TIME_SIZES]))
                                    for fid, _, font in TIME_FONTS])
     return f"""<!-- Time -->
-{choice("hrPos", [(pid, choice("textSize", [(oid, fonts(mid_geom(k)[3])) for oid, _, k in TEXT_SIZES])
+{choice("hrPos", [(pid, choice("hrSize", [(oid, fonts(mid_geom(k)[3])) for oid, _, k in HR_SIZES])
                        if pid == "middle" else fonts(0)) for pid, *_ in HR_POSITIONS])}"""
 
 
@@ -473,7 +477,7 @@ def time_pair(font, size, gap):
 {clock("mm", p(left + digits + gap), "START")}{colon}"""
 
 
-# ---- Heart rate block elsewhere: sizes (design px) at text size Normal ---------------
+# ---- Heart rate block elsewhere: sizes (design px) at heart rate size Normal ---------------
 HR_ROW_HEART, HR_ROW_BPM = 26, 44    # ♥ bpm row (Large = x1.15)
 HR_CAP = 0.35                         # half of Jost's cap height, per px of font size
 
@@ -521,7 +525,7 @@ def hr_variants(draw):
 
 
 def hr_middle(k):
-    """The design's: ♥, bpm and pills stacked between hours and minutes, text size k."""
+    """The design's: ♥, bpm and pills stacked between hours and minutes, heart rate size k."""
     heart_cy, bpm_cy, pills_cy, _ = mid_geom(k)
 
     def draw(c, value):
@@ -563,7 +567,7 @@ def heart_rate():
     position puts them. Hidden in always-on (the bpm only updates while the screen is on)."""
     def at(layout, x, y):
         make = {"mid": lambda x, y, k: hr_middle(k), "h": hr_row, "v": hr_stack}[layout]
-        return choice("textSize", [(oid, make(hr_x(x), y, k)) for oid, _, k in TEXT_SIZES])
+        return choice("hrSize", [(oid, make(hr_x(x), y, k)) for oid, _, k in HR_SIZES])
     return f"""<!-- Heart rate, colored by zone (screen on only) -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
   {AMBIENT_HIDE}
