@@ -7,7 +7,7 @@ Edit this file, not the XML:
 
 The layout follows the "Cadran Neo" design (450 px HTML mock-up, Unbounded + Inter),
 scaled to the Pixel Watch 3's 456 px: an outer ring of 60 segments (one per second)
-lit in violet for the Active Zone Minutes done of the goal, the current second's
+lit in violet, one per Active Zone Minute (all 60 from 60 on), the current second's
 segment white; a thin lime inner ring for MySteps' steps this hour; a pill on top
 with the weekday, date and temperature; the time stacked big (hours ink, minutes
 lime); zone minutes (left) and steps (right) at mid-height; a heart rate pill at the
@@ -295,12 +295,12 @@ def dim_segments():
 </Group>"""
 
 
-def segments(fraction):
-    """The lit segments over the dim ones: the first round(fraction * 60), at least
-    one once there is any."""
-    if not fraction:
+def segments(value):
+    """The lit segments over the dim ones: one per minute, the first round(value)
+    (all 60 from 60 minutes on)."""
+    if not value:
         return ""
-    lit = f"(({fraction}) &gt; 0 ? clamp(round(clamp({fraction}, 0, 1) * 60), 1, 60) : 0)"
+    lit = f"clamp(round({value}), 0, 60)"
 
     def at(w, gap):
         half = seg_half(w, gap)
@@ -335,8 +335,8 @@ def azm_slot():
     """Outer ring + left column: Active Zone Minutes (Fitbit) by default, a ranged value
     (no goal progress type: 60 segments per thickness and gap make the XML large). The
     watch clips a complication to its bounding shape: a full-screen oval."""
-    def body(kind, fraction, value):
-        parts = [x for x in (segments(fraction),) if x] + [side_column(SIDE_LEFT_X, ZONE_C, "MIN", value, "showAzm")]
+    def body(kind, minutes, value):
+        parts = [x for x in (segments(minutes),) if x] + [side_column(SIDE_LEFT_X, ZONE_C, "MIN", value, "showAzm")]
         return f"""<Complication type="{kind}">
 {indent(group(kind, chr(10).join(parts)), 2)}
 </Complication>"""
@@ -349,7 +349,7 @@ def azm_slot():
       defaultSystemProvider="EMPTY"
       defaultSystemProviderType="EMPTY" />
   <BoundingOval x="0" y="0" width="{SIZE}" height="{SIZE}" />
-{indent(body("RANGED_VALUE", RANGED, template("%s", "[COMPLICATION.TEXT]")), 2)}
+{indent(body("RANGED_VALUE", "[COMPLICATION.RANGED_VALUE_VALUE]", template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("SHORT_TEXT", None, template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("EMPTY", None, "--"), 2)}
 </ComplicationSlot>"""

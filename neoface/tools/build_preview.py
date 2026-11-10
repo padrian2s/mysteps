@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Renders src/main/res/drawable/preview.png (the watch face picker's image) from the
-generator's own geometry and fonts, at the design's sample values (10:08, 77 zone
-minutes of 150, 180 steps of 250, 89 bpm, 25°):
+generator's own geometry and fonts, at the design's sample values (10:08, 23 zone
+minutes, 180 steps of 250, 89 bpm, 25°):
 
     python3 neoface/tools/build_preview.py
 """
@@ -59,8 +59,8 @@ def main():
             d.text((x0, y), ch, font=f, fill=col, anchor="lm")
             x0 += f.getlength(ch) + S(size * spacing)
 
-    # Outer ring: 60 segments, 77 of 150 zone minutes lit, second 32 white
-    lit = round(77 / 150 * 60)
+    # Outer ring: 60 segments, one per zone minute (23 lit), second 32 white
+    lit = 23
     for i in range(60):
         col = rgb(g.INK) if i == 32 else rgb(g.VIOLET, 1 if i < lit else 0.18)
         arc(g.SEG_R, g.SEG_W, col, i * 6 - g.SEG_HALF, i * 6 + g.SEG_HALF)
@@ -76,7 +76,7 @@ def main():
     # Side columns
     NUM, LAB = g.SIDE_SIZES[1][2:]
     DS = g.DATE_SIZES[1][2]
-    for x, col, num, label in ((g.SIDE_LEFT_X, g.VIOLET, "77", "MIN"), (g.SIDE_RIGHT_X, g.LIME, "180", "PAȘI")):
+    for x, col, num, label in ((g.SIDE_LEFT_X, g.VIOLET, "23", "MIN"), (g.SIDE_RIGHT_X, g.LIME, "180", "PAȘI")):
         num_cy, lab_cy = g.side_centers(NUM, LAB)
         text(num, P(x), P(num_cy), "unbounded_bold", NUM, rgb(col))
         text(label, P(x), P(lab_cy), "inter_semibold", LAB, rgb(g.INK, 0.62),
