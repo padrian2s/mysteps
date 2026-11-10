@@ -9,6 +9,16 @@
     <string name="showAzm_label">Zone Minutes number</string>
     <string name="showHr_label">Heart rate</string>
     <string name="showSeconds_label">Seconds dot</string>
+    <string name="hrPos_label">Heart rate position</string>
+    <string name="hrPos_middle">Between hour and minutes</string>
+    <string name="hrPos_aboveDate">Above the date</string>
+    <string name="hrPos_belowDate">Between date and time</string>
+    <string name="hrPos_aboveHour">Above the hour (left)</string>
+    <string name="hrPos_aboveMin">Above the minutes (right)</string>
+    <string name="hrPos_belowHour">Below the hour (left)</string>
+    <string name="hrPos_belowMin">Below the minutes (right)</string>
+    <string name="hrPos_bottomMid">Between the bottom numbers</string>
+    <string name="hrPos_aboveTemp">Above the temperature</string>
     <string name="ringWidth_label">Ring thickness</string>
     <string name="ringWidth_thin">Thin</string>
     <string name="ringWidth_normal">Normal</string>

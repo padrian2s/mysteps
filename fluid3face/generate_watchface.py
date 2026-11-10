@@ -83,7 +83,23 @@ TIME_FONTS = [("light", "Light", "jost_light"), ("regular", "Regular", "jost_reg
               ("vstrong", "Very strong", "jost_time_vstrong"), ("ultra", "Ultra bold", "jost_time_ultra")]
 TIME_SIZES = [("small", "Small", 96), ("normal", "Normal", 108), ("large", "Large", 118)]
 TEXT_SIZES = [("small", "Small", 0.85), ("normal", "Normal", 1.0), ("large", "Large", 1.15)]
-LISTS = [("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
+# Heart rate position: (id, label, layout, x, y) in design px; x "hh" / "mm" = above or
+# below the hour / minute digits. "middle" is the design's: vertical between hh and mm.
+# Elsewhere it is hh:mm (colon instead of the gap) and the block is a ♥ bpm row with
+# the zone pills under it ("v" = small vertical stack, between the bottom numbers).
+HR_POSITIONS = [("middle", "Between hour and minutes", "mid", 225, None),
+                ("aboveDate", "Above the date", "h", 225, 62),
+                ("belowDate", "Between date and time", "h", 225, 145),
+                ("aboveHour", "Above the hour (left)", "h", "hh", 145),
+                ("aboveMin", "Above the minutes (right)", "h", "mm", 145),
+                ("belowHour", "Below the hour (left)", "h", "hh", 280),
+                ("belowMin", "Below the minutes (right)", "h", "mm", 280),
+                ("bottomMid", "Between the bottom numbers", "v", 225, 333),
+                ("aboveTemp", "Above the temperature", "h", 225, 350)]
+DATE_SHIFT = {"aboveDate": 34}     # date moves down under the heart rate
+TEMP_SHIFT = {"aboveTemp": 14}     # temperature moves down under the heart rate
+LISTS = [("hrPos", "Heart rate position", "middle", HR_POSITIONS),
+         ("ringWidth", "Ring thickness", "normal", RING_WIDTHS),
          ("ringGaps", "Ring gaps", "medium", GAPS),
          ("handSize", "Hands", "normal", HAND_SIZES),
          ("timeFont", "Time weight", "bold", TIME_FONTS),
@@ -391,26 +407,50 @@ def hands():
 def date():
     month = template(chain("[MONTH]", [m + "." for m in MONTHS]))
 
-    def at(k):
+    def at(k, top):
         day, mon = DAY_SIZE * k, MONTH_SIZE * k
-        return f"""{text(template("[DAY]"), C, p(DATE_TOP + day / 2), s(day), font="jost_regular", width=s(day * 3))}
-{text(month, C, p(DATE_TOP + day + 2 + mon * LINE / 2), s(mon), font="jost_regular",
+        return f"""{text(template("[DAY]"), C, p(top + day / 2), s(day), font="jost_regular", width=s(day * 3))}
+{text(month, C, p(top + day + 2 + mon * LINE / 2), s(mon), font="jost_regular",
       width=s(mon * 8), spacing=0.2, extra=' alpha="170"')}"""
-    return f"""<!-- Date: day of the month, month below -->
-{choice("textSize", [(oid, at(k)) for oid, _, k in TEXT_SIZES])}"""
+
+    def sizes(top):
+        return choice("textSize", [(oid, at(k, top)) for oid, _, k in TEXT_SIZES])
+    return f"""<!-- Date: day of the month, month below (lower when the heart rate sits above) -->
+{choice("hrPos", [(pid, sizes(DATE_TOP + DATE_SHIFT.get(pid, 0))) for pid, *_ in HR_POSITIONS])}"""
 
 
 def time():
     """hh and mm (tabular digits) around the heart rate; weight and size from Customize
-    (default bold 108 px; the design had extra-light)."""
+    (default bold 108 px; the design had extra-light). With the heart rate elsewhere the
+    hours and minutes touch."""
+    def fonts(gap):
+        return choice("timeFont", [(fid, choice("timeSize", [(sid, time_pair(font, size, gap))
+                                                             for sid, _, size in TIME_SIZES]))
+                                   for fid, _, font in TIME_FONTS])
     return f"""<!-- Time -->
-{choice("timeFont", [(fid, choice("timeSize", [(sid, time_pair(font, size)) for sid, _, size in TIME_SIZES]))
-                     for fid, _, font in TIME_FONTS])}"""
+{choice("hrPos", [(pid, fonts(MID_W if pid == "middle" else 0)) for pid, *_ in HR_POSITIONS])}"""
 
 
-def time_pair(font, size):
+def colon_rise(font):
+    """How far (per px of font size) Jost's colon sits below the digits' middle: it is
+    centered on the x-height, the digits on the caps (350)."""
+    from fontTools.pens.boundsPen import BoundsPen
+    gs = FONT_FILES[font].getGlyphSet()
+    pen = BoundsPen(gs)
+    gs["colon"].draw(pen)
+    return (350 - (pen.bounds[1] + pen.bounds[3]) / 2) / 1000
+
+
+def time_pair(font, size, gap):
+    """hh and mm gap px apart; no gap = the heart rate is elsewhere: hh:mm with a colon
+    raised to the digits' middle."""
     digits = text_width("00", font, size)
-    left = 225 - (2 * digits + MID_W) / 2
+    colon = ""
+    if not gap:
+        gap = text_width(":", font, size)
+        colon = "\n" + text(":", C, p(TIME_CY - colon_rise(font) * size), s(size), font=font,
+                            width=s(gap + 20))
+    left = 225 - (2 * digits + gap) / 2
     h = round(s(size) * 1.6)
     w = round(s(digits + 20))
     cy = p(TIME_CY)
@@ -423,51 +463,111 @@ def time_pair(font, size):
   </TimeText>
 </DigitalClock>"""
     return f"""{clock("hh", p(left + digits), "END")}
-{clock("mm", p(left + digits + MID_W), "START")}"""
+{clock("mm", p(left + digits + gap), "START")}{colon}"""
 
 
-def heart_rate():
-    """♥, bpm and the three zone pills between hours and minutes, colored by zone.
-    Hidden in always-on (the bpm only updates while the screen is on)."""
-    hs = s(HEART_SIZE * 0.83)
-    heart = lambda color: image("ic_heart", C - hs / 2, p(HEART_CY) - hs * 0.89 / 2, hs, hs * 0.89, tint=color)
-    bpm = lambda color: text(template("round([HEART_RATE])"), C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=color,
-                             width=s(BPM_SIZE * 3))
-    pills_x = 225 - (3 * PILL_W + 2 * PILL_GAP) / 2
+# ---- Heart rate block elsewhere: sizes (design px) at text size Normal ---------------
+HR_ROW_HEART, HR_ROW_BPM = 22, 36    # ♥ bpm row
+HR_CAP = 0.35                         # half of Jost's cap height, per px of font size
 
-    def pills(color):
-        out = []
-        for i, (_, zc) in enumerate(ZONES):
-            x = p(pills_x + i * (PILL_W + PILL_GAP))
-            lit = zc == color
-            if lit:     # box-shadow 0 0 6px: a faint wider bar behind
-                out.append(rect(x - 2, p(PILLS_CY) - s(PILL_H) / 2 - 2, s(PILL_W) + 4, s(PILL_H) + 4, zc,
-                                extra=' alpha="60"'))
-            out.append(rect(x, p(PILLS_CY) - s(PILL_H) / 2, s(PILL_W), s(PILL_H), zc,
-                            extra="" if lit else ' alpha="64"'))
-        return "\n".join(out)
 
-    no_hr = text("--", C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=ZONES[0][1], width=s(BPM_SIZE * 3))
-    return f"""<!-- Heart rate between hours and minutes, colored by zone (screen on only) -->
-<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
-  {AMBIENT_HIDE}
-{indent(toggle("showHr", zone_switch(lambda c: heart(c) + chr(10) + bpm(c) + chr(10) + pills(c)) + chr(10) + f"""<Condition>
+def hr_x(x):
+    """Block center x (design px): a number, or the middle of the hh / mm digits."""
+    half = (DIGITS_W + text_width(":", "jost_time", TIME_SIZE)) / 2
+    return {"hh": 225 - half, "mm": 225 + half}.get(x, x)
+
+
+def pills(color, cx, cy):
+    """The three zone pills centered on (cx, cy) design px, the current zone lit."""
+    x0 = cx - (3 * PILL_W + 2 * PILL_GAP) / 2
+    out = []
+    for i, (_, zc) in enumerate(ZONES):
+        x = p(x0 + i * (PILL_W + PILL_GAP))
+        lit = zc == color
+        if lit:     # box-shadow 0 0 6px: a faint wider bar behind
+            out.append(rect(x - 2, p(cy) - s(PILL_H) / 2 - 2, s(PILL_W) + 4, s(PILL_H) + 4, zc,
+                            extra=' alpha="60"'))
+        out.append(rect(x, p(cy) - s(PILL_H) / 2, s(PILL_W), s(PILL_H), zc,
+                        extra="" if lit else ' alpha="64"'))
+    return "\n".join(out)
+
+
+def heart_icon(color, cx, cy, size):
+    hs = s(size * 0.83)
+    return image("ic_heart", p(cx) - hs / 2, p(cy) - hs * 0.89 / 2, hs, hs * 0.89, tint=color)
+
+
+BPM = template("round([HEART_RATE])")
+
+
+def hr_variants(draw):
+    """draw(color, value) in the zone's color, or (rest color, "--") without a reading."""
+    return zone_switch(lambda c: draw(c, BPM)) + f"""
+<Condition>
   <Expressions>
     <Expression name="noHr">[HEART_RATE] &lt;= 0</Expression>
   </Expressions>
   <Compare expression="noHr">
-{indent(heart(ZONES[0][1]) + chr(10) + no_hr, 4)}
+{indent(draw(ZONES[0][1], "--"), 4)}
   </Compare>
-</Condition>"""), 2)}
+</Condition>"""
+
+
+def hr_middle():
+    """The design's: ♥, bpm and pills stacked between hours and minutes."""
+    def draw(c, value):
+        return "\n".join([heart_icon(c, 225, HEART_CY, HEART_SIZE),
+                          text(value, C, p(BPM_CY), s(BPM_SIZE), font="jost_regular", color=c,
+                               width=s(BPM_SIZE * 3)),
+                          pills(c, 225, PILLS_CY)])
+    return hr_variants(draw)
+
+
+def hr_row(cx, cy, k):
+    """♥ bpm on one row centered on (cx, cy) (centered for a 2-digit bpm, a third digit
+    grows to the right), pills under it."""
+    hsz, b = HR_ROW_HEART * k, HR_ROW_BPM * k
+    hw = hsz * 0.83
+    left = cx - (hw + 5 * k + text_width("75", "jost_regular", b)) / 2
+
+    def draw(c, value):
+        return "\n".join([heart_icon(c, left + hw / 2, cy, hsz),
+                          text(value, p(left + hw + 5 * k), p(cy), s(b), font="jost_regular", color=c,
+                               align="START", width=s(b * 3)),
+                          pills(c, cx, cy + b * HR_CAP + 6)])
+    return hr_variants(draw)
+
+
+def hr_stack(cx, cy, k):
+    """Small ♥ / bpm / pills stack, bpm centered on (cx, cy)."""
+    hsz, b = HR_ROW_HEART * k * 0.9, HR_ROW_BPM * k
+
+    def draw(c, value):
+        return "\n".join([heart_icon(c, cx, cy - b * HR_CAP - 4 - hsz * 0.37, hsz),
+                          text(value, p(cx), p(cy), s(b), font="jost_regular", color=c, width=s(b * 3)),
+                          pills(c, cx, cy + b * HR_CAP + 6)])
+    return hr_variants(draw)
+
+
+def heart_rate():
+    """♥, bpm and the three zone pills, colored by zone, where Customize → Heart rate
+    position puts them. Hidden in always-on (the bpm only updates while the screen is on)."""
+    def at(layout, x, y):
+        if layout == "mid":
+            return hr_middle()
+        make = hr_row if layout == "h" else hr_stack
+        return choice("textSize", [(oid, make(hr_x(x), y, k)) for oid, _, k in TEXT_SIZES])
+    return f"""<!-- Heart rate, colored by zone (screen on only) -->
+<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
+  {AMBIENT_HIDE}
+{indent(toggle("showHr", choice("hrPos", [(pid, at(lay, x, y)) for pid, _, lay, x, y in HR_POSITIONS])), 2)}
 </Group>"""
 
 
-def tap_area():
-    """Invisible box over the time and heart rate: opens MySteps' full-screen live pulse."""
-    w, h = 2 * DIGITS_W + MID_W, TIME_SIZE
-    x, y, pw, ph = round(p(225 - w / 2)), round(p(TIME_CY - h / 2)), round(s(w)), round(s(h))
-    return f"""<!-- Tap on the time / heart rate: big live pulse -->
-<Group x="{x}" y="{y}" width="{pw}" height="{ph}" name="HeartTap">
+def tap_box(name, cx, cy, w, h):
+    """Invisible box (design px) that opens MySteps' full-screen live pulse."""
+    x, y, pw, ph = round(p(cx - w / 2)), round(p(cy - h / 2)), round(s(w)), round(s(h))
+    return f"""<Group x="{x}" y="{y}" width="{pw}" height="{ph}" name="{name}">
   <Launch target="{HR_ACTIVITY}" />
   <PartDraw x="0" y="0" width="{pw}" height="{ph}">
     <Rectangle x="0" y="0" width="{pw}" height="{ph}">
@@ -475,6 +575,17 @@ def tap_area():
     </Rectangle>
   </PartDraw>
 </Group>"""
+
+
+def tap_area():
+    """Taps on the time and on the heart rate open the big live pulse."""
+    def at(pid, layout, x, y):
+        if layout == "mid":
+            return tap_box("TimeTap", 225, TIME_CY, 2 * DIGITS_W + MID_W, TIME_SIZE)
+        return "\n".join([tap_box("TimeTap", 225, TIME_CY, 2 * DIGITS_W + text_width(":", "jost_time", TIME_SIZE), TIME_SIZE),
+                          tap_box("HeartTap", hr_x(x), y if layout == "h" else y - 8, 90, 60)])
+    return f"""<!-- Tap on the time / heart rate: big live pulse -->
+{choice("hrPos", [(pid, at(pid, lay, x, y)) for pid, _, lay, x, y in HR_POSITIONS])}"""
 
 
 def temperature():
@@ -486,15 +597,17 @@ def temperature():
   </Expressions>
   <Compare expression="hasWeather">
     <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Weather">
-{indent(choice("textSize", [(oid, temperature_at(TEMP_SIZE * k)) for oid, _, k in TEXT_SIZES]), 6)}
+{indent(choice("hrPos", [(pid, choice("textSize", [(oid, temperature_at(TEMP_SIZE * k, TEMP_SHIFT.get(pid, 0)))
+                                                  for oid, _, k in TEXT_SIZES]))
+                         for pid, *_ in HR_POSITIONS]), 6)}
     </Group>
   </Compare>
 </Condition>"""
 
 
-def temperature_at(size):
+def temperature_at(size, shift=0):
     dot = size * 0.32
-    cy = p(450 - 44 - size * LINE / 2)
+    cy = p(450 - 44 - size * LINE / 2 + shift)
     tw = text_width("25°", "jost_regular", size, 0.08)
     gw = dot + 6 + tw
     temp = text(template("[WEATHER.TEMPERATURE]", "%s°"), p(225 - gw / 2 + dot + 6), cy, s(size),
