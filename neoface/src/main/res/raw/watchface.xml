@@ -1839,38 +1839,38 @@
       </Expressions>
       <Compare expression="hasWeather">
         <Group x="0" y="0" width="456" height="456" name="DateWeather">
-          <PartDraw x="134" y="52" width="190" height="32">
-            <RoundRectangle x="0.75" y="1.2" width="186.5" height="28.4" cornerRadiusX="14.2" cornerRadiusY="14.2">
+          <PartDraw x="110" y="66" width="238" height="37">
+            <RoundRectangle x="0.8" y="1.35" width="234.4" height="33.5" cornerRadiusX="16.75" cornerRadiusY="16.75">
               <Stroke color="#3df2f0ea" thickness="1" />
             </RoundRectangle>
           </PartDraw>
-          <PartText x="108" y="55" width="148" height="24">
+          <PartText x="84" y="66" width="185" height="36">
             <Text align="END">
-              <Font family="inter_semibold" size="15.2" color="#fff2f0ea" letterSpacing="0.12"><Template>%s %s %s<Parameter expression="([DAY_OF_WEEK] == 1 ? &quot;DUM&quot; : ([DAY_OF_WEEK] == 2 ? &quot;LUN&quot; : ([DAY_OF_WEEK] == 3 ? &quot;MAR&quot; : ([DAY_OF_WEEK] == 4 ? &quot;MIE&quot; : ([DAY_OF_WEEK] == 5 ? &quot;JOI&quot; : ([DAY_OF_WEEK] == 6 ? &quot;VIN&quot; : &quot;SÂM&quot;))))))" /><Parameter expression="[DAY]" /><Parameter expression="([MONTH] == 1 ? &quot;IAN&quot; : ([MONTH] == 2 ? &quot;FEB&quot; : ([MONTH] == 3 ? &quot;MAR&quot; : ([MONTH] == 4 ? &quot;APR&quot; : ([MONTH] == 5 ? &quot;MAI&quot; : ([MONTH] == 6 ? &quot;IUN&quot; : ([MONTH] == 7 ? &quot;IUL&quot; : ([MONTH] == 8 ? &quot;AUG&quot; : ([MONTH] == 9 ? &quot;SEP&quot; : ([MONTH] == 10 ? &quot;OCT&quot; : ([MONTH] == 11 ? &quot;NOV&quot; : &quot;DEC&quot;)))))))))))" /></Template></Font>
+              <Font family="inter_semibold" size="22.3" color="#fff2f0ea" letterSpacing="0.06"><Template>%s %s %s<Parameter expression="([DAY_OF_WEEK] == 1 ? &quot;DUM&quot; : ([DAY_OF_WEEK] == 2 ? &quot;LUN&quot; : ([DAY_OF_WEEK] == 3 ? &quot;MAR&quot; : ([DAY_OF_WEEK] == 4 ? &quot;MIE&quot; : ([DAY_OF_WEEK] == 5 ? &quot;JOI&quot; : ([DAY_OF_WEEK] == 6 ? &quot;VIN&quot; : &quot;SÂM&quot;))))))" /><Parameter expression="[DAY]" /><Parameter expression="([MONTH] == 1 ? &quot;IAN&quot; : ([MONTH] == 2 ? &quot;FEB&quot; : ([MONTH] == 3 ? &quot;MAR&quot; : ([MONTH] == 4 ? &quot;APR&quot; : ([MONTH] == 5 ? &quot;MAI&quot; : ([MONTH] == 6 ? &quot;IUN&quot; : ([MONTH] == 7 ? &quot;IUL&quot; : ([MONTH] == 8 ? &quot;AUG&quot; : ([MONTH] == 9 ? &quot;SEP&quot; : ([MONTH] == 10 ? &quot;OCT&quot; : ([MONTH] == 11 ? &quot;NOV&quot; : &quot;DEC&quot;)))))))))))" /></Template></Font>
             </Text>
           </PartText>
-          <PartDraw x="264" y="65" width="5" height="5">
-            <RoundRectangle x="0.3" y="0.9" width="3" height="3" cornerRadiusX="1.5" cornerRadiusY="1.5">
+          <PartDraw x="277" y="82" width="5" height="5">
+            <RoundRectangle x="0.3" y="0.6" width="3" height="3" cornerRadiusX="1.5" cornerRadiusY="1.5">
               <Fill color="#80f2f0ea" />
             </RoundRectangle>
           </PartDraw>
-          <PartText x="276" y="55" width="73" height="24">
+          <PartText x="288" y="66" width="84" height="36">
             <Text align="START">
-              <Font family="inter_semibold" size="15.2" color="#ffffb020" letterSpacing="0.12"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
+              <Font family="inter_semibold" size="22.3" color="#ffffb020" letterSpacing="0.06"><Template>%s°<Parameter expression="[WEATHER.TEMPERATURE]" /></Template></Font>
             </Text>
           </PartText>
         </Group>
       </Compare>
       <Default>
         <Group x="0" y="0" width="456" height="456" name="Date">
-          <PartDraw x="159" y="52" width="139" height="32">
-            <RoundRectangle x="1.4" y="1.2" width="135.2" height="28.4" cornerRadiusX="14.2" cornerRadiusY="14.2">
+          <PartDraw x="141" y="66" width="176" height="37">
+            <RoundRectangle x="0.95" y="1.35" width="172.1" height="33.5" cornerRadiusX="16.75" cornerRadiusY="16.75">
               <Stroke color="#3df2f0ea" thickness="1" />
             </RoundRectangle>
           </PartDraw>
-          <PartText x="154" y="55" width="148" height="24">
+          <PartText x="136" y="66" width="185" height="36">
             <Text align="CENTER">
-              <Font family="inter_semibold" size="15.2" color="#fff2f0ea" letterSpacing="0.12"><Template>%s %s %s<Parameter expression="([DAY_OF_WEEK] == 1 ? &quot;DUM&quot; : ([DAY_OF_WEEK] == 2 ? &quot;LUN&quot; : ([DAY_OF_WEEK] == 3 ? &quot;MAR&quot; : ([DAY_OF_WEEK] == 4 ? &quot;MIE&quot; : ([DAY_OF_WEEK] == 5 ? &quot;JOI&quot; : ([DAY_OF_WEEK] == 6 ? &quot;VIN&quot; : &quot;SÂM&quot;))))))" /><Parameter expression="[DAY]" /><Parameter expression="([MONTH] == 1 ? &quot;IAN&quot; : ([MONTH] == 2 ? &quot;FEB&quot; : ([MONTH] == 3 ? &quot;MAR&quot; : ([MONTH] == 4 ? &quot;APR&quot; : ([MONTH] == 5 ? &quot;MAI&quot; : ([MONTH] == 6 ? &quot;IUN&quot; : ([MONTH] == 7 ? &quot;IUL&quot; : ([MONTH] == 8 ? &quot;AUG&quot; : ([MONTH] == 9 ? &quot;SEP&quot; : ([MONTH] == 10 ? &quot;OCT&quot; : ([MONTH] == 11 ? &quot;NOV&quot; : &quot;DEC&quot;)))))))))))" /></Template></Font>
+              <Font family="inter_semibold" size="22.3" color="#fff2f0ea" letterSpacing="0.06"><Template>%s %s %s<Parameter expression="([DAY_OF_WEEK] == 1 ? &quot;DUM&quot; : ([DAY_OF_WEEK] == 2 ? &quot;LUN&quot; : ([DAY_OF_WEEK] == 3 ? &quot;MAR&quot; : ([DAY_OF_WEEK] == 4 ? &quot;MIE&quot; : ([DAY_OF_WEEK] == 5 ? &quot;JOI&quot; : ([DAY_OF_WEEK] == 6 ? &quot;VIN&quot; : &quot;SÂM&quot;))))))" /><Parameter expression="[DAY]" /><Parameter expression="([MONTH] == 1 ? &quot;IAN&quot; : ([MONTH] == 2 ? &quot;FEB&quot; : ([MONTH] == 3 ? &quot;MAR&quot; : ([MONTH] == 4 ? &quot;APR&quot; : ([MONTH] == 5 ? &quot;MAI&quot; : ([MONTH] == 6 ? &quot;IUN&quot; : ([MONTH] == 7 ? &quot;IUL&quot; : ([MONTH] == 8 ? &quot;AUG&quot; : ([MONTH] == 9 ? &quot;SEP&quot; : ([MONTH] == 10 ? &quot;OCT&quot; : ([MONTH] == 11 ? &quot;NOV&quot; : &quot;DEC&quot;)))))))))))" /></Template></Font>
             </Text>
           </PartText>
         </Group>
@@ -1910,88 +1910,88 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="153" y="363" width="151" height="40">
-                                <RoundRectangle x="0.55" y="0.35" width="148.9" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="146" y="362" width="166" height="43">
+                                <RoundRectangle x="0.1" y="0.85" width="163.8" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="165" y="374" width="18" height="16" tintColor="#ffff5a4f">
+                              <PartImage x="156" y="373" width="22" height="20" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="190" y="363" width="68" height="39">
+                              <PartText x="185" y="358" width="79" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="234" y="373" width="85" height="18" alpha="204">
+                              <PartText x="240" y="374" width="89" height="19" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="11.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="inter_semibold" size="12.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="149" y="363" width="159" height="40">
-                                <RoundRectangle x="0.9" y="0.35" width="156.2" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="140" y="362" width="178" height="43">
+                                <RoundRectangle x="0.2" y="0.85" width="175.6" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="161" y="374" width="18" height="16" tintColor="#ff000000">
+                              <PartImage x="150" y="373" width="22" height="20" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="186" y="363" width="87" height="39">
+                              <PartText x="179" y="358" width="103" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="249" y="373" width="73" height="18" alpha="204">
+                              <PartText x="258" y="374" width="77" height="19" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="11.2" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
+                                  <Font family="inter_semibold" size="12.1" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="144" y="363" width="169" height="40">
-                                <RoundRectangle x="0.9" y="0.35" width="166.2" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="134" y="362" width="189" height="43">
+                                <RoundRectangle x="0.8" y="0.85" width="186.4" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="156" y="374" width="18" height="16" tintColor="#ff000000">
+                              <PartImage x="144" y="373" width="22" height="20" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="181" y="363" width="87" height="39">
+                              <PartText x="174" y="358" width="103" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="244" y="373" width="83" height="18" alpha="204">
+                              <PartText x="253" y="374" width="87" height="19" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="11.2" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
+                                  <Font family="inter_semibold" size="12.1" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="163" y="363" width="132" height="40">
-                                <RoundRectangle x="0.45" y="0.35" width="129.1" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="158" y="362" width="141" height="43">
+                                <RoundRectangle x="0.8" y="0.85" width="138.4" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="175" y="374" width="18" height="16" tintColor="#ffff5a4f">
+                              <PartImage x="168" y="373" width="22" height="20" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="200" y="363" width="48" height="39">
+                              <PartText x="198" y="358" width="53" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="31" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
-                              <PartText x="224" y="373" width="85" height="18" alpha="204">
+                              <PartText x="227" y="374" width="89" height="19" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="11.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="inter_semibold" size="12.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2010,68 +2010,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="184" y="363" width="90" height="40">
-                                <RoundRectangle x="0.2" y="0.35" width="87.6" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="178" y="362" width="101" height="43">
+                                <RoundRectangle x="0.85" y="0.85" width="98.3" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="195" y="374" width="18" height="16" tintColor="#ffff5a4f">
+                              <PartImage x="188" y="373" width="22" height="20" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="220" y="363" width="68" height="39">
+                              <PartText x="218" y="358" width="79" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="174" y="363" width="109" height="40">
-                                <RoundRectangle x="0.8" y="0.35" width="106.4" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="166" y="362" width="125" height="43">
+                                <RoundRectangle x="0.75" y="0.85" width="122.5" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="186" y="374" width="18" height="16" tintColor="#ff000000">
+                              <PartImage x="176" y="373" width="22" height="20" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="211" y="363" width="87" height="39">
+                              <PartText x="206" y="358" width="103" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="174" y="363" width="109" height="40">
-                                <RoundRectangle x="0.8" y="0.35" width="106.4" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="166" y="362" width="125" height="43">
+                                <RoundRectangle x="0.75" y="0.85" width="122.5" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="186" y="374" width="18" height="16" tintColor="#ff000000">
+                              <PartImage x="176" y="373" width="22" height="20" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="211" y="363" width="87" height="39">
+                              <PartText x="206" y="358" width="103" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="31" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="194" y="363" width="70" height="40">
-                                <RoundRectangle x="0.05" y="0.35" width="67.9" height="37.9" cornerRadiusX="18.95" cornerRadiusY="18.95">
+                              <PartDraw x="191" y="362" width="75" height="43">
+                                <RoundRectangle x="0.5" y="0.85" width="73" height="40.5" cornerRadiusX="20.25" cornerRadiusY="20.25">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="205" y="374" width="18" height="16" tintColor="#ffff5a4f">
+                              <PartImage x="201" y="373" width="22" height="20" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="230" y="363" width="48" height="39">
+                              <PartText x="230" y="358" width="53" height="50">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="24.1" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="31" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2096,88 +2096,88 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="140" y="356" width="178" height="47">
-                                <RoundRectangle x="0.45" y="0.7" width="175.1" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="131" y="355" width="195" height="50">
+                                <RoundRectangle x="0.65" y="0.7" width="192.7" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="154" y="370" width="21" height="19" tintColor="#ffff5a4f">
+                              <PartImage x="143" y="368" width="26" height="23" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="183" y="356" width="75" height="45">
+                              <PartText x="177" y="350" width="87" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="235" y="368" width="94" height="21" alpha="204">
+                              <PartText x="242" y="368" width="99" height="23" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="13.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="inter_semibold" size="14.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="136" y="356" width="186" height="47">
-                                <RoundRectangle x="0.15" y="0.7" width="183.7" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="124" y="355" width="209" height="50">
+                                <RoundRectangle x="0.7" y="0.7" width="206.6" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="149" y="370" width="21" height="19" tintColor="#ff000000">
+                              <PartImage x="136" y="368" width="26" height="23" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="179" y="356" width="97" height="45">
+                              <PartText x="170" y="350" width="116" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="253" y="368" width="81" height="21" alpha="204">
+                              <PartText x="264" y="368" width="85" height="23" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="13.2" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
+                                  <Font family="inter_semibold" size="14.2" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="130" y="356" width="198" height="47">
-                                <RoundRectangle x="0.25" y="0.7" width="195.5" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="118" y="355" width="222" height="50">
+                                <RoundRectangle x="0.35" y="0.7" width="219.3" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="143" y="370" width="21" height="19" tintColor="#ff000000">
+                              <PartImage x="130" y="368" width="26" height="23" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="173" y="356" width="97" height="45">
+                              <PartText x="164" y="350" width="116" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
-                              <PartText x="247" y="368" width="93" height="21" alpha="204">
+                              <PartText x="257" y="368" width="97" height="23" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="13.2" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
+                                  <Font family="inter_semibold" size="14.2" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="152" y="356" width="154" height="47">
-                                <RoundRectangle x="0.05" y="0.7" width="151.9" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="146" y="355" width="165" height="50">
+                                <RoundRectangle x="0.6" y="0.7" width="162.8" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="165" y="370" width="21" height="19" tintColor="#ffff5a4f">
+                              <PartImage x="158" y="368" width="26" height="23" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="195" y="356" width="52" height="45">
+                              <PartText x="192" y="350" width="58" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
-                              <PartText x="224" y="368" width="94" height="21" alpha="204">
+                              <PartText x="227" y="368" width="99" height="23" alpha="204">
                                 <Text align="START">
-                                  <Font family="inter_semibold" size="13.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="inter_semibold" size="14.2" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2196,68 +2196,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="176" y="356" width="105" height="47">
-                                <RoundRectangle x="0.5" y="0.7" width="103" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="170" y="355" width="118" height="50">
+                                <RoundRectangle x="0.15" y="0.7" width="115.7" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="190" y="370" width="21" height="19" tintColor="#ffff5a4f">
+                              <PartImage x="181" y="368" width="26" height="23" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="219" y="356" width="75" height="45">
+                              <PartText x="216" y="350" width="87" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="165" y="356" width="128" height="47">
-                                <RoundRectangle x="0.4" y="0.7" width="125.2" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="155" y="355" width="147" height="50">
+                                <RoundRectangle x="0.95" y="0.7" width="144.1" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="179" y="370" width="21" height="19" tintColor="#ff000000">
+                              <PartImage x="167" y="368" width="26" height="23" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="208" y="356" width="97" height="45">
+                              <PartText x="202" y="350" width="116" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="165" y="356" width="128" height="47">
-                                <RoundRectangle x="0.4" y="0.7" width="125.2" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="155" y="355" width="147" height="50">
+                                <RoundRectangle x="0.95" y="0.7" width="144.1" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="179" y="370" width="21" height="19" tintColor="#ff000000">
+                              <PartImage x="167" y="368" width="26" height="23" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="208" y="356" width="97" height="45">
+                              <PartText x="202" y="350" width="116" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="188" y="356" width="82" height="47">
-                                <RoundRectangle x="0.1" y="0.7" width="79.8" height="44.6" cornerRadiusX="22.3" cornerRadiusY="22.3">
+                              <PartDraw x="185" y="355" width="88" height="50">
+                                <RoundRectangle x="0.1" y="0.7" width="85.8" height="47.6" cornerRadiusX="23.8" cornerRadiusY="23.8">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="201" y="370" width="21" height="19" tintColor="#ffff5a4f">
+                              <PartImage x="196" y="368" width="26" height="23" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="231" y="356" width="52" height="45">
+                              <PartText x="231" y="350" width="58" height="58">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="28.4" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="36.5" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2282,88 +2282,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="127" y="349" width="204" height="54">
-                                <RoundRectangle x="0.3" y="0.95" width="201.4" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="161" y="348" width="135" height="57">
+                                <RoundRectangle x="0.5" y="0.5" width="133" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="142" y="365" width="24" height="22" tintColor="#ffff5a4f">
+                              <PartImage x="174" y="362" width="30" height="27" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="176" y="350" width="81" height="52">
+                              <PartText x="214" y="342" width="96" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="236" y="364" width="104" height="24" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="15.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="unbounded_bold" size="42" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="122" y="349" width="214" height="54">
-                                <RoundRectangle x="0.35" y="0.95" width="211.3" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="145" y="348" width="168" height="57">
+                                <RoundRectangle x="0.1" y="0.5" width="165.8" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="138" y="365" width="24" height="22" tintColor="#ff000000">
+                              <PartImage x="158" y="362" width="30" height="27" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="171" y="350" width="107" height="52">
+                              <PartText x="198" y="342" width="129" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="257" y="364" width="88" height="24" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="15.1" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
+                                  <Font family="unbounded_bold" size="42" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="115" y="349" width="227" height="54">
-                                <RoundRectangle x="0.6" y="0.95" width="224.8" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="145" y="348" width="168" height="57">
+                                <RoundRectangle x="0.1" y="0.5" width="165.8" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="131" y="365" width="24" height="22" tintColor="#ff000000">
+                              <PartImage x="158" y="362" width="30" height="27" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="164" y="350" width="107" height="52">
+                              <PartText x="198" y="342" width="129" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="250" y="364" width="102" height="24" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="15.1" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
+                                  <Font family="unbounded_bold" size="42" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="140" y="349" width="177" height="54">
-                                <RoundRectangle x="0.65" y="0.95" width="174.7" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="178" y="348" width="101" height="57">
+                                <RoundRectangle x="0.65" y="0.5" width="98.7" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="156" y="365" width="24" height="22" tintColor="#ffff5a4f">
+                              <PartImage x="192" y="362" width="30" height="27" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="190" y="350" width="55" height="52">
+                              <PartText x="231" y="342" width="62" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#fff2f0ea">--</Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="223" y="364" width="104" height="24" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="15.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="unbounded_bold" size="42" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2382,68 +2362,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="168" y="349" width="121" height="54">
-                                <RoundRectangle x="0.75" y="0.95" width="118.5" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="161" y="348" width="135" height="57">
+                                <RoundRectangle x="0.5" y="0.5" width="133" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="184" y="365" width="24" height="22" tintColor="#ffff5a4f">
+                              <PartImage x="174" y="362" width="30" height="27" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="218" y="350" width="81" height="52">
+                              <PartText x="214" y="342" width="96" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="42" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="156" y="349" width="146" height="54">
-                                <RoundRectangle x="0.05" y="0.95" width="143.9" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="145" y="348" width="168" height="57">
+                                <RoundRectangle x="0.1" y="0.5" width="165.8" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="171" y="365" width="24" height="22" tintColor="#ff000000">
+                              <PartImage x="158" y="362" width="30" height="27" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="205" y="350" width="107" height="52">
+                              <PartText x="198" y="342" width="129" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="42" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="156" y="349" width="146" height="54">
-                                <RoundRectangle x="0.05" y="0.95" width="143.9" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="145" y="348" width="168" height="57">
+                                <RoundRectangle x="0.1" y="0.5" width="165.8" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="171" y="365" width="24" height="22" tintColor="#ff000000">
+                              <PartImage x="158" y="362" width="30" height="27" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="205" y="350" width="107" height="52">
+                              <PartText x="198" y="342" width="129" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="42" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="182" y="349" width="94" height="54">
-                                <RoundRectangle x="0.1" y="0.95" width="91.8" height="51.3" cornerRadiusX="25.65" cornerRadiusY="25.65">
+                              <PartDraw x="178" y="348" width="101" height="57">
+                                <RoundRectangle x="0.65" y="0.5" width="98.7" height="54.8" cornerRadiusX="27.4" cornerRadiusY="27.4">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="197" y="365" width="24" height="22" tintColor="#ffff5a4f">
+                              <PartImage x="192" y="362" width="30" height="27" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="231" y="350" width="55" height="52">
+                              <PartText x="231" y="342" width="62" height="67">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="32.6" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="42" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2468,88 +2448,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="114" y="343" width="230" height="60">
-                                <RoundRectangle x="0.15" y="0.3" width="227.7" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="152" y="341" width="153" height="64">
+                                <RoundRectangle x="0.8" y="0.35" width="150.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="131" y="360" width="28" height="25" tintColor="#ffff5a4f">
+                              <PartImage x="167" y="357" width="34" height="30" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="170" y="343" width="88" height="59">
+                              <PartText x="212" y="334" width="104" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="238" y="359" width="114" height="27" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="17.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="108" y="343" width="241" height="60">
-                                <RoundRectangle x="0.6" y="0.3" width="238.8" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="134" y="341" width="190" height="64">
+                                <RoundRectangle x="0.3" y="0.35" width="187.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="126" y="360" width="28" height="25" tintColor="#ff000000">
+                              <PartImage x="149" y="357" width="34" height="30" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="164" y="343" width="117" height="59">
+                              <PartText x="194" y="334" width="141" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="261" y="359" width="96" height="27" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="17.1" color="#ff000000" letterSpacing="0.14">ACTIV</Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="100" y="343" width="257" height="60">
-                                <RoundRectangle x="0.9" y="0.3" width="254.2" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="134" y="341" width="190" height="64">
+                                <RoundRectangle x="0.3" y="0.35" width="187.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="118" y="360" width="28" height="25" tintColor="#ff000000">
+                              <PartImage x="149" y="357" width="34" height="30" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="156" y="343" width="117" height="59">
+                              <PartText x="194" y="334" width="141" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="253" y="359" width="111" height="27" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="17.1" color="#ff000000" letterSpacing="0.14">CARDIO</Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="129" y="343" width="200" height="60">
-                                <RoundRectangle x="0.25" y="0.3" width="197.5" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="172" y="341" width="114" height="64">
+                                <RoundRectangle x="0.2" y="0.35" width="111.6" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="146" y="360" width="28" height="25" tintColor="#ffff5a4f">
+                              <PartImage x="187" y="357" width="34" height="30" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="185" y="343" width="58" height="59">
+                              <PartText x="232" y="334" width="66" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#fff2f0ea">--</Font>
-                                </Text>
-                              </PartText>
-                              <PartText x="222" y="359" width="114" height="27" alpha="204">
-                                <Text align="START">
-                                  <Font family="inter_semibold" size="17.1" color="#fff2f0ea" letterSpacing="0.14">REPAUS</Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2568,68 +2528,68 @@
                           </Expressions>
                           <Compare expression="hrRest">
                             <Group x="0" y="0" width="456" height="456" name="hrRest">
-                              <PartDraw x="161" y="343" width="136" height="60">
-                                <RoundRectangle x="0.05" y="0.3" width="133.9" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="152" y="341" width="153" height="64">
+                                <RoundRectangle x="0.8" y="0.35" width="150.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="178" y="360" width="28" height="25" tintColor="#ffff5a4f">
+                              <PartImage x="167" y="357" width="34" height="30" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="216" y="343" width="88" height="59">
+                              <PartText x="212" y="334" width="104" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#fff2f0ea"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrActive">
                             <Group x="0" y="0" width="456" height="456" name="hrActive">
-                              <PartDraw x="146" y="343" width="165" height="60">
-                                <RoundRectangle x="0.65" y="0.3" width="162.7" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="134" y="341" width="190" height="64">
+                                <RoundRectangle x="0.3" y="0.35" width="187.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ffffb020" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="164" y="360" width="28" height="25" tintColor="#ff000000">
+                              <PartImage x="149" y="357" width="34" height="30" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="202" y="343" width="117" height="59">
+                              <PartText x="194" y="334" width="141" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="hrCardio">
                             <Group x="0" y="0" width="456" height="456" name="hrCardio">
-                              <PartDraw x="146" y="343" width="165" height="60">
-                                <RoundRectangle x="0.65" y="0.3" width="162.7" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="134" y="341" width="190" height="64">
+                                <RoundRectangle x="0.3" y="0.35" width="187.4" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ffff5a4f" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="164" y="360" width="28" height="25" tintColor="#ff000000">
+                              <PartImage x="149" y="357" width="34" height="30" tintColor="#ff000000">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="202" y="343" width="117" height="59">
+                              <PartText x="194" y="334" width="141" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#ff000000"><Template>%s<Parameter expression="round([HEART_RATE])" /></Template></Font>
                                 </Text>
                               </PartText>
                             </Group>
                           </Compare>
                           <Compare expression="noHr">
                             <Group x="0" y="0" width="456" height="456" name="noHr">
-                              <PartDraw x="176" y="343" width="106" height="60">
-                                <RoundRectangle x="0.1" y="0.3" width="103.8" height="58" cornerRadiusX="29" cornerRadiusY="29">
+                              <PartDraw x="172" y="341" width="114" height="64">
+                                <RoundRectangle x="0.2" y="0.35" width="111.6" height="61.9" cornerRadiusX="30.95" cornerRadiusY="30.95">
                                   <Fill color="#ff22242b" />
                                 </RoundRectangle>
                               </PartDraw>
-                              <PartImage x="193" y="360" width="28" height="25" tintColor="#ffff5a4f">
+                              <PartImage x="187" y="357" width="34" height="30" tintColor="#ffff5a4f">
                                 <Image resource="ic_heart" />
                               </PartImage>
-                              <PartText x="231" y="343" width="58" height="59">
+                              <PartText x="232" y="334" width="66" height="76">
                                 <Text align="START">
-                                  <Font family="unbounded_bold" size="36.9" color="#fff2f0ea">--</Font>
+                                  <Font family="unbounded_bold" size="47.4" color="#fff2f0ea">--</Font>
                                 </Text>
                               </PartText>
                             </Group>
@@ -2655,10 +2615,10 @@
         </Rectangle>
       </PartDraw>
     </Group>
-    <Group x="116" y="347" width="223" height="57" name="HeartTap">
+    <Group x="106" y="340" width="243" height="65" name="HeartTap">
       <Launch target="com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity" />
-      <PartDraw x="0" y="0" width="223" height="57">
-        <Rectangle x="0" y="0" width="223" height="57">
+      <PartDraw x="0" y="0" width="243" height="65">
+        <Rectangle x="0" y="0" width="243" height="65">
           <Fill color="#00000000" />
         </Rectangle>
       </PartDraw>

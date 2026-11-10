@@ -82,7 +82,7 @@ def main():
     # Date pill
     dw = g.text_width("MIE 28 NOV", "inter_semibold", g.DATE_SIZE, g.DATE_SPACING)
     tw = g.text_width("25°", "inter_semibold", g.DATE_SIZE, g.DATE_SPACING)
-    h = 6 + g.DATE_SIZE + 6 + 2
+    h = g.date_height()
     cy = g.DATE_TOP + h / 2
     w = 13 + dw + 8 + 3 + 8 + tw + 13 + 2
     d.rounded_rectangle([P(225 - w / 2), P(cy - h / 2), P(225 + w / 2), P(cy + h / 2)], radius=S(h / 2),
@@ -95,10 +95,10 @@ def main():
     # Heart rate pill (rest zone)
     bw = g.text_width("89", "unbounded_bold", g.BPM_SIZE)
     lw = g.text_width("REPAUS", "inter_semibold", g.PILL_LABEL_SIZE, g.LABEL_SPACING)
-    h = 8 + g.BPM_SIZE + 8
+    h = g.pill_height(1)
     cy = g.PILL_BOTTOM - h / 2
-    w = 13 + g.PILL_HEART + 8 + bw + 8 + lw + 16
-    x = 225 - w / 2 + 13
+    w = 11 + g.PILL_HEART + 8 + bw + 8 + lw + 13
+    x = 225 - w / 2 + 11
     d.rounded_rectangle([P(225 - w / 2), P(cy - h / 2), P(225 + w / 2), P(cy + h / 2)], radius=S(h / 2),
                         fill=rgb("#ff22242b"))
     heart = Image.open(HERE / "src/main/res/drawable/ic_heart.png").convert("RGBA")

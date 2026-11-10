@@ -106,9 +106,20 @@ SIDE_GAP = 5
 SIDE_NUM_CY = 225 - (SIDE_SIZE + SIDE_GAP + LABEL_SIZE) / 2 + SIDE_SIZE / 2
 SIDE_LABEL_CY = 225 + (SIDE_SIZE + SIDE_GAP + LABEL_SIZE) / 2 - LABEL_SIZE / 2
 SIDE_LEFT_X, SIDE_RIGHT_X = 28 + 40, 450 - 28 - 40
-DATE_SIZE, DATE_SPACING, DATE_TOP = 15, 0.12, 52
-BPM_SIZE, PILL_LABEL_SIZE, PILL_HEART = 28, 13, 21
-PILL_BOTTOM = 396
+DATE_SIZE, DATE_SPACING, DATE_TOP = 22, 0.06, 66      # asked bigger on the watch
+BPM_SIZE, PILL_LABEL_SIZE, PILL_HEART = 36, 14, 26    # asked bigger on the watch
+PILL_BOTTOM = 398
+PILL_WORD_MAX = 1.0      # the zone word only fits up to size Normal; above, the color says it
+
+
+def date_height():
+    """Date pill: Inter caps (0.73 em) + 8 px above and below + the 1 px border."""
+    return DATE_SIZE * 0.73 + 2 * 8 + 2
+
+
+def pill_height(k):
+    """Heart rate pill at size k: Unbounded caps (0.75 em) + 10 px above and below."""
+    return BPM_SIZE * k * 0.75 + 2 * 10 * k
 
 
 def text_width(content, font, size, spacing=0.0):
@@ -321,7 +332,7 @@ def date_pill():
     temp = template("%s°", "[WEATHER.TEMPERATURE]")
     date_w = text_width("MIE 28 NOV", "inter_semibold", DATE_SIZE, DATE_SPACING)
     temp_w = text_width("25°", "inter_semibold", DATE_SIZE, DATE_SPACING)
-    h = 6 + DATE_SIZE + 6 + 2
+    h = date_height()
     cy = DATE_TOP + h / 2
     border = ("#3df2f0ea", s(1))          # rgba(242,240,234,.24)
 
@@ -384,14 +395,15 @@ def heart_pill():
 def heart_pill_at(k, labels):
     """The pill at size k (bottom edge fixed), zone word or not, one per zone."""
     bpm, lab, heart_w = BPM_SIZE * k, PILL_LABEL_SIZE * k, PILL_HEART * k
-    h = 8 * k + bpm + 8 * k
+    h = pill_height(k)
+    labels = labels and k <= PILL_WORD_MAX
     cy = PILL_BOTTOM - h / 2
     compares, exprs = [], []
     for zid, cond, bg, fg, heart, label, sample in ZONES:
         bw = text_width(sample, "unbounded_bold", bpm)
         lw = text_width(label, "inter_semibold", lab, LABEL_SPACING) if labels else 0
-        w = 13 * k + heart_w + 8 * k + bw + (8 * k + lw if labels else 0) + 16 * k
-        x = 225 - w / 2 + 13 * k
+        w = 11 * k + heart_w + 8 * k + bw + (8 * k + lw if labels else 0) + 13 * k
+        x = 225 - w / 2 + 11 * k
         hh = heart_w * 0.89
         value = "--" if zid == "noHr" else template("%s", "round([HEART_RATE])")
         parts = [
@@ -430,7 +442,7 @@ def tap_box(name, cx, cy, w, h):
 def taps():
     return f"""<!-- Tap on the time or the heart rate pill: big live pulse -->
 {tap_box("TimeTap", 225, 225, 210, 2 * TIME_SIZE * TIME_LINE)}
-{tap_box("HeartTap", 225, PILL_BOTTOM - 26, 220, 56)}"""
+{tap_box("HeartTap", 225, PILL_BOTTOM - 30, 240, 64)}"""
 
 
 def strings():
