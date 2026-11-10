@@ -79,7 +79,11 @@ DATE_SIZES = [("small", "Small", 18, True), ("normal", "Normal", 22, True), ("la
 # each still keeps the two rings apart (segments' inner edge 208, steps' outer 206)
 SEG_WIDTHS = [("thin", "Thin", 5), ("normal", "Normal", 8), ("thick", "Thick", 11), ("xthick", "Extra thick", 12)]
 STEPS_WIDTHS = [("thin", "Thin", 2), ("normal", "Normal", 4), ("thick", "Thick", 7), ("xthick", "Extra thick", 10)]
+# Ring gaps (design px): between the Zone Minutes segments (Normal = the design's 5)
+# and black cuts on the steps ring's filled part
+GAPS = [("none", "None", 0), ("small", "Small", 3), ("normal", "Normal", 5), ("large", "Large", 8)]
 LISTS = [("hrSize", "Heart rate size", "normal", HR_SIZES),
+         ("ringGaps", "Ring gaps", "normal", GAPS),
          ("segWidth", "Zone Minutes segments thickness", "normal", SEG_WIDTHS),
          ("stepsWidth", "Steps ring thickness", "normal", STEPS_WIDTHS),
          ("sideSize", "Zone minutes / steps size", "normal", SIDE_SIZES),
@@ -109,12 +113,16 @@ FONT_FILES = {n: TTFont(RES / "font" / f"{n}.ttf")
 SEG_R, SEG_W, SEG_GAP = 214, 8, 5
 
 
-def seg_half(w):
-    """Half a segment's arc in degrees at width w: the round caps take w, gaps stay 5 px."""
-    return (2 * math.pi * SEG_R / 60 - w - SEG_GAP) / 2 / SEG_R * 180 / math.pi
+def seg_half(w, gap=SEG_GAP):
+    """Half a segment's arc in degrees at width w and gap px between segments (the
+    round caps take w)."""
+    return max(2 * math.pi * SEG_R / 60 - w - gap, 0.5) / 2 / SEG_R * 180 / math.pi
 
 
 SEG_HALF = seg_half(SEG_W)
+# Steps ring cuts: one per 50 steps (max 30); a met MySteps hour (max 1) shows the
+# 300-step goal's 6
+STEP_UNIT, STEP_CAP, STEP_GOAL_TICKS = 50, 30, 6
 SEG_DIM = 46                     # opacity .18
 STEPS_R, STEPS_W = 201, 4
 STEPS_TRACK = 36                 # opacity .14
@@ -268,34 +276,73 @@ def side_column(cx, color, label, value, toggle_id):
     return switch(toggle_id, choice("sideSize", [(oid, at(num, lab)) for oid, _, num, lab in SIDE_SIZES]))
 
 
-def segments(fraction):
-    """60 segments on the outer ring, centered on each second's mark; the first
-    round(fraction * 60) lit (at least one once there is any), the rest dim."""
-    lit = f"(({fraction}) &gt; 0 ? clamp(round(clamp({fraction}, 0, 1) * 60), 1, 60) : 0)" if fraction else "0"
+def segment_sets(make):
+    """make(w, gap) for every segment thickness and gap from Customize."""
+    return choice("segWidth", [(wid, choice("ringGaps", [(gid, make(w, gap)) for gid, _, gap in GAPS]))
+                               for wid, _, w in SEG_WIDTHS])
 
-    def at(w):
-        half, out = seg_half(w), []
-        for i in range(60):
-            a = i * 6
-            alpha = f'\n  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : {SEG_DIM}" />' if fraction else ""
-            dim = "" if fraction else f"\n  {AMBIENT_HIDE}"
-            out.append(arc(s(SEG_R), s(w), ZONE_C, a - half, a + half,
-                           alpha=255 if fraction else SEG_DIM, extra=alpha + dim))
-        return "\n".join(out)
-    return choice("segWidth", [(oid, at(w)) for oid, _, w in SEG_WIDTHS])
+
+def dim_segments():
+    """All 60 segments, dim, under the lit ones (screen on only)."""
+    def at(w, gap):
+        half = seg_half(w, gap)
+        return "\n".join(arc(s(SEG_R), s(w), ZONE_C, i * 6 - half, i * 6 + half, alpha=SEG_DIM)
+                         for i in range(60))
+    return f"""<!-- Outer ring: the 60 segments, dim -->
+<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="DimSegments">
+  {AMBIENT_HIDE}
+{indent(segment_sets(at), 2)}
+</Group>"""
+
+
+def segments(fraction):
+    """The lit segments over the dim ones: the first round(fraction * 60), at least
+    one once there is any."""
+    if not fraction:
+        return ""
+    lit = f"(({fraction}) &gt; 0 ? clamp(round(clamp({fraction}, 0, 1) * 60), 1, 60) : 0)"
+
+    def at(w, gap):
+        half = seg_half(w, gap)
+        return "\n".join(arc(s(SEG_R), s(w), ZONE_C, i * 6 - half, i * 6 + half,
+                             extra=f'\n  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : 0" />')
+                         for i in range(60))
+    return segment_sets(at)
+
+
+def ring_ticks(gap, value, maxv, goal_met=None):
+    """Black radial cuts gap px wide on the steps ring's filled part, across its
+    thickest band, one per STEP_UNIT of the goal (at most STEP_CAP)."""
+    n = f"clamp(round({maxv} / {STEP_UNIT}), 1, {STEP_CAP})"
+    done = f"({value} * {n} / {maxv})"
+    if goal_met:
+        n = f"({goal_met} ? {STEP_GOAL_TICKS} : {n})"
+        done = f"({goal_met} ? {STEP_GOAL_TICKS} : {done})"
+    band = max(w for *_, w in STEPS_WIDTHS)
+    r0, r1 = (STEPS_R - band / 2 - 1) * K, (STEPS_R + band / 2 + 1) * K
+    return "\n".join(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" pivotX="0.5" pivotY="0.5" name="Tick{i}">
+  <Transform target="angle" value="{i} * 360 / {n}" />
+  <Transform target="alpha" value="{i} &lt; {n} &amp;&amp; {i} &lt; {done} ? 255 : 0" />
+  <PartDraw x="0" y="0" width="{SIZE}" height="{SIZE}">
+    <Line startX="{C:g}" startY="{C - r0:.1f}" endX="{C:g}" endY="{C - r1:.1f}">
+      <Stroke color="#ff000000" thickness="{gap * K:.2f}" />
+    </Line>
+  </PartDraw>
+</Group>""" for i in range(1, STEP_CAP))
 
 
 def azm_slot():
-    """Outer ring + left column: Active Zone Minutes (Fitbit) by default. The watch
-    clips a complication to its bounding shape: a full-screen oval."""
+    """Outer ring + left column: Active Zone Minutes (Fitbit) by default, a ranged value
+    (no goal progress type: 60 segments per thickness and gap make the XML large). The
+    watch clips a complication to its bounding shape: a full-screen oval."""
     def body(kind, fraction, value):
-        parts = [segments(fraction), side_column(SIDE_LEFT_X, ZONE_C, "MIN", value, "showAzm")]
+        parts = [x for x in (segments(fraction),) if x] + [side_column(SIDE_LEFT_X, ZONE_C, "MIN", value, "showAzm")]
         return f"""<Complication type="{kind}">
 {indent(group(kind, chr(10).join(parts)), 2)}
 </Complication>"""
     return f"""<!-- Outer segmented ring + left number: Active Zone Minutes (Fitbit) by default -->
 <ComplicationSlot x="0" y="0" width="{SIZE}" height="{SIZE}" slotId="1"
-    displayName="azm_slot_label" supportedTypes="RANGED_VALUE GOAL_PROGRESS SHORT_TEXT EMPTY">
+    displayName="azm_slot_label" supportedTypes="RANGED_VALUE SHORT_TEXT EMPTY">
   <DefaultProviderPolicy
       primaryProvider="com.fitbit.FitbitMobile/com.google.android.wearable.fitbit.mainapp.complications.offloadable.azm.OffloadableAZMComplicationDataSourceService"
       primaryProviderType="RANGED_VALUE"
@@ -303,7 +350,6 @@ def azm_slot():
       defaultSystemProviderType="EMPTY" />
   <BoundingOval x="0" y="0" width="{SIZE}" height="{SIZE}" />
 {indent(body("RANGED_VALUE", RANGED, template("%s", "[COMPLICATION.TEXT]")), 2)}
-{indent(body("GOAL_PROGRESS", GOAL, template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("SHORT_TEXT", None, template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("EMPTY", None, "--"), 2)}
 </ComplicationSlot>"""
@@ -314,8 +360,16 @@ def steps_slot():
     max 1 once the hour's goal is met: full ring then, and "❤N/M" without the ❤."""
     met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
 
-    def ring(fraction):
-        return choice("stepsWidth", [(oid, ring_at(fraction, w)) for oid, _, w in STEPS_WIDTHS])
+    def ring(fraction, kind):
+        xml = choice("stepsWidth", [(oid, ring_at(fraction, w)) for oid, _, w in STEPS_WIDTHS])
+        if fraction:
+            value, maxv = (("[COMPLICATION.RANGED_VALUE_VALUE]", "[COMPLICATION.RANGED_VALUE_MAX]")
+                           if kind == "RANGED_VALUE" else
+                           ("[COMPLICATION.GOAL_PROGRESS_VALUE]", "[COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"))
+            xml += "\n" + choice("ringGaps", [
+                (gid, ring_ticks(gap, value, maxv, met if kind == "RANGED_VALUE" else None) if gap else "")
+                for gid, _, gap in GAPS])
+        return xml
 
     def ring_at(fraction, w):
         track = arc(s(STEPS_R), s(w), MAIN_C, alpha=STEPS_TRACK, extra=f"\n  {AMBIENT_HIDE}")
@@ -327,7 +381,7 @@ def steps_slot():
         return track + "\n" + progress
 
     def body(kind, fraction, value):
-        parts = [ring(fraction), side_column(SIDE_RIGHT_X, MAIN_C, "PAȘI", value, "showSteps")]
+        parts = [ring(fraction, kind), side_column(SIDE_RIGHT_X, MAIN_C, "PAȘI", value, "showSteps")]
         return f"""<Complication type="{kind}">
 {indent(group(kind, chr(10).join(parts)), 2)}
 </Complication>"""
@@ -352,8 +406,7 @@ def steps_slot():
 
 def second_segment():
     """The current second's segment, white, over the outer ring (hidden in always-on)."""
-    seg = choice("segWidth", [(oid, arc(s(SEG_R), s(w), INK, -seg_half(w), seg_half(w)))
-                              for oid, _, w in SEG_WIDTHS])
+    seg = segment_sets(lambda w, gap: arc(s(SEG_R), s(w), INK, -seg_half(w, gap), seg_half(w, gap)))
     return f"""<!-- Current second: white segment -->
 {switch("showSeconds", f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" pivotX="0.5" pivotY="0.5" name="Second">
   <Transform target="angle" value="[SECOND] * 6" />
@@ -534,7 +587,7 @@ def user_configurations():
 
 
 def watchface():
-    scene = "\n\n".join([azm_slot(), steps_slot(), second_segment(), date_pill(), time(),
+    scene = "\n\n".join([dim_segments(), azm_slot(), steps_slot(), second_segment(), date_pill(), time(),
                          heart_pill(), taps()])
     return f"""<?xml version="1.0" encoding="utf-8"?>
 <!-- GENERATED by neoface/generate_watchface.py — edit that file, not this one. -->
@@ -552,6 +605,7 @@ def watchface():
 
 
 if __name__ == "__main__":
-    OUT.write_text(watchface())
+    # Generated XML without indentation: the option combinations make it large
+    OUT.write_text("\n".join(line.strip() for line in watchface().split("\n") if line.strip()) + "\n")
     (RES / "values/strings.xml").write_text(strings())
     print(f"wrote {OUT}")

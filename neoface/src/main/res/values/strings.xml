@@ -15,6 +15,11 @@
     <string name="hrSize_normal">Normal</string>
     <string name="hrSize_large">Large</string>
     <string name="hrSize_xlarge">Extra large</string>
+    <string name="ringGaps_label">Ring gaps</string>
+    <string name="ringGaps_none">None</string>
+    <string name="ringGaps_small">Small</string>
+    <string name="ringGaps_normal">Normal</string>
+    <string name="ringGaps_large">Large</string>
     <string name="segWidth_label">Zone Minutes segments thickness</string>
     <string name="segWidth_thin">Thin</string>
     <string name="segWidth_normal">Normal</string>
