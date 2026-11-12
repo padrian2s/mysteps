@@ -133,6 +133,7 @@ TIME_SIZE, TIME_LINE = 138, 0.82
 HOURS_CY, MINUTES_CY = 225 - TIME_SIZE * TIME_LINE / 2, 225 + TIME_SIZE * TIME_LINE / 2
 LABEL_SPACING = 0.14
 SIDE_GAP = 5
+MET_SIZE = 0.7           # "11/12" (hours done, goal met) is longer than a step count
 # Columns centered between the inner ring (x 26) and the time's digits (x 123)
 SIDE_LEFT_X, SIDE_RIGHT_X = 74, 450 - 74
 DATE_SPACING, DATE_BOTTOM = 0.06, 110     # pill bottom, just above the hours
@@ -178,14 +179,14 @@ def chain(source, values):
 
 
 def text(content, cx, cy, size, font="inter_semibold", color=INK, width=None, extra="",
-         spacing=0.0, align="CENTER"):
+         spacing=0.0, align="CENTER", inner=""):
     """Single-line text whose caps' middle sits on (cx, cy), watch px.
     align=START puts the left edge at cx, END the right edge."""
     w = round(width or SIZE)
     h = round(size * 1.6)
     x = {"CENTER": cx - w / 2, "START": cx, "END": cx - w}[align]
     ls = f' letterSpacing="{spacing:g}"' if spacing else ""
-    return f"""<PartText x="{round(x)}" y="{round(cy - h / 2)}" width="{w}" height="{h}"{extra}>
+    return f"""<PartText x="{round(x)}" y="{round(cy - h / 2)}" width="{w}" height="{h}"{extra}>{inner}
   <Text align="{align}">
     <Font family="{font}" size="{size:g}" color="{color}"{ls}>{content}</Font>
   </Text>
@@ -204,12 +205,14 @@ def image(resource, x, y, w, h, tint=None):
 </PartImage>"""
 
 
-def arc(r, stroke, color, start=0, end=360, alpha=255, extra="", transform=""):
-    """Full-screen arc on mid-radius r (watch px), degrees clockwise from 12 o'clock."""
+def arc(r, stroke, color, start=0, end=360, alpha=255, extra="", transform="", dash=None):
+    """Full-screen arc on mid-radius r (watch px), degrees clockwise from 12 o'clock;
+    dash = (on, off) px along the arc, each dash round-capped."""
     a = f' alpha="{alpha}"' if alpha != 255 else ""
+    d = f' dashIntervals="{dash[0]:.3f} {dash[1]:.3f}"' if dash else ""
     return f"""<PartDraw x="0" y="0" width="{SIZE}" height="{SIZE}"{a}>{extra}
   <Arc centerX="{C:g}" centerY="{C:g}" width="{2 * r:g}" height="{2 * r:g}" startAngle="{start:g}" endAngle="{end:g}">{transform}
-    <Stroke color="{color}" thickness="{stroke:g}" cap="ROUND" />
+    <Stroke color="{color}" thickness="{stroke:g}" cap="ROUND"{d} />
   </Arc>
 </PartDraw>"""
 
@@ -261,12 +264,21 @@ RANGED = ("(clamp([COMPLICATION.RANGED_VALUE_VALUE], [COMPLICATION.RANGED_VALUE_
 GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_VALUE]"
 
 
-def side_column(cx, color, label, value, toggle_id):
+def side_column(cx, color, label, value, toggle_id, met=None):
     """Number over its small label, centered on x = cx (design px); without labels the
-    number alone, centered on the dial's middle. Customize can hide the column."""
+    number alone, centered on the dial's middle. Customize can hide the column.
+    met = (expression, text): while the expression holds, that (longer) text instead,
+    MET_SIZE smaller so it stays between the time and the ring."""
     def at(num, lab):
         def number(cy):
-            return text(value, p(cx), p(cy), s(num), font="unbounded_bold", color=color, width=s(140))
+            def draw(content, size, inner=""):
+                return text(content, p(cx), p(cy), s(size), font="unbounded_bold", color=color,
+                            width=s(140), inner=inner)
+            if not met:
+                return draw(value, num)
+            return "\n".join([
+                draw(value, num, f'\n  <Transform target="alpha" value="{met[0]} ? 0 : 255" />'),
+                draw(met[1], num * MET_SIZE, f'\n  <Transform target="alpha" value="{met[0]} ? 255 : 0" />')])
         num_cy, lab_cy = side_centers(num, lab)
         with_label = "\n".join([
             number(num_cy),
@@ -282,12 +294,19 @@ def segment_sets(make):
                                for wid, _, w in SEG_WIDTHS])
 
 
+def seg_dash(w, gap):
+    """(on, off) watch px along the segments' circle: 60 round-capped dashes, one per
+    segment, drawn by a single arc that starts at -seg_half."""
+    pitch = 2 * math.pi * s(SEG_R) / 60
+    on = math.radians(2 * seg_half(w, gap)) * s(SEG_R)
+    return on, pitch - on
+
+
 def dim_segments():
-    """All 60 segments, dim, under the lit ones (screen on only)."""
+    """All 60 segments, dim, under the lit ones (screen on only): one dashed circle."""
     def at(w, gap):
         half = seg_half(w, gap)
-        return "\n".join(arc(s(SEG_R), s(w), ZONE_C, i * 6 - half, i * 6 + half, alpha=SEG_DIM)
-                         for i in range(60))
+        return arc(s(SEG_R), s(w), ZONE_C, -half, 360 - half, alpha=SEG_DIM, dash=seg_dash(w, gap))
     return f"""<!-- Outer ring: the 60 segments, dim -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="DimSegments">
   {AMBIENT_HIDE}
@@ -297,16 +316,16 @@ def dim_segments():
 
 def segments(value):
     """The lit segments over the dim ones: one per minute, the first round(value)
-    (all 60 from 60 minutes on)."""
+    (all 60 from 60 minutes on), as one dashed arc ending on the last lit segment."""
     if not value:
         return ""
     lit = f"clamp(round({value}), 0, 60)"
 
     def at(w, gap):
         half = seg_half(w, gap)
-        return "\n".join(arc(s(SEG_R), s(w), ZONE_C, i * 6 - half, i * 6 + half,
-                             extra=f'\n  <Transform target="alpha" value="{i} &lt; {lit} ? 255 : 0" />')
-                         for i in range(60))
+        return arc(s(SEG_R), s(w), ZONE_C, -half, half, dash=seg_dash(w, gap),
+                   extra=f'\n  <Transform target="alpha" value="{lit} &gt; 0 ? 255 : 0" />',
+                   transform=f'\n    <Transform target="endAngle" value="({lit} - 1) * 6 + {half:.4f}" />')
     return segment_sets(at)
 
 
@@ -333,7 +352,7 @@ def ring_ticks(gap, value, maxv, goal_met=None):
 
 def azm_slot():
     """Outer ring + left column: Active Zone Minutes (Fitbit) by default, a ranged value
-    (no goal progress type: 60 segments per thickness and gap make the XML large). The
+    or goal progress. The
     watch clips a complication to its bounding shape: a full-screen oval."""
     def body(kind, minutes, value):
         parts = [x for x in (segments(minutes),) if x] + [side_column(SIDE_LEFT_X, ZONE_C, "MIN", value, "showAzm")]
@@ -342,7 +361,7 @@ def azm_slot():
 </Complication>"""
     return f"""<!-- Outer segmented ring + left number: Active Zone Minutes (Fitbit) by default -->
 <ComplicationSlot x="0" y="0" width="{SIZE}" height="{SIZE}" slotId="1"
-    displayName="azm_slot_label" supportedTypes="RANGED_VALUE SHORT_TEXT EMPTY">
+    displayName="azm_slot_label" supportedTypes="RANGED_VALUE GOAL_PROGRESS SHORT_TEXT EMPTY">
   <DefaultProviderPolicy
       primaryProvider="com.fitbit.FitbitMobile/com.google.android.wearable.fitbit.mainapp.complications.offloadable.azm.OffloadableAZMComplicationDataSourceService"
       primaryProviderType="RANGED_VALUE"
@@ -350,6 +369,7 @@ def azm_slot():
       defaultSystemProviderType="EMPTY" />
   <BoundingOval x="0" y="0" width="{SIZE}" height="{SIZE}" />
 {indent(body("RANGED_VALUE", "[COMPLICATION.RANGED_VALUE_VALUE]", template("%s", "[COMPLICATION.TEXT]")), 2)}
+{indent(body("GOAL_PROGRESS", "[COMPLICATION.GOAL_PROGRESS_VALUE]", template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("SHORT_TEXT", None, template("%s", "[COMPLICATION.TEXT]")), 2)}
 {indent(body("EMPTY", None, "--"), 2)}
 </ComplicationSlot>"""
@@ -381,12 +401,15 @@ def steps_slot():
         return track + "\n" + progress
 
     def body(kind, fraction, value):
-        parts = [ring(fraction, kind), side_column(SIDE_RIGHT_X, MAIN_C, "PAȘI", value, "showSteps")]
+        parts = [ring(fraction, kind), side_column(SIDE_RIGHT_X, MAIN_C, "PAȘI", value, "showSteps",
+                                                   (met, hours) if kind == "RANGED_VALUE" else None)]
         return f"""<Complication type="{kind}">
 {indent(group(kind, chr(10).join(parts)), 2)}
 </Complication>"""
-    label = template("%s", f"{met} ? subText([COMPLICATION.TEXT], 1, textLength([COMPLICATION.TEXT])) "
-                           f": [COMPLICATION.TEXT]")
+    # "❤N/M" without the ❤ (MySteps sends just "❤" in the day's first hour: kept)
+    hours = template("%s", "textLength([COMPLICATION.TEXT]) &gt; 1 ? subText([COMPLICATION.TEXT], 1, "
+                           "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
+    label = template("%s", "[COMPLICATION.TEXT]")
     o = round(C - s(STEPS_R + max(w for *_, w in STEPS_WIDTHS) / 2 + 1) - 1)
     return f"""<!-- Inner ring + right number: MySteps, steps this hour -->
 <ComplicationSlot x="0" y="0" width="{SIZE}" height="{SIZE}" slotId="0"
@@ -485,7 +508,8 @@ def heart_pill():
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="HeartRate">
   {AMBIENT_HIDE}
 {indent(switch("showHr", choice("hrSize", [
-        (oid, switch("showLabels", heart_pill_at(k, True), heart_pill_at(k, False)))
+        (oid, switch("showLabels", heart_pill_at(k, True), heart_pill_at(k, False))
+         if k <= PILL_WORD_MAX else heart_pill_at(k, False))
         for oid, _, k in HR_SIZES])), 2)}
 </Group>"""
 
