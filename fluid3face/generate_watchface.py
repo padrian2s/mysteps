@@ -120,8 +120,8 @@ AMBIENT_HIDE = '<Variant mode="AMBIENT" target="alpha" value="0" />'
 HR_ACTIVITY = "com.adrianp.mysteps/com.adrianp.mysteps.presentation.HeartRateActivity"
 
 FONT_FILES = {n: TTFont(RES / "font" / f"{n}.ttf")
-              for n in ("jost_extralight", "jost_light", "jost_regular", "jost_time",
-                                   "jost_time_strong", "jost_time_vstrong", "jost_time_ultra")}
+              for n in ("jost_light", "jost_regular", "jost_time",
+                        "jost_time_strong", "jost_time_vstrong", "jost_time_ultra")}
 LINE = 1.445      # Jost's normal line height (hhea 1070 + 375 per 1000); its line box
                   # is centered on the caps (cap middle 350 vs box middle 347.5)
 
@@ -241,11 +241,11 @@ def choice(config_id, options):
 
 
 def zone_switch(make):
-    """Condition drawing make(color) in the current heart rate zone's color; nothing
-    without a reading."""
+    """Condition drawing make(color, wide) in the current heart rate zone's color (wide:
+    the zone's bpm has three digits, 100 and up); nothing without a reading."""
     compares = "".join(f"""
   <Compare expression="{name}">
-{indent(make(color), 4)}
+{indent(make(color, name != ZONES[0][0]), 4)}
   </Compare>""" for name, color in ZONES)
     exprs = "\n".join(f'    <Expression name="{n}">[HEART_RATE] &gt; 0 &amp;&amp; {ZONE_EXPR[n]}</Expression>'
                       for n, _ in ZONES)
@@ -265,6 +265,7 @@ GOAL = "[COMPLICATION.GOAL_PROGRESS_VALUE] / [COMPLICATION.GOAL_PROGRESS_TARGET_
 TIME_SIZE = 108
 TIME_CY = (450 - 20) / 2                    # padding-bottom 20
 HEART_SIZE, BPM_SIZE = 26, 54      # the design's 20 / 40, bigger (asked on the watch)
+BPM_WIDE = 0.85                    # a three-digit bpm between hh and mm is drawn this much smaller
 PILL_W, PILL_H, PILL_GAP = 14, 2, 4
 
 
@@ -273,7 +274,9 @@ def mid_geom(k):
     heart, bpm and pills, and the gap it leaves between the hours and minutes."""
     hs, b = HEART_SIZE * k, BPM_SIZE * k
     top = TIME_CY - (hs + 2 + b + 2 + 5 + PILL_H) / 2
-    gap = max(text_width("89", "jost_regular", b), 3 * PILL_W + 2 * PILL_GAP) + 2 * 8
+    gap = max(text_width("89", "jost_regular", b) + 2 * 8,
+              text_width("188", "jost_regular", b * BPM_WIDE) + 2 * 4,
+              3 * PILL_W + 2 * PILL_GAP + 2 * 8)
     return top + hs / 2, top + hs + 2 + b / 2, top + hs + 2 + b + 2 + 5 + PILL_H / 2, gap
 
 
@@ -284,6 +287,7 @@ TIME_LEFT = 225 - (2 * DIGITS_W + MID_W) / 2
 # ---- Bottom row: zone minutes and steps, 150 px apart --------------------------------
 VALUE_SIZE = 44
 VALUE_CY = 333
+MET_SIZE = 0.7        # "10/13" (hours done, goal met) is longer than a step count
 
 
 def value_cols():
@@ -344,16 +348,23 @@ def ring_slot(slot_id, name, provider, r, color, track_alpha, cx, toggle_id, uni
         if kind == "EMPTY":
             label = "--"
         else:
-            label = "[COMPLICATION.TEXT]"
-            if full_at_max_one and kind == "RANGED_VALUE":
-                # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
-                label = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
-                         "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            label = template(label)
-        number = choice("textSize", [
-            (oid, text(label, p(cx), p(VALUE_CY), s(VALUE_SIZE * k), font="jost_regular", color=color,
-                       width=s(VALUE_SIZE * k * 3.5)))
-            for oid, _, k in TEXT_SIZES])
+            label = template("[COMPLICATION.TEXT]")
+
+        def value(k):
+            def at(label, size, inner=""):
+                return text(label, p(cx), p(VALUE_CY), s(size), font="jost_regular", color=color,
+                            width=s(VALUE_SIZE * k * 3.5), inner=inner)
+            if not (full_at_max_one and kind == "RANGED_VALUE"):
+                return at(label, VALUE_SIZE * k)
+            # Goal met: MySteps sends "❤N/M" (just "❤" in the day's first hour). The full
+            # ring already says it: drop the ❤ and draw the longer "N/M" smaller
+            is_met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
+            hours = template("textLength([COMPLICATION.TEXT]) &gt; 1 ? subText([COMPLICATION.TEXT], 1, "
+                             "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
+            return "\n".join([
+                at(label, VALUE_SIZE * k, f'\n  <Transform target="alpha" value="{is_met} ? 0 : 255" />'),
+                at(hours, VALUE_SIZE * k * MET_SIZE, f'\n  <Transform target="alpha" value="{is_met} ? 255 : 0" />')])
+        number = choice("textSize", [(oid, value(k)) for oid, _, k in TEXT_SIZES])
         parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
 {indent(toggle(toggle_id, number), 2)}
 </Group>""")
@@ -512,14 +523,15 @@ BPM = template("round([HEART_RATE])")
 
 
 def hr_variants(draw):
-    """draw(color, value) in the zone's color, or (rest color, "--") without a reading."""
-    return zone_switch(lambda c: draw(c, BPM)) + f"""
+    """draw(color, value, wide) in the zone's color (wide: three digits), or
+    (rest color, "--") without a reading."""
+    return zone_switch(lambda c, wide: draw(c, BPM, wide)) + f"""
 <Condition>
   <Expressions>
     <Expression name="noHr">[HEART_RATE] &lt;= 0</Expression>
   </Expressions>
   <Compare expression="noHr">
-{indent(draw(ZONES[0][1], "--"), 4)}
+{indent(draw(ZONES[0][1], "--", False), 4)}
   </Compare>
 </Condition>"""
 
@@ -528,22 +540,22 @@ def hr_middle(k):
     """The design's: ♥, bpm and pills stacked between hours and minutes, heart rate size k."""
     heart_cy, bpm_cy, pills_cy, _ = mid_geom(k)
 
-    def draw(c, value):
+    def draw(c, value, wide):
         return "\n".join([heart_icon(c, 225, heart_cy, HEART_SIZE * k),
-                          text(value, C, p(bpm_cy), s(BPM_SIZE * k), font="jost_regular", color=c,
-                               width=s(BPM_SIZE * k * 3)),
+                          text(value, C, p(bpm_cy), s(BPM_SIZE * k * (BPM_WIDE if wide else 1)),
+                               font="jost_regular", color=c, width=s(BPM_SIZE * k * 3)),
                           pills(c, 225, pills_cy)])
     return hr_variants(draw)
 
 
 def hr_row(cx, cy, k):
-    """♥ bpm on one row centered on (cx, cy) (centered for a 2-digit bpm, a third digit
-    grows to the right), pills under it."""
+    """♥ bpm on one row centered on (cx, cy) for the zone's two or three digits, pills
+    under it."""
     hsz, b = HR_ROW_HEART * k, HR_ROW_BPM * k
     hw = hsz * 0.83
-    left = cx - (hw + 5 * k + text_width("75", "jost_regular", b)) / 2
 
-    def draw(c, value):
+    def draw(c, value, wide):
+        left = cx - (hw + 5 * k + text_width("188" if wide else "75", "jost_regular", b)) / 2
         return "\n".join([heart_icon(c, left + hw / 2, cy, hsz),
                           text(value, p(left + hw + 5 * k), p(cy), s(b), font="jost_regular", color=c,
                                align="START", width=s(b * 3)),
@@ -555,7 +567,7 @@ def hr_stack(cx, cy, k):
     """Small ♥ / bpm / pills stack, bpm centered on (cx, cy)."""
     hsz, b = HR_ROW_HEART * k * 0.9, HR_ROW_BPM * k
 
-    def draw(c, value):
+    def draw(c, value, wide):
         return "\n".join([heart_icon(c, cx, cy - b * HR_CAP - 4 - hsz * 0.37, hsz),
                           text(value, p(cx), p(cy), s(b), font="jost_regular", color=c, width=s(b * 3)),
                           pills(c, cx, cy + b * HR_CAP + 4)])
@@ -714,6 +726,7 @@ def watchface():
 
 
 if __name__ == "__main__":
-    OUT.write_text(watchface())
+    # Generated XML without indentation: the option combinations make it large
+    OUT.write_text("\n".join(line.strip() for line in watchface().split("\n") if line.strip()) + "\n")
     (RES / "values/strings.xml").write_text(strings())
     print(f"wrote {OUT}")

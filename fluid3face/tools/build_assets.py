@@ -20,7 +20,7 @@ from fontTools import subset
 from PIL import Image, ImageDraw, ImageFilter
 
 RES = Path(__file__).resolve().parent.parent / "src/main/res"
-FONTS = {"jost_extralight": 200, "jost_light": 300, "jost_regular": 400, "jost_time": 700,
+FONTS = {"jost_light": 300, "jost_regular": 400, "jost_time": 700,
          "jost_time_strong": 760, "jost_time_vstrong": 830, "jost_time_ultra": 900}
 TIME_TRACKING = -20          # -0.02 em at 1000 units per em
 UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
