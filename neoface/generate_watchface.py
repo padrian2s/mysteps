@@ -306,7 +306,8 @@ def dim_segments():
     """All 60 segments, dim, under the lit ones (screen on only): one dashed circle."""
     def at(w, gap):
         half = seg_half(w, gap)
-        return arc(s(SEG_R), s(w), ZONE_C, -half, 360 - half, alpha=SEG_DIM, dash=seg_dash(w, gap))
+        # Ends on the 60th segment: a full 360° sweep from a non-zero start isn't drawn
+        return arc(s(SEG_R), s(w), ZONE_C, -half, 354 + half, alpha=SEG_DIM, dash=seg_dash(w, gap))
     return f"""<!-- Outer ring: the 60 segments, dim -->
 <Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="DimSegments">
   {AMBIENT_HIDE}

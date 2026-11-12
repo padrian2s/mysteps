@@ -73,7 +73,7 @@
 <ListOption id="none">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_none">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-2.33066" endAngle="357.669">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-2.33066" endAngle="356.331">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="5.1" cap="ROUND" dashIntervals="17.646 5.068" />
 </Arc>
 </PartDraw>
@@ -82,7 +82,7 @@
 <ListOption id="small">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_small">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.92905" endAngle="358.071">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.92905" endAngle="355.929">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="5.1" cap="ROUND" dashIntervals="14.605 8.108" />
 </Arc>
 </PartDraw>
@@ -91,7 +91,7 @@
 <ListOption id="normal">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_normal">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.66131" endAngle="358.339">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.66131" endAngle="355.661">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="5.1" cap="ROUND" dashIntervals="12.578 10.136" />
 </Arc>
 </PartDraw>
@@ -100,7 +100,7 @@
 <ListOption id="large">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_large">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.25971" endAngle="358.74">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.25971" endAngle="355.26">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="5.1" cap="ROUND" dashIntervals="9.538 13.176" />
 </Arc>
 </PartDraw>
@@ -115,7 +115,7 @@
 <ListOption id="none">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_none">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.92905" endAngle="358.071">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.92905" endAngle="355.929">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="8.1" cap="ROUND" dashIntervals="14.605 8.108" />
 </Arc>
 </PartDraw>
@@ -124,7 +124,7 @@
 <ListOption id="small">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_small">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.52744" endAngle="358.473">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.52744" endAngle="355.527">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="8.1" cap="ROUND" dashIntervals="11.565 11.149" />
 </Arc>
 </PartDraw>
@@ -133,7 +133,7 @@
 <ListOption id="normal">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_normal">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.25971" endAngle="358.74">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.25971" endAngle="355.26">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="8.1" cap="ROUND" dashIntervals="9.538 13.176" />
 </Arc>
 </PartDraw>
@@ -142,7 +142,7 @@
 <ListOption id="large">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_large">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.858102" endAngle="359.142">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.858102" endAngle="354.858">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="8.1" cap="ROUND" dashIntervals="6.497 16.217" />
 </Arc>
 </PartDraw>
@@ -157,7 +157,7 @@
 <ListOption id="none">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_none">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.52744" endAngle="358.473">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.52744" endAngle="355.527">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="11.1" cap="ROUND" dashIntervals="11.565 11.149" />
 </Arc>
 </PartDraw>
@@ -166,7 +166,7 @@
 <ListOption id="small">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_small">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.12584" endAngle="358.874">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.12584" endAngle="355.126">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="11.1" cap="ROUND" dashIntervals="8.524 14.190" />
 </Arc>
 </PartDraw>
@@ -175,7 +175,7 @@
 <ListOption id="normal">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_normal">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.858102" endAngle="359.142">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.858102" endAngle="354.858">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="11.1" cap="ROUND" dashIntervals="6.497 16.217" />
 </Arc>
 </PartDraw>
@@ -184,7 +184,7 @@
 <ListOption id="large">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_large">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.456496" endAngle="359.544">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.456496" endAngle="354.456">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="11.1" cap="ROUND" dashIntervals="3.456 19.257" />
 </Arc>
 </PartDraw>
@@ -199,7 +199,7 @@
 <ListOption id="none">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_none">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.39358" endAngle="358.606">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-1.39358" endAngle="355.394">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="12.2" cap="ROUND" dashIntervals="10.551 12.163" />
 </Arc>
 </PartDraw>
@@ -208,7 +208,7 @@
 <ListOption id="small">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_small">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.99197" endAngle="359.008">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.99197" endAngle="354.992">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="12.2" cap="ROUND" dashIntervals="7.510 15.203" />
 </Arc>
 </PartDraw>
@@ -217,7 +217,7 @@
 <ListOption id="normal">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_normal">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.724233" endAngle="359.276">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.724233" endAngle="354.724">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="12.2" cap="ROUND" dashIntervals="5.483 17.230" />
 </Arc>
 </PartDraw>
@@ -226,7 +226,7 @@
 <ListOption id="large">
 <Group x="0" y="0" width="456" height="456" name="ringGaps_large">
 <PartDraw x="0" y="0" width="456" height="456" alpha="46">
-<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.322627" endAngle="359.677">
+<Arc centerX="228" centerY="228" width="433.8" height="433.8" startAngle="-0.322627" endAngle="354.323">
 <Stroke color="[CONFIGURATION.themeColor.2]" thickness="12.2" cap="ROUND" dashIntervals="2.443 20.271" />
 </Arc>
 </PartDraw>
