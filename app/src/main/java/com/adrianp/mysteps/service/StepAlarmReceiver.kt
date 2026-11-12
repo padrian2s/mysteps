@@ -44,15 +44,18 @@ class StepAlarmReceiver : BroadcastReceiver() {
         }
 
         /**
-         * Schedule ALL alarms for today. One per hour at :50 within the active interval.
+         * Schedule ALL alarms: one per hour at :50 within the active interval, each at its
+         * next occurrence (today, or tomorrow once today's :50 has passed), so the next
+         * day is armed without waiting for a complication request after midnight.
          * Each hour gets its own PendingIntent (requestCode = hour).
          *
          * IDEMPOTENT: safe to call as often as you want. AlarmManager replaces
-         * identical PendingIntents (same requestCode). Throttled to once per minute.
+         * identical PendingIntents (same requestCode). Throttled to once per minute
+         * unless force is set (the receiver re-arming the alarm that just fired).
          */
-        fun scheduleAllAlarms(context: Context) {
+        fun scheduleAllAlarms(context: Context, force: Boolean = false) {
             val currentMs = System.currentTimeMillis()
-            if (currentMs - lastScheduleTimeMs < 60_000) return
+            if (!force && currentMs - lastScheduleTimeMs < 60_000) return
             lastScheduleTimeMs = currentMs
 
             val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
@@ -61,18 +64,18 @@ class StepAlarmReceiver : BroadcastReceiver() {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
             val now = Calendar.getInstance()
-            val today = Calendar.getInstance()
 
             var scheduledCount = 0
 
             for (hour in intervalStart until intervalEnd) {
+                val today = Calendar.getInstance()
                 today.set(Calendar.HOUR_OF_DAY, hour)
                 today.set(Calendar.MINUTE, 50)
                 today.set(Calendar.SECOND, 0)
                 today.set(Calendar.MILLISECOND, 0)
 
-                // Skip alarms in the past
-                if (today.timeInMillis <= now.timeInMillis) continue
+                // Already passed today: arm tomorrow's
+                if (today.timeInMillis <= now.timeInMillis) today.add(Calendar.DAY_OF_YEAR, 1)
 
                 val intent = Intent(context, StepAlarmReceiver::class.java).apply {
                     action = ACTION_CHECK_STEPS
@@ -111,6 +114,13 @@ class StepAlarmReceiver : BroadcastReceiver() {
         val min = now.get(Calendar.MINUTE)
 
         Log.e(TAG, "Alarm received! alarmHour=$alarmHour currentTime=$hour:$min")
+
+        // Re-arm before anything can return early: this hour's alarm for tomorrow
+        try {
+            scheduleAllAlarms(context, force = true)
+        } catch (e: Exception) {
+            Log.e(TAG, "Re-arming failed", e)
+        }
 
         val forceTest = intent.getBooleanExtra("force_test", false)
         val prefs = context.getSharedPreferences(StepCounterService.PREFS_NAME, Context.MODE_PRIVATE)
