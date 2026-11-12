@@ -83,7 +83,7 @@ FAMILIES = [("sg", "Space Grotesk"), ("jb", "JetBrains Mono")]
 FAMILY = "sg"   # family being generated; code names fonts as "sg_<role>" and this swaps it
 
 FONT_FILES = {f"{fid}_{role}": TTFont(RES / "font" / f"{fid}_{role}.ttf")
-              for fid, _ in FAMILIES for role in ("light", "regular", "medium", "time")}
+              for fid, _ in FAMILIES for role in ("light", "medium", "time")}
 
 
 def font(name):
@@ -263,7 +263,7 @@ def cols():
                   text_width("180", "sg_medium", VALUE_SIZE)]
     else:
         widths = [text_width("77", "sg_medium", VALUE_SIZE),
-                  HEART_SIZE + 6 + text_width("89", "sg_medium", BPM_SIZE),
+                  HEART_SIZE + 6 + text_width("188", "sg_medium", BPM_SIZE),   # room for 100 and up
                   text_width("180", "sg_medium", VALUE_SIZE)]
     x = 225 - (sum(widths) + 2 * 22) / 2
     centers = []
@@ -308,7 +308,8 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
             if full_at_max_one:
                 # MySteps sends value 0 of max 1 once the hour's goal is met: full ring then
                 met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
-                fraction = f"({met} ? 1 : {fraction})"
+                if kind == "RANGED_VALUE":
+                    fraction = f"({met} ? 1 : {fraction})"
             parts.append(glowing_arc(r, stroke, color, fraction, glow) if glow
                          else arc(r, stroke, color, fraction))
             value, maxv = (("[COMPLICATION.RANGED_VALUE_VALUE]", "[COMPLICATION.RANGED_VALUE_MAX]")
@@ -320,13 +321,19 @@ def ring_slot(slot_id, name, provider, r, stroke, glow, color, track_alpha, col,
             if kind == "EMPTY":
                 return text("--", p(cols()[col]), p(value_cy()), s(VALUE_SIZE), color=value_color,
                             width=s(VALUE_SIZE * 3.2))
-            label_expr = "[COMPLICATION.TEXT]"
-            if full_at_max_one and kind == "RANGED_VALUE":
-                # Goal met: MySteps sends "❤N/M"; the full ring already says it, drop the ❤
-                label_expr = ("[COMPLICATION.RANGED_VALUE_MAX] == 1 ? subText([COMPLICATION.TEXT], 1, "
-                              "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
-            return text(template(label_expr), p(cols()[col]), p(value_cy()), s(VALUE_SIZE),
-                        color=value_color, width=s(VALUE_SIZE * 3.2))
+            def at(expr, size, inner=""):
+                return text(template(expr), p(cols()[col]), p(value_cy()), s(size),
+                            color=value_color, width=s(VALUE_SIZE * 3.2), inner=inner)
+            if not (full_at_max_one and kind == "RANGED_VALUE"):
+                return at("[COMPLICATION.TEXT]", VALUE_SIZE)
+            # Goal met: MySteps sends "❤N/M" (just "❤" in the day's first hour). The full
+            # ring already says it: drop the ❤ and draw the longer "N/M" smaller
+            is_met = "[COMPLICATION.RANGED_VALUE_MAX] == 1"
+            hours = ("textLength([COMPLICATION.TEXT]) &gt; 1 ? subText([COMPLICATION.TEXT], 1, "
+                     "textLength([COMPLICATION.TEXT])) : [COMPLICATION.TEXT]")
+            return "\n".join([
+                at("[COMPLICATION.TEXT]", VALUE_SIZE, f'\n  <Transform target="alpha" value="{is_met} ? 0 : 255" />'),
+                at(hours, VALUE_SIZE * 0.7, f'\n  <Transform target="alpha" value="{is_met} ? 255 : 0" />')])
         # Complications only take parts, groups and conditions: wrap the font options
         # The number can be switched off in Customize; the ring stays
         parts.append(f"""<Group x="0" y="0" width="{SIZE}" height="{SIZE}" name="Number">
@@ -631,6 +638,7 @@ def watchface():
 
 
 if __name__ == "__main__":
-    OUT.write_text(watchface())
+    # Generated XML without indentation (res/raw is not compiled; it loads faster)
+    OUT.write_text("\n".join(line.strip() for line in watchface().split("\n") if line.strip()) + "\n")
     (RES / "values/strings.xml").write_text(strings())
     print(f"wrote {OUT}", "columns:", [round(c, 1) for c in cols()])

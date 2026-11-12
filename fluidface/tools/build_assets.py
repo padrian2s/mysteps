@@ -16,7 +16,7 @@ from fontTools import subset
 
 RES = Path(__file__).resolve().parent.parent / "src/main/res"
 FONTS = {prefix + "_" + role: wght for prefix in ("sg", "jb")
-         for role, wght in (("light", 300), ("regular", 400), ("medium", 500), ("time", 300))}
+         for role, wght in (("light", 300), ("medium", 500), ("time", 300))}
 # TimeText has no letterSpacing: sg_time carries the design's -0.05 em in its digit advances
 TIME_TRACKING = -50
 UNICODES = (list(range(0x20, 0x7F)) + list(range(0xA0, 0x180))
